@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "SpectrogramDisplay.hpp"
@@ -67,6 +67,14 @@
  * |preview disable
  * |tab FFT
  *
+ * |param fullScale[Full Scale] The amplitude that corresponds to full-scale.
+ * A full-scale amplitude signal will appear as 0.0 dBfs on the plotter.
+ * The default value of 1.0 works best for scaled floating point samples.
+ * A signed 16-bit integer value might use 32768 as full-scale instead.
+ * |default 1.0
+ * |preview disable
+ * |tab FFT
+ *
  * |param timeSpan[Time Span] How many seconds of data to display in the plot.
  * |default 10.0
  * |units seconds
@@ -131,6 +139,7 @@
  * |setter setCenterFrequency(centerFreq)
  * |setter setNumFFTBins(numBins)
  * |setter setWindowType(window, windowArgs)
+ * |setter setFullScale(fullScale)
  * |setter setTimeSpan(timeSpan)
  * |setter setReferenceLevel(refLevel)
  * |setter setDynamicRange(dynRange)
@@ -171,6 +180,7 @@ public:
         this->connect(this, "setCenterFrequency", _display, "setCenterFrequency");
         this->connect(this, "setNumFFTBins", _display, "setNumFFTBins");
         this->connect(this, "setWindowType", _display, "setWindowType");
+        this->connect(this, "setFullScale", _display, "setFullScale");
         this->connect(this, "setTimeSpan", _display, "setTimeSpan");
         this->connect(this, "setReferenceLevel", _display, "setReferenceLevel");
         this->connect(this, "setDynamicRange", _display, "setDynamicRange");

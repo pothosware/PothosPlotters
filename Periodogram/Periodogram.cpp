@@ -72,6 +72,14 @@
  * |preview disable
  * |tab FFT
  *
+ * |param fullScale[Full Scale] The amplitude that corresponds to full-scale.
+ * A full-scale amplitude signal will appear as 0.0 dBfs on the plotter.
+ * The default value of 1.0 works best for scaled floating point samples.
+ * A signed 16-bit integer value might use 32768 as full-scale instead.
+ * |default 1.0
+ * |preview disable
+ * |tab FFT
+ *
  * |param autoScale[Auto-Scale] Enable automatic scaling for the vertical axis.
  * |default false
  * |option [Auto scale] true
@@ -122,14 +130,6 @@
  * |preview disable
  * |tab Axis
  *
- * |param fullScale[Full Scale] The amplitude that corresponds to full-scale.
- * A full-scale amplitude signal will appear as 0.0 dBfs on the plotter.
- * The default value of 1.0 works best for scaled floating point samples.
- * A signed 16-bit integer value might use 32768 as full-scale instead.
- * |default 1.0
- * |preview disable
- * |tab Axis
- *
  * |param freqLabelId[Freq Label ID] Labels with this ID can be used to set the center frequency.
  * To ignore frequency labels, set this parameter to an empty string.
  * |default "rxFreq"
@@ -160,6 +160,7 @@
  * |setter setCenterFrequency(centerFreq)
  * |setter setNumFFTBins(numBins)
  * |setter setWindowType(window, windowArgs)
+ * |setter setFullScale(fullScale)
  * |setter setAutoScale(autoScale)
  * |setter setReferenceLevel(refLevel)
  * |setter setDynamicRange(dynRange)
@@ -167,7 +168,6 @@
  * |setter enableXAxis(enableXAxis)
  * |setter enableYAxis(enableYAxis)
  * |setter setYAxisTitle(yAxisTitle)
- * |setter setFullScale(fullScale)
  * |setter setFreqLabelId(freqLabelId)
  * |setter setRateLabelId(rateLabelId)
  * |setter setStartLabelId(startLabelId)
@@ -204,6 +204,7 @@ public:
         this->connect(this, "setCenterFrequency", _display, "setCenterFrequency");
         this->connect(this, "setNumFFTBins", _display, "setNumFFTBins");
         this->connect(this, "setWindowType", _display, "setWindowType");
+        this->connect(this, "setFullScale", _display, "setFullScale");
         this->connect(this, "setReferenceLevel", _display, "setReferenceLevel");
         this->connect(this, "setDynamicRange", _display, "setDynamicRange");
         this->connect(this, "setAutoScale", _display, "setAutoScale");
@@ -211,7 +212,6 @@ public:
         this->connect(this, "enableXAxis", _display, "enableXAxis");
         this->connect(this, "enableYAxis", _display, "enableYAxis");
         this->connect(this, "setYAxisTitle", _display, "setYAxisTitle");
-        this->connect(this, "setFullScale", _display, "setFullScale");
         this->connect(_display, "frequencySelected", this, "frequencySelected");
 
         //connect to the internal snooper block

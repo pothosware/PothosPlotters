@@ -47,6 +47,7 @@ public:
 
     void setNumFFTBins(const size_t numBins);
     void setWindowType(const std::string &, const std::vector<double> &);
+    void setFullScale(const double fullScale);
     void setReferenceLevel(const double refLevel);
     void setDynamicRange(const double dynRange);
     void setAutoScale(const bool autoScale);
@@ -86,7 +87,6 @@ public:
     void enableXAxis(const bool enb);
     void enableYAxis(const bool enb);
     void setYAxisTitle(const QString &title);
-    void setFullScale(const double fullScale);
 
     void setFreqLabelId(const std::string &id)
     {

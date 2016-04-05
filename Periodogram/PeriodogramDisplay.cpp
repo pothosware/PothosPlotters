@@ -36,6 +36,7 @@ PeriodogramDisplay::PeriodogramDisplay(void):
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setCenterFrequency));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setNumFFTBins));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setWindowType));
+    this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setFullScale));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setReferenceLevel));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setDynamicRange));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setAutoScale));
@@ -50,7 +51,6 @@ PeriodogramDisplay::PeriodogramDisplay(void):
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, enableXAxis));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, enableYAxis));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setYAxisTitle));
-    this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setFullScale));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setFreqLabelId));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setRateLabelId));
     this->registerSignal("frequencySelected");
@@ -112,6 +112,11 @@ void PeriodogramDisplay::setNumFFTBins(const size_t numBins)
 void PeriodogramDisplay::setWindowType(const std::string &windowType, const std::vector<double> &windowArgs)
 {
     _fftPowerSpectrum.setWindowType(windowType, windowArgs);
+}
+
+void PeriodogramDisplay::setFullScale(const double fullScale)
+{
+    _fullScale = fullScale;
 }
 
 void PeriodogramDisplay::setReferenceLevel(const double refLevel)
@@ -190,11 +195,6 @@ void PeriodogramDisplay::enableYAxis(const bool enb)
 void PeriodogramDisplay::setYAxisTitle(const QString &title)
 {
     QMetaObject::invokeMethod(_mainPlot, "setAxisTitle", Qt::QueuedConnection, Q_ARG(int, QwtPlot::yLeft), Q_ARG(QwtText, MyPlotAxisTitle(title)));
-}
-
-void PeriodogramDisplay::setFullScale(const double fullScale)
-{
-    _fullScale = fullScale;
 }
 
 void PeriodogramDisplay::handlePickerSelected(const QPointF &p)

@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2014 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
@@ -53,6 +53,7 @@ public:
 
     void setNumFFTBins(const size_t numBins);
     void setWindowType(const std::string &, const std::vector<double> &);
+    void setFullScale(const double fullScale);
     void setTimeSpan(const double timeSpan);
     void setReferenceLevel(const double refLevel);
     void setDynamicRange(const double dynRange);
@@ -143,6 +144,7 @@ private:
     double _timeSpan;
     double _refLevel;
     double _dynRange;
+    double _fullScale;
     std::string _freqLabelId;
     std::string _rateLabelId;
     QwtColorMap *makeColorMap(void) const;

@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2014 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "SpectrogramDisplay.hpp"
@@ -58,7 +58,7 @@ void SpectrogramDisplay::work(void)
 
         //power bins to points on the curve
         CArray fftBins(floatBuff.as<const std::complex<float> *>(), this->numFFTBins());
-        const auto powerBins = _fftPowerSpectrum.transform(fftBins);
+        const auto powerBins = _fftPowerSpectrum.transform(fftBins, _fullScale);
         this->appendBins(powerBins);
     }
 }

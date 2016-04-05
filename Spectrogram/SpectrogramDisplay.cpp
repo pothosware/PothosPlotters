@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "SpectrogramDisplay.hpp"
@@ -35,6 +35,7 @@ SpectrogramDisplay::SpectrogramDisplay(void):
     _timeSpan(10.0),
     _refLevel(0.0),
     _dynRange(100.0),
+    _fullScale(1.0),
     _freqLabelId("rxFreq"),
     _rateLabelId("rxRate")
 {
@@ -46,6 +47,7 @@ SpectrogramDisplay::SpectrogramDisplay(void):
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setCenterFrequency));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setNumFFTBins));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setWindowType));
+    this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setFullScale));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setTimeSpan));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setReferenceLevel));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setDynamicRange));
@@ -134,6 +136,11 @@ void SpectrogramDisplay::setNumFFTBins(const size_t numBins)
 void SpectrogramDisplay::setWindowType(const std::string &windowType, const std::vector<double> &windowArgs)
 {
     _fftPowerSpectrum.setWindowType(windowType, windowArgs);
+}
+
+void SpectrogramDisplay::setFullScale(const double fullScale)
+{
+    _fullScale = fullScale;
 }
 
 void SpectrogramDisplay::setTimeSpan(const double timeSpan)
