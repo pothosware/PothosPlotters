@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PeriodogramDisplay.hpp"
@@ -57,7 +57,7 @@ void PeriodogramDisplay::work(void)
 
         //power bins to points on the curve
         CArray fftBins(floatBuff.as<const std::complex<float> *>(), this->numFFTBins());
-        const auto powerBins = _fftPowerSpectrum.transform(fftBins);
+        const auto powerBins = _fftPowerSpectrum.transform(fftBins, _fullScale);
         if (not _queueDepth[index]) _queueDepth[index].reset(new std::atomic<size_t>(0));
         _queueDepth[index]->fetch_add(1);
         QMetaObject::invokeMethod(this, "handlePowerBins", Qt::QueuedConnection, Q_ARG(int, index), Q_ARG(std::valarray<float>, powerBins));

@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PeriodogramDisplay.hpp"
@@ -81,7 +81,7 @@
  *
  * |param refLevel[Reference Level] The maximum displayable power level.
  * |default 0.0
- * |units dBxx
+ * |units dBfs
  * |widget DoubleSpinBox(minimum=-150, maximum=150, step=10, decimals=1)
  * |preview disable
  * |tab Axis
@@ -122,6 +122,14 @@
  * |preview disable
  * |tab Axis
  *
+ * |param fullScale[Full Scale] The amplitude that corresponds to full-scale.
+ * A full-scale amplitude signal will appear as 0.0 dBfs on the plotter.
+ * The default value of 1.0 works best for scaled floating point samples.
+ * A signed 16-bit integer value might use 32768 as full-scale instead.
+ * |default 1.0
+ * |preview disable
+ * |tab Axis
+ *
  * |param freqLabelId[Freq Label ID] Labels with this ID can be used to set the center frequency.
  * To ignore frequency labels, set this parameter to an empty string.
  * |default "rxFreq"
@@ -159,6 +167,7 @@
  * |setter enableXAxis(enableXAxis)
  * |setter enableYAxis(enableYAxis)
  * |setter setYAxisTitle(yAxisTitle)
+ * |setter setFullScale(fullScale)
  * |setter setFreqLabelId(freqLabelId)
  * |setter setRateLabelId(rateLabelId)
  * |setter setStartLabelId(startLabelId)
@@ -202,6 +211,7 @@ public:
         this->connect(this, "enableXAxis", _display, "enableXAxis");
         this->connect(this, "enableYAxis", _display, "enableYAxis");
         this->connect(this, "setYAxisTitle", _display, "setYAxisTitle");
+        this->connect(this, "setFullScale", _display, "setFullScale");
         this->connect(_display, "frequencySelected", this, "frequencySelected");
 
         //connect to the internal snooper block

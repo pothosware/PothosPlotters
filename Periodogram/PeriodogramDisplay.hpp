@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
@@ -86,6 +86,7 @@ public:
     void enableXAxis(const bool enb);
     void enableYAxis(const bool enb);
     void setYAxisTitle(const QString &title);
+    void setFullScale(const double fullScale);
 
     void setFreqLabelId(const std::string &id)
     {
@@ -139,6 +140,7 @@ private:
     std::string _freqLabelId;
     std::string _rateLabelId;
     double _averageFactor;
+    double _fullScale;
 
     //per-port data structs
     std::map<size_t, std::shared_ptr<PeriodogramChannel>> _curves;

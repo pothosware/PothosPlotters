@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PeriodogramDisplay.hpp"
@@ -26,7 +26,8 @@ PeriodogramDisplay::PeriodogramDisplay(void):
     _autoScale(false),
     _freqLabelId("rxFreq"),
     _rateLabelId("rxRate"),
-    _averageFactor(0.0)
+    _averageFactor(0.0),
+    _fullScale(1.0)
 {
     //setup block
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, widget));
@@ -49,6 +50,7 @@ PeriodogramDisplay::PeriodogramDisplay(void):
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, enableXAxis));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, enableYAxis));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setYAxisTitle));
+    this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setFullScale));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setFreqLabelId));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setRateLabelId));
     this->registerSignal("frequencySelected");
@@ -188,6 +190,11 @@ void PeriodogramDisplay::enableYAxis(const bool enb)
 void PeriodogramDisplay::setYAxisTitle(const QString &title)
 {
     QMetaObject::invokeMethod(_mainPlot, "setAxisTitle", Qt::QueuedConnection, Q_ARG(int, QwtPlot::yLeft), Q_ARG(QwtText, MyPlotAxisTitle(title)));
+}
+
+void PeriodogramDisplay::setFullScale(const double fullScale)
+{
+    _fullScale = fullScale;
 }
 
 void PeriodogramDisplay::handlePickerSelected(const QPointF &p)

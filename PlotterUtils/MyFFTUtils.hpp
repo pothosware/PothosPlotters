@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
@@ -69,7 +69,7 @@ struct FFTPowerSpectrum
         _precomputedWindow.clear();
     }
 
-    std::valarray<float> transform(CArray &fftBins)
+    std::valarray<float> transform(CArray &fftBins, const double fullScale = 1.0)
     {
         //windowing
         if (_precomputedWindow.size() != fftBins.size())
@@ -88,7 +88,7 @@ struct FFTPowerSpectrum
         fft(fftBins);
 
         //window and fft gain adjustment
-        const float gain_dB = 20*std::log10(fftBins.size()) + 20*std::log10(_precomputedWindowPower);
+        const float gain_dB = 20*std::log10(fftBins.size()) + 20*std::log10(_precomputedWindowPower) + 20*std::log10(fullScale);
 
         //power calculation
         std::valarray<float> powerBins(fftBins.size());
