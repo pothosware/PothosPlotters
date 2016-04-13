@@ -27,7 +27,9 @@ PeriodogramDisplay::PeriodogramDisplay(void):
     _freqLabelId("rxFreq"),
     _rateLabelId("rxRate"),
     _averageFactor(0.0),
-    _fullScale(1.0)
+    _fullScale(1.0),
+    _fftModeComplex(true),
+    _fftModeAutomatic(true)
 {
     //setup block
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, widget));
@@ -37,6 +39,7 @@ PeriodogramDisplay::PeriodogramDisplay(void):
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setNumFFTBins));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setWindowType));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setFullScale));
+    this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setFFTMode));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setReferenceLevel));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setDynamicRange));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setAutoScale));
@@ -119,6 +122,17 @@ void PeriodogramDisplay::setFullScale(const double fullScale)
     _fullScale = fullScale;
 }
 
+void PeriodogramDisplay::setFFTMode(const std::string &fftMode)
+{
+    if (fftMode == "REAL"){}
+    else if (fftMode == "COMPLEX"){}
+    else if (fftMode == "AUTO"){}
+    else throw Pothos::InvalidArgumentException("PeriodogramDisplay::setFFTMode("+fftMode+")", "unknown mode");
+    _fftModeComplex = (fftMode != "REAL");
+    _fftModeAutomatic = (fftMode == "AUTO");
+    QMetaObject::invokeMethod(this, "handleUpdateAxis", Qt::QueuedConnection);
+}
+
 void PeriodogramDisplay::setReferenceLevel(const double refLevel)
 {
     _refLevel = refLevel;
@@ -161,7 +175,8 @@ void PeriodogramDisplay::handleUpdateAxis(void)
     _zoomer->setAxis(QwtPlot::xBottom, QwtPlot::yLeft);
     _sampleRateWoAxisUnits = _sampleRate/factor;
     _centerFreqWoAxisUnits = _centerFreq/factor;
-    _mainPlot->setAxisScale(QwtPlot::xBottom, _centerFreqWoAxisUnits-_sampleRateWoAxisUnits/2, _centerFreqWoAxisUnits+_sampleRateWoAxisUnits/2);
+    const qreal freqLow = _fftModeComplex?(_centerFreqWoAxisUnits-_sampleRateWoAxisUnits/2):0.0;
+    _mainPlot->setAxisScale(QwtPlot::xBottom, freqLow, _centerFreqWoAxisUnits+_sampleRateWoAxisUnits/2);
     _mainPlot->setAxisScale(QwtPlot::yLeft, _refLevel-_dynRange, _refLevel);
     _mainPlot->updateAxes(); //update after axis changes
     _zoomer->setZoomBase(); //record current axis settings

@@ -48,6 +48,7 @@ public:
     void setNumFFTBins(const size_t numBins);
     void setWindowType(const std::string &, const std::vector<double> &);
     void setFullScale(const double fullScale);
+    void setFFTMode(const std::string &fftMode);
     void setReferenceLevel(const double refLevel);
     void setDynamicRange(const double dynRange);
     void setAutoScale(const bool autoScale);
@@ -141,6 +142,8 @@ private:
     std::string _rateLabelId;
     double _averageFactor;
     double _fullScale;
+    bool _fftModeComplex;
+    bool _fftModeAutomatic;
 
     //per-port data structs
     std::map<size_t, std::shared_ptr<PeriodogramChannel>> _curves;

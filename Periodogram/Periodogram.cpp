@@ -80,6 +80,19 @@
  * |preview disable
  * |tab FFT
  *
+ * |param fftMode[FFT Mode] Power spectrum display mode.
+ * <ul>
+ * <li>Real mode ("REAL") displays only the positive frequencies between [0, +fs/2].</li>
+ * <li>Complex mode ("COMPLEX) displays positive and negative frequencies between [-fs/2, +fs/2].</li>
+ * <li>Automatic mode ("AUTO") selects the FFT mode based on the data type of the current signal.</li>
+ * </ul>
+ * |default "AUTO"
+ * |option [Automatic] "AUTO"
+ * |option [Complex] "COMPLEX"
+ * |option [Real] "REAL"
+ * |preview disable
+ * |tab FFT
+ *
  * |param autoScale[Auto-Scale] Enable automatic scaling for the vertical axis.
  * |default false
  * |option [Auto scale] true
@@ -161,6 +174,7 @@
  * |setter setNumFFTBins(numBins)
  * |setter setWindowType(window, windowArgs)
  * |setter setFullScale(fullScale)
+ * |setter setFFTMode(fftMode)
  * |setter setAutoScale(autoScale)
  * |setter setReferenceLevel(refLevel)
  * |setter setDynamicRange(dynRange)
@@ -205,6 +219,7 @@ public:
         this->connect(this, "setNumFFTBins", _display, "setNumFFTBins");
         this->connect(this, "setWindowType", _display, "setWindowType");
         this->connect(this, "setFullScale", _display, "setFullScale");
+        this->connect(this, "setFFTMode", _display, "setFFTMode");
         this->connect(this, "setReferenceLevel", _display, "setReferenceLevel");
         this->connect(this, "setDynamicRange", _display, "setDynamicRange");
         this->connect(this, "setAutoScale", _display, "setAutoScale");

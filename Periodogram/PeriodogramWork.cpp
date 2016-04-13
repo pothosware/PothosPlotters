@@ -55,6 +55,15 @@ void PeriodogramDisplay::work(void)
         //safe guard against FFT size changes, old buffers could still be in-flight
         if (floatBuff.elements() != this->numFFTBins()) return;
 
+        //handle automatic FFT mode
+        if (_fftModeAutomatic and index == 0)
+        {
+            const bool isComplex = buff.dtype.isComplex();
+            const bool changed = _fftModeComplex != isComplex;
+            _fftModeComplex = isComplex;
+            if (changed) QMetaObject::invokeMethod(this, "handleUpdateAxis", Qt::QueuedConnection);
+        }
+
         //power bins to points on the curve
         CArray fftBins(floatBuff.as<const std::complex<float> *>(), this->numFFTBins());
         const auto powerBins = _fftPowerSpectrum.transform(fftBins, _fullScale);
