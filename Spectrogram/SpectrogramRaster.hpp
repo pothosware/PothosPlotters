@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2014 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
@@ -12,7 +12,8 @@ class MySpectrogramRasterData : public QwtRasterData
 {
 public:
     MySpectrogramRasterData(void):
-        _numCols(1)
+        _numCols(1),
+        _isComplex(true)
     {
         this->setNumRows(1);
     }
@@ -42,8 +43,16 @@ public:
 
         _yOff = this->interval(Qt::YAxis).minValue();
         _yScale = (_data.size()-1)/this->interval(Qt::YAxis).width();
-        _xOff = this->interval(Qt::XAxis).minValue();
-        _xScale = (_numCols-1)/this->interval(Qt::XAxis).width();
+        if (_isComplex)
+        {
+            _xOff = this->interval(Qt::XAxis).minValue();
+            _xScale = (_numCols-1)/this->interval(Qt::XAxis).width();
+        }
+        else
+        {
+            _xScale = (_numCols/2-1)/this->interval(Qt::XAxis).width();
+            _xOff = this->interval(Qt::XAxis).minValue() - this->interval(Qt::XAxis).width();
+        }
 
     }
 
@@ -68,6 +77,13 @@ public:
         }
     }
 
+    //! Set the rendering mode for real valued signals
+    void setFFTMode(const bool isComplex)
+    {
+        std::unique_lock<std::mutex> lock(_rasterMutex);
+        _isComplex = isComplex;
+    }
+
 private:
     void setNumRows(const int num)
     {
@@ -86,4 +102,5 @@ private:
     std::mutex _rasterMutex;
 
     size_t _numCols;
+    bool _isComplex;
 };

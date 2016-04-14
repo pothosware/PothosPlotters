@@ -54,6 +54,7 @@ public:
     void setNumFFTBins(const size_t numBins);
     void setWindowType(const std::string &, const std::vector<double> &);
     void setFullScale(const double fullScale);
+    void setFFTMode(const std::string &fftMode);
     void setTimeSpan(const double timeSpan);
     void setReferenceLevel(const double refLevel);
     void setDynamicRange(const double dynRange);
@@ -145,6 +146,8 @@ private:
     double _refLevel;
     double _dynRange;
     double _fullScale;
+    bool _fftModeComplex;
+    bool _fftModeAutomatic;
     std::string _freqLabelId;
     std::string _rateLabelId;
     QwtColorMap *makeColorMap(void) const;

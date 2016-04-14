@@ -36,6 +36,8 @@ SpectrogramDisplay::SpectrogramDisplay(void):
     _refLevel(0.0),
     _dynRange(100.0),
     _fullScale(1.0),
+    _fftModeComplex(true),
+    _fftModeAutomatic(true),
     _freqLabelId("rxFreq"),
     _rateLabelId("rxRate")
 {
@@ -48,6 +50,7 @@ SpectrogramDisplay::SpectrogramDisplay(void):
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setNumFFTBins));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setWindowType));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setFullScale));
+    this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setFFTMode));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setTimeSpan));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setReferenceLevel));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setDynamicRange));
@@ -143,6 +146,17 @@ void SpectrogramDisplay::setFullScale(const double fullScale)
     _fullScale = fullScale;
 }
 
+void SpectrogramDisplay::setFFTMode(const std::string &fftMode)
+{
+    if (fftMode == "REAL"){}
+    else if (fftMode == "COMPLEX"){}
+    else if (fftMode == "AUTO"){}
+    else throw Pothos::InvalidArgumentException("PeriodogramDisplay::setFFTMode("+fftMode+")", "unknown mode");
+    _fftModeComplex = (fftMode != "REAL");
+    _fftModeAutomatic = (fftMode == "AUTO");
+    QMetaObject::invokeMethod(this, "handleUpdateAxis", Qt::QueuedConnection);
+}
+
 void SpectrogramDisplay::setTimeSpan(const double timeSpan)
 {
     _timeSpan = timeSpan;
@@ -211,7 +225,8 @@ void SpectrogramDisplay::handleUpdateAxis(void)
     _centerFreqWoAxisUnits = _centerFreq/factor;
 
     //update main plot axis
-    _mainPlot->setAxisScale(QwtPlot::xBottom, _centerFreqWoAxisUnits-_sampleRateWoAxisUnits/2, _centerFreqWoAxisUnits+_sampleRateWoAxisUnits/2);
+    const qreal freqLow = _fftModeComplex?(_centerFreqWoAxisUnits-_sampleRateWoAxisUnits/2):0.0;
+    _mainPlot->setAxisScale(QwtPlot::xBottom, freqLow, _centerFreqWoAxisUnits+_sampleRateWoAxisUnits/2);
     _mainPlot->setAxisScale(QwtPlot::yLeft, 0, _timeSpan);
     _mainPlot->setAxisScale(QwtPlot::yRight, _refLevel-_dynRange, _refLevel);
 
@@ -219,6 +234,7 @@ void SpectrogramDisplay::handleUpdateAxis(void)
     _plotRaster->setInterval(Qt::XAxis, _mainPlot->axisInterval(QwtPlot::xBottom));
     _plotRaster->setInterval(Qt::YAxis, _mainPlot->axisInterval(QwtPlot::yLeft));
     _plotRaster->setInterval(Qt::ZAxis, _mainPlot->axisInterval(QwtPlot::yRight));
+    _plotRaster->setFFTMode(_fftModeComplex);
     _mainPlot->axisWidget(QwtPlot::yRight)->setColorMap(_plotRaster->interval(Qt::ZAxis), this->makeColorMap());
 
     _zoomer->setZoomBase(); //record current axis settings

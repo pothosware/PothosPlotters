@@ -75,6 +75,19 @@
  * |preview disable
  * |tab FFT
  *
+ * |param fftMode[FFT Mode] Power spectrum display mode.
+ * <ul>
+ * <li>Real mode ("REAL") displays only the positive frequencies between [0, +fs/2].</li>
+ * <li>Complex mode ("COMPLEX) displays positive and negative frequencies between [-fs/2, +fs/2].</li>
+ * <li>Automatic mode ("AUTO") selects the FFT mode based on the data type of the current signal.</li>
+ * </ul>
+ * |default "AUTO"
+ * |option [Automatic] "AUTO"
+ * |option [Complex] "COMPLEX"
+ * |option [Real] "REAL"
+ * |preview disable
+ * |tab FFT
+ *
  * |param timeSpan[Time Span] How many seconds of data to display in the plot.
  * |default 10.0
  * |units seconds
@@ -140,6 +153,7 @@
  * |setter setNumFFTBins(numBins)
  * |setter setWindowType(window, windowArgs)
  * |setter setFullScale(fullScale)
+ * |setter setFFTMode(fftMode)
  * |setter setTimeSpan(timeSpan)
  * |setter setReferenceLevel(refLevel)
  * |setter setDynamicRange(dynRange)
