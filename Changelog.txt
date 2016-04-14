@@ -3,6 +3,7 @@ This this the changelog file for the Pothos Plotters toolkit.
 Release 0.1.1 (pending)
 ==========================
 
+- Clear wave monitor channels on data type change
 - Added FFT mode option to the Spectrogram plotter
 - Added FFT mode option to the Periodogram plotter
 - Added full-scale option to the Spectrogram plotter

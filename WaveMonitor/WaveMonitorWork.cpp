@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "WaveMonitorDisplay.hpp"
@@ -46,8 +46,8 @@ void WaveMonitorDisplay::handleSamples(const Pothos::Packet &packet)
             pointsI[i] = QPointF(x, sampsI[i]);
             pointsQ[i] = QPointF(x, sampsQ[i]);
         }
-        this->getCurve(index, 0)->setSamples(pointsI);
-        this->getCurve(index, 1)->setSamples(pointsQ);
+        this->getCurve(index, 0, 2)->setSamples(pointsI);
+        this->getCurve(index, 1, 2)->setSamples(pointsQ);
     }
     else
     {
@@ -59,7 +59,7 @@ void WaveMonitorDisplay::handleSamples(const Pothos::Packet &packet)
             const auto x = (i-frac)/_sampleRateWoAxisUnits;
             points[i] = QPointF(x, samps[i]);
         }
-        this->getCurve(index, 0)->setSamples(points);
+        this->getCurve(index, 0, 1)->setSamples(points);
     }
 
     //create markers from labels

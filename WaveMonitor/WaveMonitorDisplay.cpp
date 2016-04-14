@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "WaveMonitorDisplay.hpp"
@@ -243,9 +243,19 @@ void WaveMonitorDisplay::handleLegendChecked(const QVariant &itemInfo, bool on, 
     _mainPlot->replot();
 }
 
-std::shared_ptr<QwtPlotCurve> &WaveMonitorDisplay::getCurve(const size_t index, const size_t which)
+std::shared_ptr<QwtPlotCurve> &WaveMonitorDisplay::getCurve(const size_t index, const size_t which, const size_t width)
 {
-    auto &curve = _curves[index][which];
+    auto &curves = _curves[index];
+
+    //detect width change (was complex data, now its real)
+    if (curves.size() > width)
+    {
+        _curveCount -= curves.size();
+        curves.clear();
+        if (_curveCount <= 1) _mainPlot->insertLegend(nullptr);
+    }
+
+    auto &curve = curves[which];
     if (not curve)
     {
         curve.reset(new QwtPlotCurve());

@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
@@ -105,7 +105,7 @@ private slots:
     void handleZoomed(const QRectF &rect);
 
 private:
-    std::shared_ptr<QwtPlotCurve> &getCurve(const size_t index, const size_t which);
+    std::shared_ptr<QwtPlotCurve> &getCurve(const size_t index, const size_t which, const size_t width);
 
     MyQwtPlot *_mainPlot;
     QwtPlotGrid *_plotGrid;
