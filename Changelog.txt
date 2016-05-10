@@ -1,6 +1,6 @@
 This this the changelog file for the Pothos Plotters toolkit.
 
-Release 0.1.1 (pending)
+Release 0.1.1 (2016-05-10)
 ==========================
 
 - Clear wave monitor channels on data type change
