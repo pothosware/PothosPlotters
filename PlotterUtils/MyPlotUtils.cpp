@@ -1,7 +1,8 @@
-// Copyright (c) 2014-2014 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "MyPlotUtils.hpp"
+#include "MyPlotStyler.hpp"
 #include <QList>
 #include <valarray>
 #include <qwt_legend_data.h>
@@ -71,14 +72,14 @@ MyQwtPlot::MyQwtPlot(QWidget *parent):
     qRegisterMetaType<QwtText>("QwtText"); //used in this class's public slots
 }
 
-void MyQwtPlot::setTitle(const QwtText &text)
+void MyQwtPlot::setTitle(const QString &text)
 {
-    QwtPlot::setTitle(text);
+    QwtPlot::setTitle(MyPlotTitle(text));
 }
 
-void MyQwtPlot::setAxisTitle(const int id, const QwtText &text)
+void MyQwtPlot::setAxisTitle(const int id, const QString &text)
 {
-    QwtPlot::setAxisTitle(id, text);
+    QwtPlot::setAxisTitle(id, MyPlotAxisTitle(text));
 }
 
 void MyQwtPlot::updateChecked(QwtPlotItem *item)

@@ -84,7 +84,7 @@ SpectrogramDisplay::SpectrogramDisplay(void):
         _mainPlot->setAxisFont(QwtPlot::xBottom, MyPlotAxisFontSize());
         _mainPlot->setAxisFont(QwtPlot::yLeft, MyPlotAxisFontSize());
         _mainPlot->setAxisFont(QwtPlot::yRight, MyPlotAxisFontSize());
-        _mainPlot->setAxisTitle(QwtPlot::yRight, MyPlotAxisTitle("dB"));
+        _mainPlot->setAxisTitle(QwtPlot::yRight, "dB");
         _mainPlot->plotLayout()->setAlignCanvasToScales(true);
         _mainPlot->enableAxis(QwtPlot::yRight);
         _mainPlot->axisWidget(QwtPlot::yRight)->setColorBarEnabled(true);
@@ -109,7 +109,7 @@ SpectrogramDisplay::~SpectrogramDisplay(void)
 
 void SpectrogramDisplay::setTitle(const QString &title)
 {
-    QMetaObject::invokeMethod(_mainPlot, "setTitle", Qt::QueuedConnection, Q_ARG(QwtText, MyPlotTitle(title)));
+    QMetaObject::invokeMethod(_mainPlot, "setTitle", Qt::QueuedConnection, Q_ARG(QString, title));
 }
 
 void SpectrogramDisplay::setDisplayRate(const double displayRate)
@@ -198,7 +198,7 @@ void SpectrogramDisplay::handleUpdateAxis(void)
         _timeSpan *= 1e3;
         timeAxisTitle = "msecs";
     }
-    _mainPlot->setAxisTitle(QwtPlot::yLeft, MyPlotAxisTitle(timeAxisTitle));
+    _mainPlot->setAxisTitle(QwtPlot::yLeft, timeAxisTitle);
 
     QString freqAxisTitle("Hz");
     double factor = std::max(_sampleRate, _centerFreq);
@@ -217,7 +217,7 @@ void SpectrogramDisplay::handleUpdateAxis(void)
         factor = 1e3;
         freqAxisTitle = "kHz";
     }
-    _mainPlot->setAxisTitle(QwtPlot::xBottom, MyPlotAxisTitle(freqAxisTitle));
+    _mainPlot->setAxisTitle(QwtPlot::xBottom, freqAxisTitle);
 
     _zoomer->setAxis(QwtPlot::xBottom, QwtPlot::yLeft);
 

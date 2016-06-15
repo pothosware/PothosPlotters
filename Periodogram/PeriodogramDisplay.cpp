@@ -92,7 +92,7 @@ PeriodogramDisplay::~PeriodogramDisplay(void)
 
 void PeriodogramDisplay::setTitle(const QString &title)
 {
-    QMetaObject::invokeMethod(_mainPlot, "setTitle", Qt::QueuedConnection, Q_ARG(QwtText, MyPlotTitle(title)));
+    QMetaObject::invokeMethod(_mainPlot, "setTitle", Qt::QueuedConnection, Q_ARG(QString, title));
 }
 
 void PeriodogramDisplay::setSampleRate(const double sampleRate)
@@ -170,7 +170,7 @@ void PeriodogramDisplay::handleUpdateAxis(void)
         factor = 1e3;
         axisTitle = "kHz";
     }
-    _mainPlot->setAxisTitle(QwtPlot::xBottom, MyPlotAxisTitle(axisTitle));
+    _mainPlot->setAxisTitle(QwtPlot::xBottom, axisTitle);
 
     _zoomer->setAxis(QwtPlot::xBottom, QwtPlot::yLeft);
     _sampleRateWoAxisUnits = _sampleRate/factor;
@@ -209,7 +209,7 @@ void PeriodogramDisplay::enableYAxis(const bool enb)
 
 void PeriodogramDisplay::setYAxisTitle(const QString &title)
 {
-    QMetaObject::invokeMethod(_mainPlot, "setAxisTitle", Qt::QueuedConnection, Q_ARG(int, QwtPlot::yLeft), Q_ARG(QwtText, MyPlotAxisTitle(title)));
+    QMetaObject::invokeMethod(_mainPlot, "setAxisTitle", Qt::QueuedConnection, Q_ARG(int, QwtPlot::yLeft), Q_ARG(QString, title));
 }
 
 void PeriodogramDisplay::handlePickerSelected(const QPointF &p)

@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "ConstellationDisplay.hpp"
@@ -60,7 +60,7 @@ ConstellationDisplay::~ConstellationDisplay(void)
 
 void ConstellationDisplay::setTitle(const QString &title)
 {
-    QMetaObject::invokeMethod(_mainPlot, "setTitle", Qt::QueuedConnection, Q_ARG(QwtText, MyPlotTitle(title)));
+    QMetaObject::invokeMethod(_mainPlot, "setTitle", Qt::QueuedConnection, Q_ARG(QString, title));
 }
 
 void ConstellationDisplay::setAutoScale(const bool autoScale)
@@ -88,8 +88,8 @@ void ConstellationDisplay::handleUpdateAxis(void)
     if (_xRange.size() == 2) _mainPlot->setAxisScale(QwtPlot::xBottom, _xRange[0], _xRange[1]);
     if (_yRange.size() == 2) _mainPlot->setAxisScale(QwtPlot::yLeft, _yRange[0], _yRange[1]);
 
-    _mainPlot->setAxisTitle(QwtPlot::xBottom, MyPlotAxisTitle("In-Phase"));
-    _mainPlot->setAxisTitle(QwtPlot::yLeft, MyPlotAxisTitle("Quadrature"));
+    _mainPlot->setAxisTitle(QwtPlot::xBottom, "In-Phase");
+    _mainPlot->setAxisTitle(QwtPlot::yLeft, "Quadrature");
 
     _mainPlot->updateAxes(); //update after axis changes
     _zoomer->setZoomBase(); //record current axis settings

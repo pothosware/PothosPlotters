@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
@@ -27,6 +27,6 @@ public:
     void updateChecked(QwtPlotItem *item);
 
 public slots:
-    void setTitle(const QwtText &text);
-    void setAxisTitle(const int id, const QwtText &text);
+    void setTitle(const QString &text);
+    void setAxisTitle(const int id, const QString &text);
 };

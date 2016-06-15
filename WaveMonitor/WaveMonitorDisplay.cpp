@@ -79,7 +79,7 @@ WaveMonitorDisplay::~WaveMonitorDisplay(void)
 
 void WaveMonitorDisplay::setTitle(const QString &title)
 {
-    QMetaObject::invokeMethod(_mainPlot, "setTitle", Qt::QueuedConnection, Q_ARG(QwtText, MyPlotTitle(title)));
+    QMetaObject::invokeMethod(_mainPlot, "setTitle", Qt::QueuedConnection, Q_ARG(QString, title));
 }
 
 void WaveMonitorDisplay::setSampleRate(const double sampleRate)
@@ -124,7 +124,7 @@ void WaveMonitorDisplay::enableYAxis(const bool enb)
 
 void WaveMonitorDisplay::setYAxisTitle(const QString &title)
 {
-    QMetaObject::invokeMethod(_mainPlot, "setAxisTitle", Qt::QueuedConnection, Q_ARG(int, QwtPlot::yLeft), Q_ARG(QwtText, MyPlotAxisTitle(title)));
+    QMetaObject::invokeMethod(_mainPlot, "setAxisTitle", Qt::QueuedConnection, Q_ARG(int, QwtPlot::yLeft), Q_ARG(QString, title));
 }
 
 void WaveMonitorDisplay::handleUpdateAxis(void)
@@ -150,7 +150,7 @@ void WaveMonitorDisplay::handleUpdateAxis(void)
         factor = 1e3;
         timeAxisTitle = "msecs";
     }
-    _mainPlot->setAxisTitle(QwtPlot::xBottom, MyPlotAxisTitle(timeAxisTitle));
+    _mainPlot->setAxisTitle(QwtPlot::xBottom, timeAxisTitle);
 
     _zoomer->setAxis(QwtPlot::xBottom, QwtPlot::yLeft);
     _sampleRateWoAxisUnits = _sampleRate/factor;
