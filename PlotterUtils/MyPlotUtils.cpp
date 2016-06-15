@@ -69,7 +69,6 @@ MyQwtPlot::MyQwtPlot(QWidget *parent):
     this->setCanvas(new MyQwtPlotCanvas(this));
     qRegisterMetaType<QList<QwtLegendData>>("QList<QwtLegendData>"); //missing from qwt
     qRegisterMetaType<std::valarray<float>>("std::valarray<float>"); //used for plot data
-    qRegisterMetaType<QwtText>("QwtText"); //used in this class's public slots
 }
 
 void MyQwtPlot::setTitle(const QString &text)
