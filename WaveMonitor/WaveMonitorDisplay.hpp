@@ -16,6 +16,7 @@ class QwtPlotGrid;
 class QwtPlotCurve;
 class QwtPlotZoomer;
 class QwtPlotMarker;
+class MyPlotPicker;
 
 class WaveMonitorDisplay : public QWidget, public Pothos::Block
 {
@@ -96,6 +97,14 @@ public:
         return this->minimumSizeHint();
     }
 
+signals:
+
+    void stateChanged(const QVariant &value);
+
+public slots:
+
+    void restoreState(const QVariant &value);
+
 private slots:
     void installLegend(void);
     void handleLegendChecked(const QVariant &, bool, int);
@@ -109,7 +118,7 @@ private:
 
     MyQwtPlot *_mainPlot;
     QwtPlotGrid *_plotGrid;
-    QwtPlotZoomer *_zoomer;
+    MyPlotPicker *_zoomer;
     double _sampleRate;
     double _sampleRateWoAxisUnits;
     size_t _numPoints;

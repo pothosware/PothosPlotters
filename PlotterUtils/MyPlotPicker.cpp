@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "MyPlotPicker.hpp"
@@ -21,6 +21,24 @@ MyPlotPicker::MyPlotPicker(QWidget *parent):
 void MyPlotPicker::registerRaster(QwtRasterData *raster)
 {
     _raster = raster;
+}
+
+QVariant MyPlotPicker::state(void) const
+{
+    QVariantList stack;
+    for (const auto &rect : this->zoomStack()) stack.append(rect);
+    QVariantMap state;
+    state["stack"] = stack;
+    state["index"] = this->zoomRectIndex();
+    return state;
+}
+
+void MyPlotPicker::setState(const QVariant &state)
+{
+    const auto map = state.toMap();
+    QStack<QRectF> stack;
+    for (const auto &rect : map["stack"].toList()) stack.push(rect.toRectF());
+    this->setZoomStack(stack, map["index"].toInt());
 }
 
 void MyPlotPicker::widgetMouseDoubleClickEvent(QMouseEvent *event)

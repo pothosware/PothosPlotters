@@ -1,9 +1,10 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
 #include "PlotUtilsConfig.hpp"
 #include <qwt_plot_zoomer.h>
+#include <QVariant>
 
 class QwtRasterData;
 
@@ -18,6 +19,12 @@ public:
 
     //! support for getting a z-axis value
     void registerRaster(QwtRasterData *raster);
+
+    //! query the zoomer state as a QVariant
+    QVariant state(void) const;
+
+    //! restore the state from QVariant
+    void setState(const QVariant &state);
 
 protected:
     QwtText trackerTextF(const QPointF &pos) const;

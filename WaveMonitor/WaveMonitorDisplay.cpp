@@ -226,6 +226,14 @@ void WaveMonitorDisplay::handleZoomed(const QRectF &rect)
         _mainPlot->setAxisAutoScale(QwtPlot::yLeft);
         _mainPlot->updateAxes(); //update after axis changes
     }
+
+    //save zoom stack
+    emit this->stateChanged(_zoomer->state());
+}
+
+void WaveMonitorDisplay::restoreState(const QVariant &state)
+{
+   _zoomer->setState(state);
 }
 
 void WaveMonitorDisplay::installLegend(void)
