@@ -122,7 +122,16 @@ public:
         return this->minimumSizeHint();
     }
 
+signals:
+
+    void stateChanged(const QVariant &value);
+
+public slots:
+
+    void restoreState(const QVariant &value);
+
 private slots:
+    void handleZoomed(const QRectF &);
     void handlePickerSelected(const QPointF &);
     void appendBins(const std::valarray<float> &bins);
     void handleUpdateAxis(void);

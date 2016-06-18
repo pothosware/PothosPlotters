@@ -60,6 +60,14 @@ public:
         return this->minimumSizeHint();
     }
 
+signals:
+
+    void stateChanged(const QVariant &value);
+
+public slots:
+
+    void restoreState(const QVariant &value);
+
 private slots:
     void handleUpdateAxis(void);
     void handleSamples(const Pothos::BufferChunk &buff);

@@ -79,6 +79,7 @@ SpectrogramDisplay::SpectrogramDisplay(void):
     {
         _mainPlot->setCanvasBackground(MyPlotCanvasBg());
         dynamic_cast<MyPlotPicker *>(_mainPlot->zoomer())->registerRaster(_plotRaster);
+        connect(_mainPlot->zoomer(), SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
         connect(_mainPlot->zoomer(), SIGNAL(selected(const QPointF &)), this, SLOT(handlePickerSelected(const QPointF &)));
         _mainPlot->setAxisFont(QwtPlot::xBottom, MyPlotAxisFontSize());
         _mainPlot->setAxisFont(QwtPlot::yLeft, MyPlotAxisFontSize());
@@ -247,6 +248,16 @@ void SpectrogramDisplay::enableXAxis(const bool enb)
 void SpectrogramDisplay::enableYAxis(const bool enb)
 {
     _mainPlot->enableAxis(QwtPlot::yLeft, enb);
+}
+
+void SpectrogramDisplay::restoreState(const QVariant &state)
+{
+    _mainPlot->setState(state);
+}
+
+void SpectrogramDisplay::handleZoomed(const QRectF &)
+{
+    emit this->stateChanged(_mainPlot->state());
 }
 
 void SpectrogramDisplay::handlePickerSelected(const QPointF &p)

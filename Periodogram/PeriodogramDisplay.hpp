@@ -118,11 +118,20 @@ public:
         return this->minimumSizeHint();
     }
 
+signals:
+
+    void stateChanged(const QVariant &value);
+
+public slots:
+
+    void restoreState(const QVariant &value);
+
 private slots:
     void handlePickerSelected(const QPointF &);
     void handlePowerBins(const int index, const std::valarray<float> &bins);
     void handleUpdateAxis(void);
     void handleZoomed(const QRectF &rect);
+    void handleLegendChecked(const QVariant &, bool, int);
 
 private:
     MyQwtPlot *_mainPlot;

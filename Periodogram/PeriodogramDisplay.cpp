@@ -74,6 +74,7 @@ PeriodogramDisplay::PeriodogramDisplay(void):
 
         auto legend = new QwtLegend(_mainPlot);
         legend->setDefaultItemMode(QwtLegendData::Checkable);
+        connect(legend, SIGNAL(checked(const QVariant &, bool, int)), this, SLOT(handleLegendChecked(const QVariant &, bool, int)));
         _mainPlot->insertLegend(legend);
     }
 
@@ -182,6 +183,11 @@ void PeriodogramDisplay::handleUpdateAxis(void)
     this->handleZoomed(_mainPlot->zoomer()->zoomBase()); //reload
 }
 
+void PeriodogramDisplay::restoreState(const QVariant &state)
+{
+    _mainPlot->setState(state);
+}
+
 void PeriodogramDisplay::handleZoomed(const QRectF &rect)
 {
     //when zoomed all the way out, return to autoscale
@@ -189,6 +195,7 @@ void PeriodogramDisplay::handleZoomed(const QRectF &rect)
     {
         _mainPlot->setAxisAutoScale(QwtPlot::yLeft);
     }
+    emit this->stateChanged(_mainPlot->state());
 }
 
 QString PeriodogramDisplay::title(void) const
@@ -215,4 +222,9 @@ void PeriodogramDisplay::handlePickerSelected(const QPointF &p)
 {
     const double freq = p.x()*_sampleRate/_sampleRateWoAxisUnits;
     this->callVoid("frequencySelected", freq);
+}
+
+void PeriodogramDisplay::handleLegendChecked(const QVariant &, bool, int)
+{
+    emit this->stateChanged(_mainPlot->state());
 }
