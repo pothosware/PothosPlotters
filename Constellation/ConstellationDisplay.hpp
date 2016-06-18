@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
@@ -14,7 +14,6 @@
 class MyQwtPlot;
 class QwtPlotGrid;
 class QwtPlotCurve;
-class QwtPlotZoomer;
 
 class ConstellationDisplay : public QWidget, public Pothos::Block
 {
@@ -69,7 +68,6 @@ private slots:
 private:
     MyQwtPlot *_mainPlot;
     QwtPlotGrid *_plotGrid;
-    QwtPlotZoomer *_zoomer;
     bool _autoScale;
     std::vector<double> _xRange;
     std::vector<double> _yRange;

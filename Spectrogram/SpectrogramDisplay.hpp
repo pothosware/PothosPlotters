@@ -13,7 +13,6 @@
 class QTimer;
 class MyQwtPlot;
 class QwtColorMap;
-class QwtPlotZoomer;
 class QwtPlotSpectrogram;
 class MySpectrogramRasterData;
 
@@ -131,7 +130,6 @@ private slots:
 private:
     QTimer *_replotTimer;
     MyQwtPlot *_mainPlot;
-    QwtPlotZoomer *_zoomer;
     std::shared_ptr<QwtPlotSpectrogram> _plotSpect;
     MySpectrogramRasterData *_plotRaster;
     FFTPowerSpectrum _fftPowerSpectrum;

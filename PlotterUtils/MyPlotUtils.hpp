@@ -8,6 +8,7 @@
 #include <QVariant>
 
 class QwtPlotItem;
+class QwtPlotZoomer;
 
 //! Get a color for a plotter curve given an index
 POTHOS_PLOTTER_UTILS_EXPORT QColor getDefaultCurveColor(const size_t whichCurve);
@@ -33,7 +34,16 @@ public:
     //! restore the state from QVariant
     void setState(const QVariant &state);
 
+    //! Get the plot zoomer for this canvas
+    QwtPlotZoomer *zoomer(void) const
+    {
+        return _zoomer;
+    }
+
 public slots:
     void setTitle(const QString &text);
     void setAxisTitle(const int id, const QString &text);
+
+private:
+    QwtPlotZoomer *_zoomer;
 };

@@ -14,7 +14,6 @@
 class MyQwtPlot;
 class QwtPlotGrid;
 class QwtPlotCurve;
-class QwtPlotZoomer;
 class PeriodogramChannel;
 
 class PeriodogramDisplay : public QWidget, public Pothos::Block
@@ -128,7 +127,6 @@ private slots:
 private:
     MyQwtPlot *_mainPlot;
     QwtPlotGrid *_plotGrid;
-    QwtPlotZoomer *_zoomer;
     FFTPowerSpectrum _fftPowerSpectrum;
     double _sampleRate;
     double _sampleRateWoAxisUnits;

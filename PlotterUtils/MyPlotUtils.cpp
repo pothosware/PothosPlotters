@@ -3,6 +3,7 @@
 
 #include "MyPlotUtils.hpp"
 #include "MyPlotStyler.hpp"
+#include "MyPlotPicker.hpp"
 #include <QList>
 #include <valarray>
 #include <qwt_legend_data.h>
@@ -65,9 +66,11 @@ protected:
  * Custom QwtPlot implementation
  **********************************************************************/
 MyQwtPlot::MyQwtPlot(QWidget *parent):
-    QwtPlot(parent)
+    QwtPlot(parent),
+    _zoomer(nullptr)
 {
     this->setCanvas(new MyQwtPlotCanvas(this));
+    _zoomer = new MyPlotPicker(this->canvas());
     qRegisterMetaType<QList<QwtLegendData>>("QList<QwtLegendData>"); //missing from qwt
     qRegisterMetaType<std::valarray<float>>("std::valarray<float>"); //used for plot data
 }
@@ -95,19 +98,37 @@ void MyQwtPlot::updateChecked(QwtPlotItem *item)
 
 QVariant MyQwtPlot::state(void) const
 {
+    QVariantMap state;
+
+    //zoom stack
+    QVariantList stack;
+    for (const auto &rect : zoomer()->zoomStack()) stack.append(rect);
+    state["stack"] = stack;
+    state["index"] = zoomer()->zoomRectIndex();
+
+    //item visibility
     const auto items = this->itemList();
     QBitArray visible(items.size());
     for (int i = 0; i < items.size(); i++)
     {
         visible.setBit(i, items[i]->isVisible());
     }
-    return visible;
+    state["visible"] = visible;
+
+    return state;
 }
 
 void MyQwtPlot::setState(const QVariant &state)
 {
+    const auto map = state.toMap();
+
+    //zoom stack
+    QStack<QRectF> stack;
+    for (const auto &rect : map["stack"].toList()) stack.push(rect.toRectF());
+    zoomer()->setZoomStack(stack, map["index"].toInt());
+
     const auto items = this->itemList();
-    const auto visible = state.toBitArray();
+    const auto visible = map["visible"].toBitArray();
     for (int i = 0; i < items.size() and i < visible.size(); i++)
     {
         items[i]->setVisible(visible.at(i));
