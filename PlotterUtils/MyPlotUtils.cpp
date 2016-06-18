@@ -12,7 +12,6 @@
 #include <qwt_legend_label.h>
 #include <qwt_text.h>
 #include <QMouseEvent>
-#include <QBitArray>
 
 QColor getDefaultCurveColor(const size_t whichCurve)
 {
@@ -73,6 +72,7 @@ MyQwtPlot::MyQwtPlot(QWidget *parent):
     _zoomer = new MyPlotPicker(this->canvas());
     qRegisterMetaType<QList<QwtLegendData>>("QList<QwtLegendData>"); //missing from qwt
     qRegisterMetaType<std::valarray<float>>("std::valarray<float>"); //used for plot data
+    connect(this, SIGNAL(itemAttached(QwtPlotItem *, bool)), this, SLOT(handleItemAttached(QwtPlotItem *, bool)));
 }
 
 void MyQwtPlot::setTitle(const QString &text)
@@ -94,6 +94,22 @@ void MyQwtPlot::updateChecked(QwtPlotItem *item)
     if (label == nullptr) return; //no label
     label->setChecked(item->isVisible());
     this->updateLegend();
+}
+
+void MyQwtPlot::handleItemAttached(QwtPlotItem *, bool on)
+{
+    //apply stashed visibility when the item count matches
+    //this handles curves which are added on-demand
+    const auto items = this->itemList();
+    if (on and items.size() == _visible.size())
+    {
+        for (int i = 0; i < items.size(); i++)
+        {
+            items[i]->setVisible(_visible.at(i));
+            this->updateChecked(items[i]);
+        }
+        _visible.clear();
+    }
 }
 
 QVariant MyQwtPlot::state(void) const
@@ -127,11 +143,12 @@ void MyQwtPlot::setState(const QVariant &state)
     for (const auto &rect : map["stack"].toList()) stack.push(rect.toRectF());
     zoomer()->setZoomStack(stack, map["index"].toInt());
 
+    //item visibility
     const auto items = this->itemList();
-    const auto visible = map["visible"].toBitArray();
-    for (int i = 0; i < items.size() and i < visible.size(); i++)
+    _visible = map["visible"].toBitArray();
+    for (int i = 0; i < items.size() and i < _visible.size(); i++)
     {
-        items[i]->setVisible(visible.at(i));
+        items[i]->setVisible(_visible.at(i));
         this->updateChecked(items[i]);
     }
 }

@@ -6,6 +6,7 @@
 #include <QColor>
 #include <qwt_plot.h>
 #include <QVariant>
+#include <QBitArray>
 
 class QwtPlotItem;
 class QwtPlotZoomer;
@@ -44,6 +45,10 @@ public slots:
     void setTitle(const QString &text);
     void setAxisTitle(const int id, const QString &text);
 
+private slots:
+    void handleItemAttached(QwtPlotItem *plotItem, bool on);
+
 private:
     QwtPlotZoomer *_zoomer;
+    QBitArray _visible;
 };
