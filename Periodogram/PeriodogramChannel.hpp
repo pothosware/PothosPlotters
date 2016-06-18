@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2014 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
@@ -22,9 +22,7 @@ public:
 
     void update(const std::valarray<float> &powerBins, const double rate, const double freq, const double factor);
 
-private slots:
-
-    void handleLegendChecked(const QVariant &itemInfo, bool on, int);
+    void clearOnChange(QwtPlotItem *item);
 
 private:
 

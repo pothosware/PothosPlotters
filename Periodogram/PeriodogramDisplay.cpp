@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PeriodogramDisplay.hpp"
+#include "PeriodogramChannel.hpp"
 #include "MyPlotStyler.hpp"
 #include "MyPlotUtils.hpp"
 #include <QResizeEvent>
@@ -224,7 +225,15 @@ void PeriodogramDisplay::handlePickerSelected(const QPointF &p)
     this->callVoid("frequencySelected", freq);
 }
 
-void PeriodogramDisplay::handleLegendChecked(const QVariant &, bool, int)
+void PeriodogramDisplay::handleLegendChecked(const QVariant &itemInfo, bool on, int)
 {
+    auto item = _mainPlot->infoToItem(itemInfo);
+    for (const auto &c : _curves)
+    {
+        if (item->isVisible() != on)
+            c.second->clearOnChange(item);
+    }
+    item->setVisible(on);
     emit this->stateChanged(_mainPlot->state());
+    _mainPlot->replot();
 }
