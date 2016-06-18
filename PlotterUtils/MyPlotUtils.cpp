@@ -11,6 +11,7 @@
 #include <qwt_legend_label.h>
 #include <qwt_text.h>
 #include <QMouseEvent>
+#include <QBitArray>
 
 QColor getDefaultCurveColor(const size_t whichCurve)
 {
@@ -90,6 +91,28 @@ void MyQwtPlot::updateChecked(QwtPlotItem *item)
     if (label == nullptr) return; //no label
     label->setChecked(item->isVisible());
     this->updateLegend();
+}
+
+QVariant MyQwtPlot::state(void) const
+{
+    const auto items = this->itemList();
+    QBitArray visible(items.size());
+    for (int i = 0; i < items.size(); i++)
+    {
+        visible.setBit(i, items[i]->isVisible());
+    }
+    return visible;
+}
+
+void MyQwtPlot::setState(const QVariant &state)
+{
+    const auto items = this->itemList();
+    const auto visible = state.toBitArray();
+    for (int i = 0; i < items.size() and i < visible.size(); i++)
+    {
+        items[i]->setVisible(visible.at(i));
+        this->updateChecked(items[i]);
+    }
 }
 
 #include "MyPlotUtils.moc"

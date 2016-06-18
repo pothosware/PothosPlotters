@@ -5,6 +5,7 @@
 #include "PlotUtilsConfig.hpp"
 #include <QColor>
 #include <qwt_plot.h>
+#include <QVariant>
 
 class QwtPlotItem;
 
@@ -25,6 +26,12 @@ public:
 
     //! update checked status based on visibility
     void updateChecked(QwtPlotItem *item);
+
+    //! query the plot state as a QVariant
+    QVariant state(void) const;
+
+    //! restore the state from QVariant
+    void setState(const QVariant &state);
 
 public slots:
     void setTitle(const QString &text);
