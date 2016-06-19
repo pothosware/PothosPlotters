@@ -225,7 +225,11 @@ void WaveMonitorDisplay::handleZoomed(const QRectF &rect)
         _mainPlot->setAxisAutoScale(QwtPlot::yLeft);
         _mainPlot->updateAxes(); //update after axis changes
     }
-    emit this->stateChanged(_mainPlot->state());
+}
+
+QVariant WaveMonitorDisplay::saveState(void) const
+{
+    return _mainPlot->state();
 }
 
 void WaveMonitorDisplay::restoreState(const QVariant &state)
@@ -246,7 +250,6 @@ void WaveMonitorDisplay::handleLegendChecked(const QVariant &itemInfo, bool on, 
 {
     _mainPlot->infoToItem(itemInfo)->setVisible(on);
     _mainPlot->replot();
-    emit this->stateChanged(_mainPlot->state());
 }
 
 std::shared_ptr<QwtPlotCurve> &WaveMonitorDisplay::getCurve(const size_t index, const size_t which, const size_t width)

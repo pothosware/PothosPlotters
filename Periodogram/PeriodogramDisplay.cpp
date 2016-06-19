@@ -184,6 +184,11 @@ void PeriodogramDisplay::handleUpdateAxis(void)
     this->handleZoomed(_mainPlot->zoomer()->zoomBase()); //reload
 }
 
+QVariant PeriodogramDisplay::saveState(void) const
+{
+    return _mainPlot->state();
+}
+
 void PeriodogramDisplay::restoreState(const QVariant &state)
 {
     _mainPlot->setState(state);
@@ -196,7 +201,6 @@ void PeriodogramDisplay::handleZoomed(const QRectF &rect)
     {
         _mainPlot->setAxisAutoScale(QwtPlot::yLeft);
     }
-    emit this->stateChanged(_mainPlot->state());
 }
 
 QString PeriodogramDisplay::title(void) const
@@ -234,6 +238,5 @@ void PeriodogramDisplay::handleLegendChecked(const QVariant &itemInfo, bool on, 
             c.second->clearOnChange(item);
     }
     item->setVisible(on);
-    emit this->stateChanged(_mainPlot->state());
     _mainPlot->replot();
 }

@@ -106,11 +106,12 @@ public:
         this->callVoid("valueChanged", this->value());
     }
 
-signals:
-
-    void stateChanged(const QVariant &state);
-
 public slots:
+
+    QVariant saveState(void) const
+    {
+        return this->value();
+    }
 
     void restoreState(const QVariant &state)
     {
@@ -121,7 +122,6 @@ private slots:
     void handleValueChanged(const double value)
     {
         this->callVoid("valueChanged", value);
-        emit this->stateChanged(value);
     }
 };
 

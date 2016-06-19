@@ -4,6 +4,7 @@
 #pragma once
 #include <qwt_math.h> //_USE_MATH_DEFINES
 #include <Pothos/Framework.hpp>
+#include <QVariant>
 #include <QWidget>
 #include <memory>
 #include <map>
@@ -122,11 +123,9 @@ public:
         return this->minimumSizeHint();
     }
 
-signals:
-
-    void stateChanged(const QVariant &value);
-
 public slots:
+
+    QVariant saveState(void) const;
 
     void restoreState(const QVariant &value);
 

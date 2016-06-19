@@ -250,6 +250,11 @@ void SpectrogramDisplay::enableYAxis(const bool enb)
     _mainPlot->enableAxis(QwtPlot::yLeft, enb);
 }
 
+QVariant SpectrogramDisplay::saveState(void) const
+{
+    return _mainPlot->state();
+}
+
 void SpectrogramDisplay::restoreState(const QVariant &state)
 {
     _mainPlot->setState(state);
@@ -257,7 +262,7 @@ void SpectrogramDisplay::restoreState(const QVariant &state)
 
 void SpectrogramDisplay::handleZoomed(const QRectF &)
 {
-    emit this->stateChanged(_mainPlot->state());
+    return;
 }
 
 void SpectrogramDisplay::handlePickerSelected(const QPointF &p)

@@ -82,6 +82,11 @@ void ConstellationDisplay::setYRange(const std::vector<double> &range)
     QMetaObject::invokeMethod(this, "handleUpdateAxis", Qt::QueuedConnection);
 }
 
+QVariant ConstellationDisplay::saveState(void) const
+{
+    return _mainPlot->state();
+}
+
 void ConstellationDisplay::restoreState(const QVariant &state)
 {
     _mainPlot->setState(state);
@@ -108,7 +113,6 @@ void ConstellationDisplay::handleZoomed(const QRectF &rect)
         _mainPlot->setAxisAutoScale(QwtPlot::xBottom);
         _mainPlot->setAxisAutoScale(QwtPlot::yLeft);
     }
-    emit this->stateChanged(_mainPlot->state());
 }
 
 QString ConstellationDisplay::title(void) const
