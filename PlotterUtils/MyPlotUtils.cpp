@@ -98,18 +98,21 @@ void MyQwtPlot::updateChecked(QwtPlotItem *item)
 
 void MyQwtPlot::handleItemAttached(QwtPlotItem *, bool on)
 {
+    if (not on) return; //only handles attaches
+
+    const auto items = this->itemList();
+    const int i = items.size()-1;
+
     //apply stashed visibility when the item count matches
     //this handles curves which are added on-demand
-    const auto items = this->itemList();
-    if (on and items.size() == _visible.size())
+    if (_visible.size() > i)
     {
-        for (int i = 0; i < items.size(); i++)
-        {
-            items[i]->setVisible(_visible.at(i));
-            this->updateChecked(items[i]);
-        }
-        _visible.clear();
+        items[i]->setVisible(_visible.at(i));
+        this->updateChecked(items[i]);
     }
+
+    //otherwise expand the cache to match the item size
+    else _visible.resize(items.size());
 }
 
 QVariant MyQwtPlot::state(void) const
@@ -124,8 +127,8 @@ QVariant MyQwtPlot::state(void) const
 
     //item visibility
     const auto items = this->itemList();
-    QBitArray visible(items.size());
-    for (int i = 0; i < items.size(); i++)
+    QBitArray visible(_visible);
+    for (int i = 0; i < items.size() and i < _visible.size(); i++)
     {
         visible.setBit(i, items[i]->isVisible());
     }
