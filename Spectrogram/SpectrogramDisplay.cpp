@@ -22,7 +22,6 @@
 SpectrogramDisplay::SpectrogramDisplay(void):
     _replotTimer(new QTimer(this)),
     _mainPlot(new MyQwtPlot(this)),
-    _zoomer(new MyPlotPicker(_mainPlot->canvas())),
     _plotSpect(new QwtPlotSpectrogram()),
     _plotRaster(new MySpectrogramRasterData()),
     _lastUpdateRate(1.0),
@@ -79,8 +78,9 @@ SpectrogramDisplay::SpectrogramDisplay(void):
     //setup plotter
     {
         _mainPlot->setCanvasBackground(MyPlotCanvasBg());
-        dynamic_cast<MyPlotPicker *>(_zoomer)->registerRaster(_plotRaster);
-        connect(_zoomer, SIGNAL(selected(const QPointF &)), this, SLOT(handlePickerSelected(const QPointF &)));
+        dynamic_cast<MyPlotPicker *>(_mainPlot->zoomer())->registerRaster(_plotRaster);
+        connect(_mainPlot->zoomer(), SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
+        connect(_mainPlot->zoomer(), SIGNAL(selected(const QPointF &)), this, SLOT(handlePickerSelected(const QPointF &)));
         _mainPlot->setAxisFont(QwtPlot::xBottom, MyPlotAxisFontSize());
         _mainPlot->setAxisFont(QwtPlot::yLeft, MyPlotAxisFontSize());
         _mainPlot->setAxisFont(QwtPlot::yRight, MyPlotAxisFontSize());
@@ -219,7 +219,7 @@ void SpectrogramDisplay::handleUpdateAxis(void)
     }
     _mainPlot->setAxisTitle(QwtPlot::xBottom, freqAxisTitle);
 
-    _zoomer->setAxis(QwtPlot::xBottom, QwtPlot::yLeft);
+    _mainPlot->zoomer()->setAxis(QwtPlot::xBottom, QwtPlot::yLeft);
 
     _sampleRateWoAxisUnits = _sampleRate/factor;
     _centerFreqWoAxisUnits = _centerFreq/factor;
@@ -237,7 +237,7 @@ void SpectrogramDisplay::handleUpdateAxis(void)
     _plotRaster->setFFTMode(_fftModeComplex);
     _mainPlot->axisWidget(QwtPlot::yRight)->setColorMap(_plotRaster->interval(Qt::ZAxis), this->makeColorMap());
 
-    _zoomer->setZoomBase(); //record current axis settings
+    _mainPlot->zoomer()->setZoomBase(); //record current axis settings
 }
 
 void SpectrogramDisplay::enableXAxis(const bool enb)
@@ -248,6 +248,21 @@ void SpectrogramDisplay::enableXAxis(const bool enb)
 void SpectrogramDisplay::enableYAxis(const bool enb)
 {
     _mainPlot->enableAxis(QwtPlot::yLeft, enb);
+}
+
+QVariant SpectrogramDisplay::saveState(void) const
+{
+    return _mainPlot->state();
+}
+
+void SpectrogramDisplay::restoreState(const QVariant &state)
+{
+    _mainPlot->setState(state);
+}
+
+void SpectrogramDisplay::handleZoomed(const QRectF &)
+{
+    return;
 }
 
 void SpectrogramDisplay::handlePickerSelected(const QPointF &p)

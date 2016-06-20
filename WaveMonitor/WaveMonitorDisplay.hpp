@@ -4,6 +4,7 @@
 #pragma once
 #include <qwt_math.h> //_USE_MATH_DEFINES
 #include <Pothos/Framework.hpp>
+#include <QVariant>
 #include <QWidget>
 #include <memory>
 #include <map>
@@ -14,7 +15,6 @@
 class MyQwtPlot;
 class QwtPlotGrid;
 class QwtPlotCurve;
-class QwtPlotZoomer;
 class QwtPlotMarker;
 
 class WaveMonitorDisplay : public QWidget, public Pothos::Block
@@ -96,6 +96,12 @@ public:
         return this->minimumSizeHint();
     }
 
+public slots:
+
+    QVariant saveState(void) const;
+
+    void restoreState(const QVariant &value);
+
 private slots:
     void installLegend(void);
     void handleLegendChecked(const QVariant &, bool, int);
@@ -109,7 +115,6 @@ private:
 
     MyQwtPlot *_mainPlot;
     QwtPlotGrid *_plotGrid;
-    QwtPlotZoomer *_zoomer;
     double _sampleRate;
     double _sampleRateWoAxisUnits;
     size_t _numPoints;

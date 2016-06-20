@@ -1,8 +1,9 @@
-// Copyright (c) 2014-2014 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include <Pothos/Framework.hpp>
 #include <qwt_slider.h>
+#include <QVariant>
 
 /***********************************************************************
  * |PothosDoc QWT Slider
@@ -103,6 +104,18 @@ public:
     {
         //emit current value when design becomes active
         this->callVoid("valueChanged", this->value());
+    }
+
+public slots:
+
+    QVariant saveState(void) const
+    {
+        return this->value();
+    }
+
+    void restoreState(const QVariant &state)
+    {
+        this->setValue(state.toDouble());
     }
 
 private slots:

@@ -4,6 +4,7 @@
 #pragma once
 #include <qwt_math.h> //_USE_MATH_DEFINES
 #include <Pothos/Framework.hpp>
+#include <QVariant>
 #include <QWidget>
 #include <memory>
 #include <map>
@@ -13,7 +14,6 @@
 class QTimer;
 class MyQwtPlot;
 class QwtColorMap;
-class QwtPlotZoomer;
 class QwtPlotSpectrogram;
 class MySpectrogramRasterData;
 
@@ -123,7 +123,14 @@ public:
         return this->minimumSizeHint();
     }
 
+public slots:
+
+    QVariant saveState(void) const;
+
+    void restoreState(const QVariant &value);
+
 private slots:
+    void handleZoomed(const QRectF &);
     void handlePickerSelected(const QPointF &);
     void appendBins(const std::valarray<float> &bins);
     void handleUpdateAxis(void);
@@ -131,7 +138,6 @@ private slots:
 private:
     QTimer *_replotTimer;
     MyQwtPlot *_mainPlot;
-    QwtPlotZoomer *_zoomer;
     std::shared_ptr<QwtPlotSpectrogram> _plotSpect;
     MySpectrogramRasterData *_plotRaster;
     FFTPowerSpectrum _fftPowerSpectrum;

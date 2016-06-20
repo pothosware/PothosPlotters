@@ -4,6 +4,7 @@
 #pragma once
 #include <qwt_math.h> //_USE_MATH_DEFINES
 #include <Pothos/Framework.hpp>
+#include <QVariant>
 #include <QWidget>
 #include <memory>
 #include <map>
@@ -14,7 +15,6 @@
 class MyQwtPlot;
 class QwtPlotGrid;
 class QwtPlotCurve;
-class QwtPlotZoomer;
 class PeriodogramChannel;
 
 class PeriodogramDisplay : public QWidget, public Pothos::Block
@@ -119,16 +119,22 @@ public:
         return this->minimumSizeHint();
     }
 
+public slots:
+
+    QVariant saveState(void) const;
+
+    void restoreState(const QVariant &value);
+
 private slots:
     void handlePickerSelected(const QPointF &);
     void handlePowerBins(const int index, const std::valarray<float> &bins);
     void handleUpdateAxis(void);
     void handleZoomed(const QRectF &rect);
+    void handleLegendChecked(const QVariant &, bool, int);
 
 private:
     MyQwtPlot *_mainPlot;
     QwtPlotGrid *_plotGrid;
-    QwtPlotZoomer *_zoomer;
     FFTPowerSpectrum _fftPowerSpectrum;
     double _sampleRate;
     double _sampleRateWoAxisUnits;

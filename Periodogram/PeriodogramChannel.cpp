@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PeriodogramChannel.hpp"
@@ -40,8 +40,6 @@ PeriodogramChannel::PeriodogramChannel(const size_t index, MyQwtPlot *plot):
     plot->updateChecked(_channelCurve.get());
     plot->updateChecked(_maxHoldCurve.get());
     plot->updateChecked(_minHoldCurve.get());
-
-    connect(plot->legend(), SIGNAL(checked(const QVariant &, bool, int)), this, SLOT(handleLegendChecked(const QVariant &, bool, int)));
 }
 
 PeriodogramChannel::~PeriodogramChannel(void)
@@ -72,21 +70,10 @@ void PeriodogramChannel::update(const std::valarray<float> &powerBins, const dou
     _minHoldCurve->setSamples(_minHoldBuffer);
 }
 
-void PeriodogramChannel::handleLegendChecked(const QVariant &itemInfo, bool on, int)
+void PeriodogramChannel::clearOnChange(QwtPlotItem *item)
 {
-    auto item = _plot->infoToItem(itemInfo);
-    if (item == _channelCurve.get()) _channelCurve->setVisible(on);
-    if (item == _maxHoldCurve.get())
-    {
-        _maxHoldCurve->setVisible(on);
-        if (on) _maxHoldBuffer.clear();
-    }
-    if (item == _minHoldCurve.get())
-    {
-        _minHoldCurve->setVisible(on);
-        if (on) _minHoldBuffer.clear();
-    }
-    _plot->replot();
+    if (item == _maxHoldCurve.get()) _maxHoldBuffer.clear();
+    if (item == _minHoldCurve.get()) _minHoldBuffer.clear();
 }
 
 void PeriodogramChannel::initBufferSize(const std::valarray<float> &powerBins, QVector<QPointF> &buff)

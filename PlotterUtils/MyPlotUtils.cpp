@@ -3,6 +3,7 @@
 
 #include "MyPlotUtils.hpp"
 #include "MyPlotStyler.hpp"
+#include "MyPlotPicker.hpp"
 #include <QList>
 #include <valarray>
 #include <qwt_legend_data.h>
@@ -64,11 +65,14 @@ protected:
  * Custom QwtPlot implementation
  **********************************************************************/
 MyQwtPlot::MyQwtPlot(QWidget *parent):
-    QwtPlot(parent)
+    QwtPlot(parent),
+    _zoomer(nullptr)
 {
     this->setCanvas(new MyQwtPlotCanvas(this));
+    _zoomer = new MyPlotPicker(this->canvas());
     qRegisterMetaType<QList<QwtLegendData>>("QList<QwtLegendData>"); //missing from qwt
     qRegisterMetaType<std::valarray<float>>("std::valarray<float>"); //used for plot data
+    connect(this, SIGNAL(itemAttached(QwtPlotItem *, bool)), this, SLOT(handleItemAttached(QwtPlotItem *, bool)));
 }
 
 void MyQwtPlot::setTitle(const QString &text)
@@ -90,6 +94,66 @@ void MyQwtPlot::updateChecked(QwtPlotItem *item)
     if (label == nullptr) return; //no label
     label->setChecked(item->isVisible());
     this->updateLegend();
+}
+
+void MyQwtPlot::handleItemAttached(QwtPlotItem *, bool on)
+{
+    if (not on) return; //only handles attaches
+
+    const auto items = this->itemList();
+    const int i = items.size()-1;
+
+    //apply stashed visibility when the item count matches
+    //this handles curves which are added on-demand
+    if (_visible.size() > i)
+    {
+        items[i]->setVisible(_visible.at(i));
+        this->updateChecked(items[i]);
+    }
+
+    //otherwise expand the cache to match the item size
+    else _visible.resize(items.size());
+}
+
+QVariant MyQwtPlot::state(void) const
+{
+    QVariantMap state;
+
+    //zoom stack
+    QVariantList stack;
+    for (const auto &rect : zoomer()->zoomStack()) stack.append(rect);
+    state["stack"] = stack;
+    state["index"] = zoomer()->zoomRectIndex();
+
+    //item visibility
+    const auto items = this->itemList();
+    QBitArray visible(_visible);
+    for (int i = 0; i < items.size() and i < _visible.size(); i++)
+    {
+        visible.setBit(i, items[i]->isVisible());
+    }
+    state["visible"] = visible;
+
+    return state;
+}
+
+void MyQwtPlot::setState(const QVariant &state)
+{
+    const auto map = state.toMap();
+
+    //zoom stack
+    QStack<QRectF> stack;
+    for (const auto &rect : map["stack"].toList()) stack.push(rect.toRectF());
+    zoomer()->setZoomStack(stack, map["index"].toInt());
+
+    //item visibility
+    const auto items = this->itemList();
+    _visible = map["visible"].toBitArray();
+    for (int i = 0; i < items.size() and i < _visible.size(); i++)
+    {
+        items[i]->setVisible(_visible.at(i));
+        this->updateChecked(items[i]);
+    }
 }
 
 #include "MyPlotUtils.moc"

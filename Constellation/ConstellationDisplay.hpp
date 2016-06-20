@@ -1,10 +1,11 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
 #include <qwt_math.h> //_USE_MATH_DEFINES
 #include <Pothos/Framework.hpp>
 #include <Pothos/Proxy.hpp>
+#include <QVariant>
 #include <QWidget>
 #include <memory>
 #include <map>
@@ -14,7 +15,6 @@
 class MyQwtPlot;
 class QwtPlotGrid;
 class QwtPlotCurve;
-class QwtPlotZoomer;
 
 class ConstellationDisplay : public QWidget, public Pothos::Block
 {
@@ -61,6 +61,12 @@ public:
         return this->minimumSizeHint();
     }
 
+public slots:
+
+    QVariant saveState(void) const;
+
+    void restoreState(const QVariant &value);
+
 private slots:
     void handleUpdateAxis(void);
     void handleSamples(const Pothos::BufferChunk &buff);
@@ -69,7 +75,6 @@ private slots:
 private:
     MyQwtPlot *_mainPlot;
     QwtPlotGrid *_plotGrid;
-    QwtPlotZoomer *_zoomer;
     bool _autoScale;
     std::vector<double> _xRange;
     std::vector<double> _yRange;

@@ -5,8 +5,11 @@
 #include "PlotUtilsConfig.hpp"
 #include <QColor>
 #include <qwt_plot.h>
+#include <QVariant>
+#include <QBitArray>
 
 class QwtPlotItem;
+class QwtPlotZoomer;
 
 //! Get a color for a plotter curve given an index
 POTHOS_PLOTTER_UTILS_EXPORT QColor getDefaultCurveColor(const size_t whichCurve);
@@ -26,7 +29,26 @@ public:
     //! update checked status based on visibility
     void updateChecked(QwtPlotItem *item);
 
+    //! query the plot state as a QVariant
+    QVariant state(void) const;
+
+    //! restore the state from QVariant
+    void setState(const QVariant &state);
+
+    //! Get the plot zoomer for this canvas
+    QwtPlotZoomer *zoomer(void) const
+    {
+        return _zoomer;
+    }
+
 public slots:
     void setTitle(const QString &text);
     void setAxisTitle(const int id, const QString &text);
+
+private slots:
+    void handleItemAttached(QwtPlotItem *plotItem, bool on);
+
+private:
+    QwtPlotZoomer *_zoomer;
+    QBitArray _visible;
 };

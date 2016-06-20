@@ -2,20 +2,20 @@
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PeriodogramDisplay.hpp"
+#include "PeriodogramChannel.hpp"
 #include "MyPlotStyler.hpp"
-#include "MyPlotPicker.hpp"
 #include "MyPlotUtils.hpp"
 #include <QResizeEvent>
 #include <qwt_plot.h>
 #include <qwt_plot_grid.h>
 #include <qwt_legend.h>
+#include <qwt_plot_zoomer.h>
 #include <QHBoxLayout>
 #include <algorithm> //min/max
 
 PeriodogramDisplay::PeriodogramDisplay(void):
     _mainPlot(new MyQwtPlot(this)),
     _plotGrid(new QwtPlotGrid()),
-    _zoomer(new MyPlotPicker(_mainPlot->canvas())),
     _sampleRate(1.0),
     _sampleRateWoAxisUnits(1.0),
     _centerFreq(0.0),
@@ -68,13 +68,14 @@ PeriodogramDisplay::PeriodogramDisplay(void):
     //setup plotter
     {
         _mainPlot->setCanvasBackground(MyPlotCanvasBg());
-        connect(_zoomer, SIGNAL(selected(const QPointF &)), this, SLOT(handlePickerSelected(const QPointF &)));
-        connect(_zoomer, SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
+        connect(_mainPlot->zoomer(), SIGNAL(selected(const QPointF &)), this, SLOT(handlePickerSelected(const QPointF &)));
+        connect(_mainPlot->zoomer(), SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
         _mainPlot->setAxisFont(QwtPlot::xBottom, MyPlotAxisFontSize());
         _mainPlot->setAxisFont(QwtPlot::yLeft, MyPlotAxisFontSize());
 
         auto legend = new QwtLegend(_mainPlot);
         legend->setDefaultItemMode(QwtLegendData::Checkable);
+        connect(legend, SIGNAL(checked(const QVariant &, bool, int)), this, SLOT(handleLegendChecked(const QVariant &, bool, int)));
         _mainPlot->insertLegend(legend);
     }
 
@@ -172,21 +173,31 @@ void PeriodogramDisplay::handleUpdateAxis(void)
     }
     _mainPlot->setAxisTitle(QwtPlot::xBottom, axisTitle);
 
-    _zoomer->setAxis(QwtPlot::xBottom, QwtPlot::yLeft);
+    _mainPlot->zoomer()->setAxis(QwtPlot::xBottom, QwtPlot::yLeft);
     _sampleRateWoAxisUnits = _sampleRate/factor;
     _centerFreqWoAxisUnits = _centerFreq/factor;
     const qreal freqLow = _fftModeComplex?(_centerFreqWoAxisUnits-_sampleRateWoAxisUnits/2):0.0;
     _mainPlot->setAxisScale(QwtPlot::xBottom, freqLow, _centerFreqWoAxisUnits+_sampleRateWoAxisUnits/2);
     _mainPlot->setAxisScale(QwtPlot::yLeft, _refLevel-_dynRange, _refLevel);
     _mainPlot->updateAxes(); //update after axis changes
-    _zoomer->setZoomBase(); //record current axis settings
-    this->handleZoomed(_zoomer->zoomBase()); //reload
+    _mainPlot->zoomer()->setZoomBase(); //record current axis settings
+    this->handleZoomed(_mainPlot->zoomer()->zoomBase()); //reload
+}
+
+QVariant PeriodogramDisplay::saveState(void) const
+{
+    return _mainPlot->state();
+}
+
+void PeriodogramDisplay::restoreState(const QVariant &state)
+{
+    _mainPlot->setState(state);
 }
 
 void PeriodogramDisplay::handleZoomed(const QRectF &rect)
 {
     //when zoomed all the way out, return to autoscale
-    if (rect == _zoomer->zoomBase() and _autoScale)
+    if (rect == _mainPlot->zoomer()->zoomBase() and _autoScale)
     {
         _mainPlot->setAxisAutoScale(QwtPlot::yLeft);
     }
@@ -216,4 +227,16 @@ void PeriodogramDisplay::handlePickerSelected(const QPointF &p)
 {
     const double freq = p.x()*_sampleRate/_sampleRateWoAxisUnits;
     this->callVoid("frequencySelected", freq);
+}
+
+void PeriodogramDisplay::handleLegendChecked(const QVariant &itemInfo, bool on, int)
+{
+    auto item = _mainPlot->infoToItem(itemInfo);
+    for (const auto &c : _curves)
+    {
+        if (item->isVisible() != on)
+            c.second->clearOnChange(item);
+    }
+    item->setVisible(on);
+    _mainPlot->replot();
 }

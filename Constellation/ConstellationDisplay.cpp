@@ -3,17 +3,16 @@
 
 #include "ConstellationDisplay.hpp"
 #include "MyPlotStyler.hpp"
-#include "MyPlotPicker.hpp"
 #include "MyPlotUtils.hpp"
 #include <QResizeEvent>
 #include <qwt_plot.h>
 #include <qwt_plot_grid.h>
+#include <qwt_plot_zoomer.h>
 #include <QHBoxLayout>
 
 ConstellationDisplay::ConstellationDisplay(void):
     _mainPlot(new MyQwtPlot(this)),
     _plotGrid(new QwtPlotGrid()),
-    _zoomer(new MyPlotPicker(_mainPlot->canvas())),
     _autoScale(false),
     _queueDepth(0)
 {
@@ -38,7 +37,7 @@ ConstellationDisplay::ConstellationDisplay(void):
     //setup plotter
     {
         _mainPlot->setCanvasBackground(MyPlotCanvasBg());
-        connect(_zoomer, SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
+        connect(_mainPlot->zoomer(), SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
         _mainPlot->setAxisFont(QwtPlot::xBottom, MyPlotAxisFontSize());
         _mainPlot->setAxisFont(QwtPlot::yLeft, MyPlotAxisFontSize());
     }
@@ -83,6 +82,16 @@ void ConstellationDisplay::setYRange(const std::vector<double> &range)
     QMetaObject::invokeMethod(this, "handleUpdateAxis", Qt::QueuedConnection);
 }
 
+QVariant ConstellationDisplay::saveState(void) const
+{
+    return _mainPlot->state();
+}
+
+void ConstellationDisplay::restoreState(const QVariant &state)
+{
+    _mainPlot->setState(state);
+}
+
 void ConstellationDisplay::handleUpdateAxis(void)
 {
     if (_xRange.size() == 2) _mainPlot->setAxisScale(QwtPlot::xBottom, _xRange[0], _xRange[1]);
@@ -92,14 +101,14 @@ void ConstellationDisplay::handleUpdateAxis(void)
     _mainPlot->setAxisTitle(QwtPlot::yLeft, "Quadrature");
 
     _mainPlot->updateAxes(); //update after axis changes
-    _zoomer->setZoomBase(); //record current axis settings
-    this->handleZoomed(_zoomer->zoomBase()); //reload
+    _mainPlot->zoomer()->setZoomBase(); //record current axis settings
+    this->handleZoomed(_mainPlot->zoomer()->zoomBase()); //reload
 }
 
 void ConstellationDisplay::handleZoomed(const QRectF &rect)
 {
     //when zoomed all the way out, return to autoscale
-    if (rect == _zoomer->zoomBase() and _autoScale)
+    if (rect == _mainPlot->zoomer()->zoomBase() and _autoScale)
     {
         _mainPlot->setAxisAutoScale(QwtPlot::xBottom);
         _mainPlot->setAxisAutoScale(QwtPlot::yLeft);

@@ -3,12 +3,12 @@
 
 #include "WaveMonitorDisplay.hpp"
 #include "MyPlotStyler.hpp"
-#include "MyPlotPicker.hpp"
 #include "MyPlotUtils.hpp"
 #include <QResizeEvent>
 #include <qwt_plot.h>
 #include <qwt_plot_grid.h>
 #include <qwt_plot_curve.h>
+#include <qwt_plot_zoomer.h>
 #include <qwt_legend.h>
 #include <QHBoxLayout>
 #include <iostream>
@@ -16,7 +16,6 @@
 WaveMonitorDisplay::WaveMonitorDisplay(void):
     _mainPlot(new MyQwtPlot(this)),
     _plotGrid(new QwtPlotGrid()),
-    _zoomer(new MyPlotPicker(_mainPlot->canvas())),
     _sampleRate(1.0),
     _sampleRateWoAxisUnits(1.0),
     _numPoints(1024),
@@ -54,7 +53,7 @@ WaveMonitorDisplay::WaveMonitorDisplay(void):
         _mainPlot->setCanvasBackground(MyPlotCanvasBg());
         _mainPlot->setAxisFont(QwtPlot::xBottom, MyPlotAxisFontSize());
         _mainPlot->setAxisFont(QwtPlot::yLeft, MyPlotAxisFontSize());
-        connect(_zoomer, SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
+        connect(_mainPlot->zoomer(), SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
     }
 
     //setup grid
@@ -152,12 +151,12 @@ void WaveMonitorDisplay::handleUpdateAxis(void)
     }
     _mainPlot->setAxisTitle(QwtPlot::xBottom, timeAxisTitle);
 
-    _zoomer->setAxis(QwtPlot::xBottom, QwtPlot::yLeft);
+    _mainPlot->zoomer()->setAxis(QwtPlot::xBottom, QwtPlot::yLeft);
     _sampleRateWoAxisUnits = _sampleRate/factor;
     _mainPlot->setAxisScale(QwtPlot::xBottom, 0, _numPoints/_sampleRateWoAxisUnits);
     _mainPlot->updateAxes(); //update after axis changes
-    _zoomer->setZoomBase(); //record current axis settings
-    this->handleZoomed(_zoomer->zoomBase()); //reload
+    _mainPlot->zoomer()->setZoomBase(); //record current axis settings
+    this->handleZoomed(_mainPlot->zoomer()->zoomBase()); //reload
 }
 
 void WaveMonitorDisplay::handleUpdateCurves(void)
@@ -221,11 +220,21 @@ void WaveMonitorDisplay::handleUpdateCurves(void)
 void WaveMonitorDisplay::handleZoomed(const QRectF &rect)
 {
     //when zoomed all the way out, return to autoscale
-    if (rect == _zoomer->zoomBase() and _autoScale)
+    if (rect == _mainPlot->zoomer()->zoomBase() and _autoScale)
     {
         _mainPlot->setAxisAutoScale(QwtPlot::yLeft);
         _mainPlot->updateAxes(); //update after axis changes
     }
+}
+
+QVariant WaveMonitorDisplay::saveState(void) const
+{
+    return _mainPlot->state();
+}
+
+void WaveMonitorDisplay::restoreState(const QVariant &state)
+{
+    _mainPlot->setState(state);
 }
 
 void WaveMonitorDisplay::installLegend(void)

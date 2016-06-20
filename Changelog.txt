@@ -3,6 +3,7 @@ This this the changelog file for the Pothos Plotters toolkit.
 Release 0.1.2 (pending)
 ==========================
 
+- Added saveState()/restoreState() hooks for all plotters
 - Replace use of QwtText in metatype due to Qt unload bug
 
 Release 0.1.1 (2016-05-10)
