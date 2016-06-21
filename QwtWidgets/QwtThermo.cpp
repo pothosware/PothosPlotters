@@ -43,6 +43,30 @@
  * |default 0.1
  * |widget DoubleSpinBox()
  *
+ * |param fillColor[Fill Color] The color of the liquid in the thermometer display.
+ * |widget ColorPicker(mode=pastel)
+ * |default "#b19cd9"
+ * |preview disable
+ *
+ * |param alarmEnabled[Alarm Enabled] True to enable the alarm state coloring.
+ * |default false
+ * |option [Enabled] true
+ * |option [Disabled] false
+ * |tab Alarm
+ * |preview disable
+ *
+ * |param alarmLevel[Alarm Level] The threshold for entering the alarm state.
+ * |default 0.5
+ * |widget DoubleSpinBox()
+ * |tab Alarm
+ * |preview when(enum=alarmEnabled, true)
+ *
+ * |param alarmColor[Alarm Color] The color of the liquid in the thermometer display in alarm mode.
+ * |widget ColorPicker(mode=pastel)
+ * |default "#ff6961"
+ * |tab Alarm
+ * |preview disable
+ *
  * |mode graphWidget
  * |factory /widgets/qwt_thermo()
  * |setter setOrientation(orientation)
@@ -51,6 +75,10 @@
  * |setter setUpperBound(upperBound)
  * |setter setStepSize(stepSize)
  * |setter setValue(value)
+ * |setter setFillColor(fillColor)
+ * |setter setAlarmEnabled(alarmEnabled)
+ * |setter setAlarmLevel(alarmLevel)
+ * |setter setAlarmColor(alarmColor)
  **********************************************************************/
 class QwtThermoBlock : public QwtThermo, public Pothos::Block
 {
@@ -73,6 +101,10 @@ public:
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setStepSize));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setOrientation));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setScalePosition));
+        this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setFillColor));
+        this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setAlarmEnabled));
+        this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setAlarmLevel));
+        this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setAlarmColor));
     }
 
     QWidget *widget(void)
@@ -96,6 +128,16 @@ public:
     void setStepSize(const double step)
     {
         this->setScaleStepSize(step);
+    }
+
+    void setFillColor(const QString &color)
+    {
+        this->setFillBrush(QBrush(QColor(color)));
+    }
+
+    void setAlarmColor(const QString &color)
+    {
+        this->setAlarmBrush(QBrush(QColor(color)));
     }
 };
 
