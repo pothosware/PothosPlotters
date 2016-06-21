@@ -9,6 +9,7 @@
  * |PothosDoc QWT Slider
  *
  * A slider widget for graphical control of an floating point value.
+ * http://qwt.sourceforge.net/class_qwt_slider.html
  *
  * |category /Widgets
  * |keywords slider
@@ -39,7 +40,7 @@
  * |widget DoubleSpinBox()
  *
  * |param stepSize[Step Size] The delta inbetween discrete values in this slider.
- * |default 0.001
+ * |default 0.1
  * |widget DoubleSpinBox()
  *
  * |mode graphWidget
