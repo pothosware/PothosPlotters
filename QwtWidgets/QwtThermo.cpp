@@ -14,10 +14,10 @@
  * |category /Widgets
  * |keywords thermo indicator status
  *
- * |param orientation The widget orientation (horizontal or veritical).
+ * |param orientation The widget orientation (horizontal or vertical).
  * |default "Horizontal"
  * |option [Horizontal] "Horizontal"
- * |option [Veritical] "Veritical"
+ * |option [Vertical] "Vertical"
  * |preview disable
  *
  * |param scalePosition[Scale Position] The widget scale markers.
