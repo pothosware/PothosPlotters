@@ -3,7 +3,9 @@
 
 #include <Pothos/Framework.hpp>
 #include <qwt_thermo.h>
-#include <QVariant>
+#include <QGroupBox>
+#include <QVBoxLayout>
+#include <QMouseEvent>
 
 /***********************************************************************
  * |PothosDoc QWT Thermo
@@ -13,6 +15,10 @@
  *
  * |category /Widgets
  * |keywords thermo indicator status
+ *
+ * |param title The name of the value displayed by this widget
+ * |default "My Thermo"
+ * |widget StringEntry()
  *
  * |param orientation The widget orientation (horizontal or vertical).
  * |default "Horizontal"
@@ -69,6 +75,7 @@
  *
  * |mode graphWidget
  * |factory /widgets/qwt_thermo()
+ * |setter setTitle(title)
  * |setter setOrientation(orientation)
  * |setter setScalePosition(scalePosition)
  * |setter setLowerBound(lowerBound)
@@ -80,7 +87,7 @@
  * |setter setAlarmLevel(alarmLevel)
  * |setter setAlarmColor(alarmColor)
  **********************************************************************/
-class QwtThermoBlock : public QwtThermo, public Pothos::Block
+class QwtThermoBlock : public QGroupBox, public Pothos::Block
 {
     Q_OBJECT
 public:
@@ -91,8 +98,14 @@ public:
     }
 
     QwtThermoBlock(void):
-        QwtThermo(nullptr)
+        _thermo(new QwtThermo(this))
     {
+        auto layout = new QVBoxLayout(this);
+        layout->setContentsMargins(0, 0, 0, 0);
+        layout->addWidget(_thermo);
+        this->setStyleSheet("QGroupBox {font-weight: bold;}");
+
+        this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setTitle));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, widget));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, value));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setValue));
@@ -112,33 +125,85 @@ public:
         return this;
     }
 
+    void setTitle(const QString &title)
+    {
+        QMetaObject::invokeMethod(this, "handleSetTitle", Qt::QueuedConnection, Q_ARG(QString, title));
+    }
+
+    double value(void) const
+    {
+        return _thermo->value();
+    }
+
+    void setValue(const double value)
+    {
+        _thermo->setValue(value);
+    }
+
+    void setLowerBound(const double value)
+    {
+        _thermo->setLowerBound(value);
+    }
+
+    void setUpperBound(const double value)
+    {
+        _thermo->setUpperBound(value);
+    }
+
+    void setAlarmEnabled(const bool enb)
+    {
+        _thermo->setAlarmEnabled(enb);
+    }
+
+    void setAlarmLevel(const double level)
+    {
+        _thermo->setAlarmLevel(level);
+    }
+
     void setOrientation(const QString &orientation)
     {
-        if ((orientation == "Horizontal")) QwtThermo::setOrientation(Qt::Horizontal);
-        if ((orientation == "Vertical")) QwtThermo::setOrientation(Qt::Vertical);
+        if ((orientation == "Horizontal")) _thermo->setOrientation(Qt::Horizontal);
+        if ((orientation == "Vertical")) _thermo->setOrientation(Qt::Vertical);
     }
 
     void setScalePosition(const QString &scale)
     {
-        if ((scale == "NoScale")) QwtThermo::setScalePosition(QwtThermo::NoScale);
-        if ((scale == "LeadingScale")) QwtThermo::setScalePosition(QwtThermo::LeadingScale);
-        if ((scale == "TrailingScale")) QwtThermo::setScalePosition(QwtThermo::TrailingScale);
+        if ((scale == "NoScale")) _thermo->setScalePosition(_thermo->NoScale);
+        if ((scale == "LeadingScale")) _thermo->setScalePosition(_thermo->LeadingScale);
+        if ((scale == "TrailingScale")) _thermo->setScalePosition(_thermo->TrailingScale);
     }
 
     void setStepSize(const double step)
     {
-        this->setScaleStepSize(step);
+        _thermo->setScaleStepSize(step);
     }
 
     void setFillColor(const QString &color)
     {
-        this->setFillBrush(QBrush(QColor(color)));
+        _thermo->setFillBrush(QBrush(QColor(color)));
     }
 
     void setAlarmColor(const QString &color)
     {
-        this->setAlarmBrush(QBrush(QColor(color)));
+        _thermo->setAlarmBrush(QBrush(QColor(color)));
     }
+
+private slots:
+
+    void handleSetTitle(const QString &title)
+    {
+        QGroupBox::setTitle(title);
+    }
+
+protected:
+    void mousePressEvent(QMouseEvent *event)
+    {
+        QGroupBox::mousePressEvent(event);
+        event->ignore(); //allows for dragging from QGroupBox title
+    }
+
+private:
+    QwtThermo *_thermo;
 };
 
 static Pothos::BlockRegistry registerQwtThermoBlock(

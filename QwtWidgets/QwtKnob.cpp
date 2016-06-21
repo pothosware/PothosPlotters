@@ -4,6 +4,9 @@
 #include <Pothos/Framework.hpp>
 #include <qwt_knob.h>
 #include <QVariant>
+#include <QGroupBox>
+#include <QVBoxLayout>
+#include <QMouseEvent>
 
 /***********************************************************************
  * |PothosDoc QWT Knob
@@ -13,6 +16,10 @@
  *
  * |category /Widgets
  * |keywords knob turn dial
+ *
+ * |param title The name of the value displayed by this widget
+ * |default "My Knob"
+ * |widget StringEntry()
  *
  * |param value The initial value of this widget.
  * |default 0.0
@@ -32,12 +39,13 @@
  *
  * |mode graphWidget
  * |factory /widgets/qwt_knob()
+ * |setter setTitle(title)
  * |setter setLowerBound(lowerBound)
  * |setter setUpperBound(upperBound)
  * |setter setStepSize(stepSize)
  * |setter setValue(value)
  **********************************************************************/
-class QwtKnobBlock : public QwtKnob, public Pothos::Block
+class QwtKnobBlock : public QGroupBox, public Pothos::Block
 {
     Q_OBJECT
 public:
@@ -48,8 +56,14 @@ public:
     }
 
     QwtKnobBlock(void):
-        QwtKnob(nullptr)
+        _knob(new QwtKnob(this))
     {
+        auto layout = new QVBoxLayout(this);
+        layout->setContentsMargins(0, 0, 0, 0);
+        layout->addWidget(_knob);
+        this->setStyleSheet("QGroupBox {font-weight: bold;}");
+
+        this->registerCall(this, POTHOS_FCN_TUPLE(QwtKnobBlock, setTitle));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtKnobBlock, widget));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtKnobBlock, value));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtKnobBlock, setValue));
@@ -57,7 +71,7 @@ public:
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtKnobBlock, setUpperBound));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtKnobBlock, setStepSize));
         this->registerSignal("valueChanged");
-        connect(this, SIGNAL(valueChanged(const double)), this, SLOT(handleValueChanged(const double)));
+        connect(_knob, SIGNAL(valueChanged(const double)), this, SLOT(handleValueChanged(const double)));
     }
 
     QWidget *widget(void)
@@ -65,9 +79,34 @@ public:
         return this;
     }
 
+    void setTitle(const QString &title)
+    {
+        QMetaObject::invokeMethod(this, "handleSetTitle", Qt::QueuedConnection, Q_ARG(QString, title));
+    }
+
+    double value(void) const
+    {
+        return _knob->value();
+    }
+
+    void setValue(const double value)
+    {
+        _knob->setValue(value);
+    }
+
+    void setLowerBound(const double value)
+    {
+        _knob->setLowerBound(value);
+    }
+
+    void setUpperBound(const double value)
+    {
+        _knob->setUpperBound(value);
+    }
+
     void setStepSize(const double step)
     {
-        this->setScaleStepSize(step);
+        _knob->setScaleStepSize(step);
     }
 
     void activate(void)
@@ -93,6 +132,21 @@ private slots:
     {
         this->callVoid("valueChanged", value);
     }
+
+    void handleSetTitle(const QString &title)
+    {
+        QGroupBox::setTitle(title);
+    }
+
+protected:
+    void mousePressEvent(QMouseEvent *event)
+    {
+        QGroupBox::mousePressEvent(event);
+        event->ignore(); //allows for dragging from QGroupBox title
+    }
+
+private:
+    QwtKnob *_knob;
 };
 
 static Pothos::BlockRegistry registerQwtKnobBlock(

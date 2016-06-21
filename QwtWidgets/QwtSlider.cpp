@@ -4,6 +4,9 @@
 #include <Pothos/Framework.hpp>
 #include <qwt_slider.h>
 #include <QVariant>
+#include <QGroupBox>
+#include <QVBoxLayout>
+#include <QMouseEvent>
 
 /***********************************************************************
  * |PothosDoc QWT Slider
@@ -13,6 +16,10 @@
  *
  * |category /Widgets
  * |keywords slider
+ *
+ * |param title The name of the value displayed by this widget
+ * |default "My Slider"
+ * |widget StringEntry()
  *
  * |param orientation The widget orientation (horizontal or vertical).
  * |default "Horizontal"
@@ -45,6 +52,7 @@
  *
  * |mode graphWidget
  * |factory /widgets/qwt_slider()
+ * |setter setTitle(title)
  * |setter setOrientation(orientation)
  * |setter setScalePosition(scalePosition)
  * |setter setLowerBound(lowerBound)
@@ -52,7 +60,7 @@
  * |setter setStepSize(stepSize)
  * |setter setValue(value)
  **********************************************************************/
-class QwtSliderBlock : public QwtSlider, public Pothos::Block
+class QwtSliderBlock : public QGroupBox, public Pothos::Block
 {
     Q_OBJECT
 public:
@@ -63,9 +71,15 @@ public:
     }
 
     QwtSliderBlock(void):
-        QwtSlider(nullptr)
+        _slider(new QwtSlider(this))
     {
-        this->setHandleSize(QSize(14, 14));
+        auto layout = new QVBoxLayout(this);
+        layout->setContentsMargins(0, 0, 0, 0);
+        layout->addWidget(_slider);
+        this->setStyleSheet("QGroupBox {font-weight: bold;}");
+
+        _slider->setHandleSize(QSize(14, 14));
+        this->registerCall(this, POTHOS_FCN_TUPLE(QwtSliderBlock, setTitle));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtSliderBlock, widget));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtSliderBlock, value));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtSliderBlock, setValue));
@@ -75,7 +89,7 @@ public:
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtSliderBlock, setOrientation));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtSliderBlock, setScalePosition));
         this->registerSignal("valueChanged");
-        connect(this, SIGNAL(valueChanged(const double)), this, SLOT(handleValueChanged(const double)));
+        connect(_slider, SIGNAL(valueChanged(const double)), this, SLOT(handleValueChanged(const double)));
     }
 
     QWidget *widget(void)
@@ -83,22 +97,47 @@ public:
         return this;
     }
 
+    void setTitle(const QString &title)
+    {
+        QMetaObject::invokeMethod(this, "handleSetTitle", Qt::QueuedConnection, Q_ARG(QString, title));
+    }
+
+    double value(void) const
+    {
+        return _slider->value();
+    }
+
+    void setValue(const double value)
+    {
+        _slider->setValue(value);
+    }
+
+    void setLowerBound(const double value)
+    {
+        _slider->setLowerBound(value);
+    }
+
+    void setUpperBound(const double value)
+    {
+        _slider->setUpperBound(value);
+    }
+
     void setOrientation(const QString &orientation)
     {
-        if ((orientation == "Horizontal")) QwtSlider::setOrientation(Qt::Horizontal);
-        if ((orientation == "Vertical")) QwtSlider::setOrientation(Qt::Vertical);
+        if ((orientation == "Horizontal")) _slider->setOrientation(Qt::Horizontal);
+        if ((orientation == "Vertical")) _slider->setOrientation(Qt::Vertical);
     }
 
     void setScalePosition(const QString &scale)
     {
-        if ((scale == "NoScale")) QwtSlider::setScalePosition(QwtSlider::NoScale);
-        if ((scale == "LeadingScale")) QwtSlider::setScalePosition(QwtSlider::LeadingScale);
-        if ((scale == "TrailingScale")) QwtSlider::setScalePosition(QwtSlider::TrailingScale);
+        if ((scale == "NoScale")) _slider->setScalePosition(_slider->NoScale);
+        if ((scale == "LeadingScale")) _slider->setScalePosition(_slider->LeadingScale);
+        if ((scale == "TrailingScale")) _slider->setScalePosition(_slider->TrailingScale);
     }
 
     void setStepSize(const double step)
     {
-        this->setScaleStepSize(step);
+        _slider->setScaleStepSize(step);
     }
 
     void activate(void)
@@ -124,6 +163,21 @@ private slots:
     {
         this->callVoid("valueChanged", value);
     }
+
+    void handleSetTitle(const QString &title)
+    {
+        QGroupBox::setTitle(title);
+    }
+
+protected:
+    void mousePressEvent(QMouseEvent *event)
+    {
+        QGroupBox::mousePressEvent(event);
+        event->ignore(); //allows for dragging from QGroupBox title
+    }
+
+private:
+    QwtSlider *_slider;
 };
 
 static Pothos::BlockRegistry registerQwtSliderBlock(
