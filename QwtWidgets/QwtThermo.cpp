@@ -43,10 +43,6 @@
  * |preview disable
  * |tab Scale
  *
- * |param value The initial value of this widget.
- * |default 0.0
- * |widget DoubleSpinBox()
- *
  * |param lowerBound[Lower Bound] The minimum value of this widget.
  * |default -1.0
  * |widget DoubleSpinBox()
@@ -94,7 +90,6 @@
  * |setter setLowerBound(lowerBound)
  * |setter setUpperBound(upperBound)
  * |setter setStepSize(stepSize)
- * |setter setValue(value)
  * |setter setFillColor(fillColor)
  * |setter setAlarmEnabled(alarmEnabled)
  * |setter setAlarmLevel(alarmLevel)
