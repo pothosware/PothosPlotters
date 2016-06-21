@@ -3,6 +3,7 @@
 
 #include <Pothos/Framework.hpp>
 #include <qwt_knob.h>
+#include <qwt_scale_engine.h>
 #include <QVariant>
 #include <QGroupBox>
 #include <QVBoxLayout>
@@ -20,6 +21,13 @@
  * |param title The name of the value displayed by this widget
  * |default "My Knob"
  * |widget StringEntry()
+ *
+ * |param scaleEngine[Scale Engine] The scaling engine, linear or logarithmic.
+ * |default "Linear"
+ * |option [Linear] "Linear"
+ * |option [Log2] "Log2"
+ * |option [Log10] "Log10"
+ * |preview disable
  *
  * |param value The initial value of this widget.
  * |default 0.0
@@ -40,6 +48,7 @@
  * |mode graphWidget
  * |factory /widgets/qwt_knob()
  * |setter setTitle(title)
+ * |setter setScaleEngine(scaleEngine)
  * |setter setLowerBound(lowerBound)
  * |setter setUpperBound(upperBound)
  * |setter setStepSize(stepSize)
@@ -59,7 +68,7 @@ public:
         _knob(new QwtKnob(this))
     {
         auto layout = new QVBoxLayout(this);
-        layout->setContentsMargins(0, 0, 0, 0);
+        layout->setContentsMargins(QMargins());
         layout->addWidget(_knob);
         this->setStyleSheet("QGroupBox {font-weight: bold;}");
 
@@ -70,6 +79,7 @@ public:
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtKnobBlock, setLowerBound));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtKnobBlock, setUpperBound));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtKnobBlock, setStepSize));
+        this->registerCall(this, POTHOS_FCN_TUPLE(QwtKnobBlock, setScaleEngine));
         this->registerSignal("valueChanged");
         connect(_knob, SIGNAL(valueChanged(const double)), this, SLOT(handleValueChanged(const double)));
     }
@@ -107,6 +117,14 @@ public:
     void setStepSize(const double step)
     {
         _knob->setScaleStepSize(step);
+    }
+
+    void setScaleEngine(const QString &engine)
+    {
+        if (engine == "Linear") _knob->setScaleEngine(new QwtLinearScaleEngine());
+        if (engine == "Log2") _knob->setScaleEngine(new QwtLogScaleEngine(2));
+        if (engine == "Log10") _knob->setScaleEngine(new QwtLogScaleEngine(10));
+        _knob->setScale(_knob->lowerBound(), _knob->upperBound()); //refresh
     }
 
     void activate(void)

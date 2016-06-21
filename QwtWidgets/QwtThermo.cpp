@@ -3,6 +3,7 @@
 
 #include <Pothos/Framework.hpp>
 #include <qwt_thermo.h>
+#include <qwt_scale_engine.h>
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QMouseEvent>
@@ -32,6 +33,15 @@
  * |option [Leading] "LeadingScale"
  * |option [Trailing] "TrailingScale"
  * |preview disable
+ * |tab Scale
+ *
+ * |param scaleEngine[Scale Engine] The scaling engine, linear or logarithmic.
+ * |default "Linear"
+ * |option [Linear] "Linear"
+ * |option [Log2] "Log2"
+ * |option [Log10] "Log10"
+ * |preview disable
+ * |tab Scale
  *
  * |param value The initial value of this widget.
  * |default 0.0
@@ -78,6 +88,7 @@
  * |setter setTitle(title)
  * |setter setOrientation(orientation)
  * |setter setScalePosition(scalePosition)
+ * |setter setScaleEngine(scaleEngine)
  * |setter setLowerBound(lowerBound)
  * |setter setUpperBound(upperBound)
  * |setter setStepSize(stepSize)
@@ -101,7 +112,7 @@ public:
         _thermo(new QwtThermo(this))
     {
         auto layout = new QVBoxLayout(this);
-        layout->setContentsMargins(0, 0, 0, 0);
+        layout->setContentsMargins(QMargins());
         layout->addWidget(_thermo);
         this->setStyleSheet("QGroupBox {font-weight: bold;}");
 
@@ -114,6 +125,7 @@ public:
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setStepSize));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setOrientation));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setScalePosition));
+        this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setScaleEngine));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setFillColor));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setAlarmEnabled));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtThermoBlock, setAlarmLevel));
@@ -171,6 +183,14 @@ public:
         if ((scale == "NoScale")) _thermo->setScalePosition(_thermo->NoScale);
         if ((scale == "LeadingScale")) _thermo->setScalePosition(_thermo->LeadingScale);
         if ((scale == "TrailingScale")) _thermo->setScalePosition(_thermo->TrailingScale);
+    }
+
+    void setScaleEngine(const QString &engine)
+    {
+        if (engine == "Linear") _thermo->setScaleEngine(new QwtLinearScaleEngine());
+        if (engine == "Log2") _thermo->setScaleEngine(new QwtLogScaleEngine(2));
+        if (engine == "Log10") _thermo->setScaleEngine(new QwtLogScaleEngine(10));
+        _thermo->setScale(_thermo->lowerBound(), _thermo->upperBound()); //refresh
     }
 
     void setStepSize(const double step)

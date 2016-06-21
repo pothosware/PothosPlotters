@@ -3,6 +3,7 @@
 
 #include <Pothos/Framework.hpp>
 #include <qwt_slider.h>
+#include <qwt_scale_engine.h>
 #include <QVariant>
 #include <QGroupBox>
 #include <QVBoxLayout>
@@ -33,6 +34,15 @@
  * |option [Leading] "LeadingScale"
  * |option [Trailing] "TrailingScale"
  * |preview disable
+ * |tab Scale
+ *
+ * |param scaleEngine[Scale Engine] The scaling engine, linear or logarithmic.
+ * |default "Linear"
+ * |option [Linear] "Linear"
+ * |option [Log2] "Log2"
+ * |option [Log10] "Log10"
+ * |preview disable
+ * |tab Scale
  *
  * |param value The initial value of this widget.
  * |default 0.0
@@ -55,6 +65,7 @@
  * |setter setTitle(title)
  * |setter setOrientation(orientation)
  * |setter setScalePosition(scalePosition)
+ * |setter setScaleEngine(scaleEngine)
  * |setter setLowerBound(lowerBound)
  * |setter setUpperBound(upperBound)
  * |setter setStepSize(stepSize)
@@ -74,7 +85,7 @@ public:
         _slider(new QwtSlider(this))
     {
         auto layout = new QVBoxLayout(this);
-        layout->setContentsMargins(0, 0, 0, 0);
+        layout->setContentsMargins(QMargins());
         layout->addWidget(_slider);
         this->setStyleSheet("QGroupBox {font-weight: bold;}");
 
@@ -88,6 +99,7 @@ public:
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtSliderBlock, setStepSize));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtSliderBlock, setOrientation));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtSliderBlock, setScalePosition));
+        this->registerCall(this, POTHOS_FCN_TUPLE(QwtSliderBlock, setScaleEngine));
         this->registerSignal("valueChanged");
         connect(_slider, SIGNAL(valueChanged(const double)), this, SLOT(handleValueChanged(const double)));
     }
@@ -133,6 +145,14 @@ public:
         if ((scale == "NoScale")) _slider->setScalePosition(_slider->NoScale);
         if ((scale == "LeadingScale")) _slider->setScalePosition(_slider->LeadingScale);
         if ((scale == "TrailingScale")) _slider->setScalePosition(_slider->TrailingScale);
+    }
+
+    void setScaleEngine(const QString &engine)
+    {
+        if (engine == "Linear") _slider->setScaleEngine(new QwtLinearScaleEngine());
+        if (engine == "Log2") _slider->setScaleEngine(new QwtLogScaleEngine(2));
+        if (engine == "Log10") _slider->setScaleEngine(new QwtLogScaleEngine(10));
+        _slider->setScale(_slider->lowerBound(), _slider->upperBound()); //refresh
     }
 
     void setStepSize(const double step)
