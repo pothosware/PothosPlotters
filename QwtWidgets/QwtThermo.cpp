@@ -56,8 +56,10 @@
  * |widget DoubleSpinBox()
  *
  * |param stepSize[Step Size] The delta in-between discrete values in this widget.
- * |default 0.1
+ * Use a value of 0.0 for automatic step-size calculation.
+ * |default 0.0
  * |widget DoubleSpinBox()
+ * |preview valid
  *
  * |param fillColor[Fill Color] The color of the liquid in the thermometer display.
  * |widget ColorPicker(mode=pastel)
