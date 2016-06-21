@@ -8,38 +8,38 @@
 /***********************************************************************
  * |PothosDoc QWT Slider
  *
- * A slider widget for graphical control of an floating point value.
+ * A slider widget for graphical control of a floating point value.
  * http://qwt.sourceforge.net/class_qwt_slider.html
  *
  * |category /Widgets
  * |keywords slider
  *
- * |param orientation The slider orientation (horizontal or veritical).
+ * |param orientation The widget orientation (horizontal or veritical).
  * |default "Horizontal"
  * |option [Horizontal] "Horizontal"
  * |option [Veritical] "Veritical"
  * |preview disable
  *
- * |param scalePosition[Scale Position] The slider scale markers.
+ * |param scalePosition[Scale Position] The widget scale markers.
  * |default "NoScale"
  * |option [None] "NoScale"
  * |option [Leading] "LeadingScale"
  * |option [Trailing] "TrailingScale"
  * |preview disable
  *
- * |param value The initial value of this slider.
+ * |param value The initial value of this widget.
  * |default 0.0
  * |widget DoubleSpinBox()
  *
- * |param lowerBound[Lower Bound] The minimum value of this slider.
+ * |param lowerBound[Lower Bound] The minimum value of this widget.
  * |default -1.0
  * |widget DoubleSpinBox()
  *
- * |param upperBound[Upper Bound] The maximum value of this slider.
+ * |param upperBound[Upper Bound] The maximum value of this widget.
  * |default 1.0
  * |widget DoubleSpinBox()
  *
- * |param stepSize[Step Size] The delta inbetween discrete values in this slider.
+ * |param stepSize[Step Size] The delta in-between discrete values in this widget.
  * |default 0.1
  * |widget DoubleSpinBox()
  *
