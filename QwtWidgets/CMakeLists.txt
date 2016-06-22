@@ -14,6 +14,9 @@ POTHOS_MODULE_UTIL(
     TARGET QwtWidgets
     SOURCES
         QwtSlider.cpp
+        QwtThermo.cpp
+        QwtKnob.cpp
+        QwtDial.cpp
     ENABLE_DOCS
     LIBRARIES ${Qt5_LIBRARIES}
     DESTINATION plotters
