@@ -96,23 +96,35 @@ void MyQwtPlot::updateChecked(QwtPlotItem *item)
     this->updateLegend();
 }
 
-void MyQwtPlot::handleItemAttached(QwtPlotItem *, bool on)
+void MyQwtPlot::handleItemAttached(QwtPlotItem *item, bool on)
 {
-    if (not on) return; //only handles attaches
+    //only cuves are supported by this logic
+    if (item->rtti() != QwtPlotItem::Rtti_PlotCurve) return;
 
     const auto items = this->itemList();
-    const int i = items.size()-1;
-
-    //apply stashed visibility when the item count matches
-    //this handles curves which are added on-demand
-    if (_visible.size() > i)
+    if (on)
     {
-        items[i]->setVisible(_visible.at(i));
-        this->updateChecked(items[i]);
+        const int i = items.size()-1;
+
+        //apply stashed visibility when the item count matches
+        //this handles curves which are added on-demand
+        if (_visible.size() > i)
+        {
+            items[i]->setVisible(_visible.at(i));
+            this->updateChecked(items[i]);
+        }
+
+        //otherwise expand the cache to match the item size
+        else _visible.resize(items.size());
     }
 
-    //otherwise expand the cache to match the item size
-    else _visible.resize(items.size());
+    else
+    {
+        //store the visibility status when removed
+        //so it can be restored when added back
+        if (items.size() < _visible.size())
+            _visible.setBit(items.size(), item->isVisible());
+    }
 }
 
 QVariant MyQwtPlot::state(void) const
@@ -151,6 +163,7 @@ void MyQwtPlot::setState(const QVariant &state)
     _visible = map["visible"].toBitArray();
     for (int i = 0; i < items.size() and i < _visible.size(); i++)
     {
+        if (items[i]->rtti() != QwtPlotItem::Rtti_PlotCurve) continue;
         items[i]->setVisible(_visible.at(i));
         this->updateChecked(items[i]);
     }
