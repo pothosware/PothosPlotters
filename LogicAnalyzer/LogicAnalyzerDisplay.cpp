@@ -1,4 +1,4 @@
-// Copyright (c) 2015-2015 Josh Blum
+// Copyright (c) 2015-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "LogicAnalyzerDisplay.hpp"
@@ -81,7 +81,7 @@ void LogicAnalyzerDisplay::populateChannel(const int channel, const Pothos::Pack
 {
     //convert buffer (does not convert when type matches)
     const auto numericBuff = packet.payload.convert(typeid(T));
-    assert(_chData.size() > channel);
+    assert(int(_chData.size()) > channel);
     _chData[channel] = packet;
     _chData[channel].payload = numericBuff;
 
