@@ -90,7 +90,7 @@ if (QWT_FOUND)
 
 elseif (ENABLE_PLOTTERS)
 
-    set(QWT_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/qwt-6.1.2/src)
+    set(QWT_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/qwt6/src)
 
     if (NOT EXISTS ${QWT_SRC_DIR})
         message(FATAL_ERROR "Qwt submodule not configured (git submodule update --init --recursive)")
