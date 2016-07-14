@@ -63,9 +63,11 @@ private slots:
 static QWidget *makeColorMapEntry(const Poco::JSON::Object::Ptr &, QWidget *parent)
 {
     auto colorMapEntry =  new ColorMapEntry(parent);
-    for (size_t i = 0; i < NUM_COLOR_MAPS; i++)
+    for (const auto &pair : available_color_maps())
     {
-        colorMapEntry->addItem(COLOR_MAP_TITLES[i], QString("\"%1\"").arg(COLOR_MAP_NAMES[i]));
+        colorMapEntry->addItem(
+            QString::fromStdString(pair.first),
+            QString("\"%1\"").arg(QString::fromStdString(pair.second)));
     }
     return colorMapEntry;
 }

@@ -1,6 +1,7 @@
 // Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
+#include "GeneratedColorMaps.hpp"
 #include "SpectrogramDisplay.hpp"
 #include "MyPlotStyler.hpp"
 #include "MyPlotPicker.hpp"
@@ -276,8 +277,6 @@ void SpectrogramDisplay::appendBins(const std::valarray<float> &bins)
 {
     _plotRaster->appendBins(bins);
 }
-
-#include "GeneratedColorMaps.hpp"
 
 void SpectrogramDisplay::setColorMap(const std::string &colorMapName)
 {

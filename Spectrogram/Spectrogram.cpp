@@ -125,7 +125,7 @@
  *
  * |param colorMap[Color Map] The name of a color map for the raster plot.
  * |widget ColorMapEntry()
- * |default "default"
+ * |default "rainbow"
  * |preview disable
  * |tab Axis
  *

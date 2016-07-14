@@ -92,7 +92,15 @@ def interp_subspec(pt, subspec):
     #print map(type, [pt, y0, x0, x1, y1])
     return y0 + (y1-y0)*(pt-x0)/(x1-x0)
 
-def spec_to_lin(spec):
+def check(name, result):
+    for line in result:
+        for i, elem in enumerate(line):
+            if elem > 1.0:
+                line[i] = 1.0
+            if elem < 0.0:
+                line[i] = 0.0
+
+def spec_to_lin(name, spec):
 
     if hasattr(spec['red'], '__call__'):
         linMap = list()
@@ -107,6 +115,7 @@ def spec_to_lin(spec):
             if 'alpha' in spec:
                 data.append(alphas[i])
             linMap.append(data)
+        check(name, linMap)
         return linMap
 
     allPts = list()
@@ -124,6 +133,7 @@ def spec_to_lin(spec):
             data.append(interp_subspec(pt, spec['alpha']))
         linMap.append(data)
 
+    check(name, linMap)
     return linMap
 
 def plot_color_gradients(cmap_category, cmap_list):
@@ -139,7 +149,7 @@ def plot_color_gradients(cmap_category, cmap_list):
             #x_text = pos[0] - 0.01
             #y_text = pos[1] + pos[3]/2.
             #fig.text(x_text, y_text, name, va='center', ha='right', fontsize=10)
-            yield name, spec_to_lin(plt.get_cmap(name)._segmentdata)
+            yield name, spec_to_lin(name, plt.get_cmap(name)._segmentdata)
         except Exception as ex:
             print '#'*40,name,str(ex),plt.get_cmap(name)._segmentdata
 
@@ -147,10 +157,7 @@ def plot_color_gradients(cmap_category, cmap_list):
     #for ax in axes:
     #    ax.set_axis_off()
 
-import sys
-import json
-
-f = open(sys.argv[1], 'w')
+f = open("GeneratedColorMaps.cpp", 'w')
 titles = list()
 names = list()
 
@@ -158,8 +165,7 @@ f.write('//\n')
 f.write('//Machine generated color maps extracted from matplotlib cm module\n')
 f.write('//\n')
 f.write('\n')
-f.write('#include <string>\n')
-f.write('#include <vector>\n')
+f.write('#include "GeneratedColorMaps.hpp"\n')
 f.write('\n')
 
 for cmap_category, cmap_list in cmaps:
@@ -178,13 +184,15 @@ for cmap_category, cmap_list in cmaps:
         names.append(name)
 
 f.write('\n')
-f.write('static const char *COLOR_MAP_TITLES[] = {\n    %s};\n'%(',\n    '.join(['"%s"'%t for t in titles])))
+f.write('std::vector<std::pair<const std::string, const std::string>> available_color_maps(void)')
+f.write('{\n')
+f.write('    std::vector<std::pair<const std::string, const std::string>> out;\n')
+for title, name in zip(titles, names):
+    f.write('    out.emplace_back("%s", "%s");\n'%(title, name));
+f.write('    return out;\n')
+f.write('}\n')
 f.write('\n')
-f.write('static const char *COLOR_MAP_NAMES[] = {\n    %s};\n'%(',\n    '.join(['"%s"'%n for n in names])))
-f.write('\n')
-f.write('#define NUM_COLOR_MAPS %d\n'%len(names))
-f.write('\n')
-f.write('static std::vector<std::vector<double>> make_color_map(const std::string &name)\n')
+f.write('std::vector<std::vector<double>> make_color_map(const std::string &name)\n')
 f.write('{\n')
 for name in names:
     f.write('    if (name == "%s") return make_color_map_%s();\n'%(name, name))
