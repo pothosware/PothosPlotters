@@ -268,7 +268,7 @@ void SpectrogramDisplay::handleZoomed(const QRectF &)
 void SpectrogramDisplay::handlePickerSelected(const QPointF &p)
 {
     const double freq = p.x()*_sampleRate/_sampleRateWoAxisUnits;
-    this->callVoid("frequencySelected", freq);
+    this->emitSignal("frequencySelected", freq);
 }
 
 void SpectrogramDisplay::appendBins(const std::valarray<float> &bins)

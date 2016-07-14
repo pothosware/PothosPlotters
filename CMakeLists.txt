@@ -4,7 +4,12 @@
 cmake_minimum_required(VERSION 2.8.9)
 project(PothosPlotters CXX)
 
-find_package(Pothos CONFIG REQUIRED)
+if(${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
+    find_package(Pothos "0.4.0" CONFIG REQUIRED)
+else()
+    find_package(Pothos CONFIG REQUIRED) #in-tree build
+endif()
+
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 #args to set the CMAKE_PREFIX_PATH environment variable

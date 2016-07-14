@@ -226,7 +226,7 @@ void PeriodogramDisplay::setYAxisTitle(const QString &title)
 void PeriodogramDisplay::handlePickerSelected(const QPointF &p)
 {
     const double freq = p.x()*_sampleRate/_sampleRateWoAxisUnits;
-    this->callVoid("frequencySelected", freq);
+    this->emitSignal("frequencySelected", freq);
 }
 
 void PeriodogramDisplay::handleLegendChecked(const QVariant &itemInfo, bool on, int)
