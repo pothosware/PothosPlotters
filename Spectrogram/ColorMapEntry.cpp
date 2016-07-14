@@ -4,7 +4,11 @@
 #include <Pothos/Plugin.hpp>
 #include <Poco/JSON/Object.h>
 #include <QComboBox>
+#include <QPainter>
+#include <QPixmap>
+#include <QIcon>
 #include <QAbstractItemView>
+#include <qwt_color_map.h>
 #include "GeneratedColorMaps.hpp"
 
 /***********************************************************************
@@ -58,14 +62,34 @@ private slots:
 };
 
 /***********************************************************************
+ * Helpful icons to preview color map
+ **********************************************************************/
+static QIcon makeColorMapIcon(const std::string &name)
+{
+    std::unique_ptr<QwtColorMap> colorMap(makeQwtColorMap(name));
+    QPixmap pixmap(100, 20);
+    QPainter painter(&pixmap);
+    painter.setPen(Qt::transparent);
+    const QwtInterval interval(0.0, double(pixmap.width()));
+    for (int i = 0; i < pixmap.width(); i++)
+    {
+        painter.setBrush(QColor(colorMap->rgb(interval, double(i))));
+        painter.drawRect(QRectF(qreal(i), qreal(0), qreal(1), pixmap.height()));
+    }
+    return QIcon(pixmap);
+}
+
+/***********************************************************************
  * Factory function and registration
  **********************************************************************/
 static QWidget *makeColorMapEntry(const Poco::JSON::Object::Ptr &, QWidget *parent)
 {
     auto colorMapEntry =  new ColorMapEntry(parent);
-    for (const auto &pair : available_color_maps())
+    colorMapEntry->setIconSize(QSize(100, 20));
+    for (const auto &pair : availableColorMaps())
     {
         colorMapEntry->addItem(
+            makeColorMapIcon(pair.second),
             QString::fromStdString(pair.first),
             QString("\"%1\"").arg(QString::fromStdString(pair.second)));
     }

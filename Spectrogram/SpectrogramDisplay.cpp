@@ -236,8 +236,8 @@ void SpectrogramDisplay::handleUpdateAxis(void)
     _plotRaster->setInterval(Qt::YAxis, _mainPlot->axisInterval(QwtPlot::yLeft));
     _plotRaster->setInterval(Qt::ZAxis, _mainPlot->axisInterval(QwtPlot::yRight));
     _plotRaster->setFFTMode(_fftModeComplex);
-    _plotSpect->setColorMap(this->makeColorMap());
-    _mainPlot->axisWidget(QwtPlot::yRight)->setColorMap(_plotRaster->interval(Qt::ZAxis), this->makeColorMap());
+    _plotSpect->setColorMap(makeQwtColorMap(_colorMapName));
+    _mainPlot->axisWidget(QwtPlot::yRight)->setColorMap(_plotRaster->interval(Qt::ZAxis), makeQwtColorMap(_colorMapName));
 
     _mainPlot->zoomer()->setZoomBase(); //record current axis settings
 }
@@ -280,26 +280,6 @@ void SpectrogramDisplay::appendBins(const std::valarray<float> &bins)
 
 void SpectrogramDisplay::setColorMap(const std::string &colorMapName)
 {
-    _colorMap = make_color_map(colorMapName);
-    if (_colorMap.empty()) _colorMap = make_color_map("rainbow");
-    if (_colorMap.size() < 2) throw Pothos::InvalidArgumentException("SpectrogramDisplay::setColorMap()", "map requires at least 2 entries");
+    _colorMapName = colorMapName;
     QMetaObject::invokeMethod(this, "handleUpdateAxis", Qt::QueuedConnection);
-}
-
-static QColor vecToColor(const std::vector<double> &vec)
-{
-    std::vector<double> colorsF(vec);
-    colorsF.resize(5, 1.0); //last 4 entries are r, g, b, a with 1.0 default
-    return QColor::fromRgbF(colorsF[1], colorsF[2], colorsF[3], colorsF[4]);
-}
-
-QwtColorMap *SpectrogramDisplay::makeColorMap(void) const
-{
-    auto cMap = new QwtLinearColorMap(vecToColor(_colorMap.front()), vecToColor(_colorMap.back()));
-    for (size_t i = 1; i < _colorMap.size()-1; i++)
-    {
-        const auto &vec = _colorMap.at(i);
-        cMap->addColorStop(vec.at(0), vecToColor(vec));
-    }
-    return cMap;
 }

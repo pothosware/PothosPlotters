@@ -171,7 +171,7 @@ f.write('\n')
 for cmap_category, cmap_list in cmaps:
     for name, data in plot_color_gradients(cmap_category, cmap_list):
         title = (cmap_category + '/' + name).replace("_", ' ').title()
-        f.write('static std::vector<std::vector<double>> make_color_map_%s(void)\n'%name)
+        f.write('static std::vector<std::vector<double>> makeColorMap%s(void)\n'%name)
         f.write('{\n')
         f.write('    std::vector<std::vector<double>> out;\n')
         for d in data:
@@ -184,7 +184,7 @@ for cmap_category, cmap_list in cmaps:
         names.append(name)
 
 f.write('\n')
-f.write('std::vector<std::pair<const std::string, const std::string>> available_color_maps(void)')
+f.write('std::vector<std::pair<const std::string, const std::string>> availableColorMaps(void)')
 f.write('{\n')
 f.write('    std::vector<std::pair<const std::string, const std::string>> out;\n')
 for title, name in zip(titles, names):
@@ -192,10 +192,10 @@ for title, name in zip(titles, names):
 f.write('    return out;\n')
 f.write('}\n')
 f.write('\n')
-f.write('std::vector<std::vector<double>> make_color_map(const std::string &name)\n')
+f.write('std::vector<std::vector<double>> lookupColorMap(const std::string &name)\n')
 f.write('{\n')
 for name in names:
-    f.write('    if (name == "%s") return make_color_map_%s();\n'%(name, name))
+    f.write('    if (name == "%s") return makeColorMap%s();\n'%(name, name))
 
 f.write('    return std::vector<std::vector<double>>();\n')
 f.write('}\n')

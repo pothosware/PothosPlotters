@@ -4,7 +4,7 @@
 
 #include "GeneratedColorMaps.hpp"
 
-static std::vector<std::vector<double>> make_color_map_Blues(void)
+static std::vector<std::vector<double>> makeColorMapBlues(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.96862745285,0.984313726425,1.0});
@@ -19,7 +19,7 @@ static std::vector<std::vector<double>> make_color_map_Blues(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_BuGn(void)
+static std::vector<std::vector<double>> makeColorMapBuGn(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.96862745285,0.988235294819,0.992156863213});
@@ -34,7 +34,7 @@ static std::vector<std::vector<double>> make_color_map_BuGn(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_BuPu(void)
+static std::vector<std::vector<double>> makeColorMapBuPu(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.96862745285,0.988235294819,0.992156863213});
@@ -49,7 +49,7 @@ static std::vector<std::vector<double>> make_color_map_BuPu(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_GnBu(void)
+static std::vector<std::vector<double>> makeColorMapGnBu(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.96862745285,0.988235294819,0.941176474094});
@@ -64,7 +64,7 @@ static std::vector<std::vector<double>> make_color_map_GnBu(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_Greens(void)
+static std::vector<std::vector<double>> makeColorMapGreens(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.96862745285,0.988235294819,0.960784316063});
@@ -79,7 +79,7 @@ static std::vector<std::vector<double>> make_color_map_Greens(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_Greys(void)
+static std::vector<std::vector<double>> makeColorMapGreys(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,1.0,1.0});
@@ -94,7 +94,7 @@ static std::vector<std::vector<double>> make_color_map_Greys(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_Oranges(void)
+static std::vector<std::vector<double>> makeColorMapOranges(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,0.960784316063,0.921568632126});
@@ -109,7 +109,7 @@ static std::vector<std::vector<double>> make_color_map_Oranges(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_OrRd(void)
+static std::vector<std::vector<double>> makeColorMapOrRd(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,0.96862745285,0.92549020052});
@@ -124,7 +124,7 @@ static std::vector<std::vector<double>> make_color_map_OrRd(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_PuBu(void)
+static std::vector<std::vector<double>> makeColorMapPuBu(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,0.96862745285,0.984313726425});
@@ -139,7 +139,7 @@ static std::vector<std::vector<double>> make_color_map_PuBu(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_PuBuGn(void)
+static std::vector<std::vector<double>> makeColorMapPuBuGn(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,0.96862745285,0.984313726425});
@@ -154,7 +154,7 @@ static std::vector<std::vector<double>> make_color_map_PuBuGn(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_PuRd(void)
+static std::vector<std::vector<double>> makeColorMapPuRd(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.96862745285,0.956862747669,0.976470589638});
@@ -169,7 +169,7 @@ static std::vector<std::vector<double>> make_color_map_PuRd(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_Purples(void)
+static std::vector<std::vector<double>> makeColorMapPurples(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.988235294819,0.984313726425,0.992156863213});
@@ -184,7 +184,7 @@ static std::vector<std::vector<double>> make_color_map_Purples(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_RdPu(void)
+static std::vector<std::vector<double>> makeColorMapRdPu(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,0.96862745285,0.952941179276});
@@ -199,7 +199,7 @@ static std::vector<std::vector<double>> make_color_map_RdPu(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_Reds(void)
+static std::vector<std::vector<double>> makeColorMapReds(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,0.960784316063,0.941176474094});
@@ -214,7 +214,7 @@ static std::vector<std::vector<double>> make_color_map_Reds(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_YlGn(void)
+static std::vector<std::vector<double>> makeColorMapYlGn(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,1.0,0.898039221764});
@@ -229,7 +229,7 @@ static std::vector<std::vector<double>> make_color_map_YlGn(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_YlGnBu(void)
+static std::vector<std::vector<double>> makeColorMapYlGnBu(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,1.0,0.850980401039});
@@ -244,7 +244,7 @@ static std::vector<std::vector<double>> make_color_map_YlGnBu(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_YlOrBr(void)
+static std::vector<std::vector<double>> makeColorMapYlOrBr(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,1.0,0.898039221764});
@@ -259,7 +259,7 @@ static std::vector<std::vector<double>> make_color_map_YlOrBr(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_YlOrRd(void)
+static std::vector<std::vector<double>> makeColorMapYlOrRd(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,1.0,0.800000011921});
@@ -274,7 +274,7 @@ static std::vector<std::vector<double>> make_color_map_YlOrRd(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_afmhot(void)
+static std::vector<std::vector<double>> makeColorMapafmhot(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,0.0});
@@ -381,7 +381,7 @@ static std::vector<std::vector<double>> make_color_map_afmhot(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_autumn(void)
+static std::vector<std::vector<double>> makeColorMapautumn(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,0.0,0.0});
@@ -389,7 +389,7 @@ static std::vector<std::vector<double>> make_color_map_autumn(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_bone(void)
+static std::vector<std::vector<double>> makeColorMapbone(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,0.0});
@@ -399,7 +399,7 @@ static std::vector<std::vector<double>> make_color_map_bone(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_cool(void)
+static std::vector<std::vector<double>> makeColorMapcool(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,1.0,1.0});
@@ -407,7 +407,7 @@ static std::vector<std::vector<double>> make_color_map_cool(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_copper(void)
+static std::vector<std::vector<double>> makeColorMapcopper(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,0.0});
@@ -416,7 +416,7 @@ static std::vector<std::vector<double>> make_color_map_copper(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_gist_heat(void)
+static std::vector<std::vector<double>> makeColorMapgist_heat(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,0.0});
@@ -523,7 +523,7 @@ static std::vector<std::vector<double>> make_color_map_gist_heat(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_gray(void)
+static std::vector<std::vector<double>> makeColorMapgray(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0,0,0});
@@ -531,7 +531,7 @@ static std::vector<std::vector<double>> make_color_map_gray(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_hot(void)
+static std::vector<std::vector<double>> makeColorMaphot(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0416,0.0,0.0});
@@ -541,7 +541,7 @@ static std::vector<std::vector<double>> make_color_map_hot(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_pink(void)
+static std::vector<std::vector<double>> makeColorMappink(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.1178,0.0,0.0});
@@ -611,7 +611,7 @@ static std::vector<std::vector<double>> make_color_map_pink(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_spring(void)
+static std::vector<std::vector<double>> makeColorMapspring(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,0.0,1.0});
@@ -619,7 +619,7 @@ static std::vector<std::vector<double>> make_color_map_spring(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_summer(void)
+static std::vector<std::vector<double>> makeColorMapsummer(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.5,0.4});
@@ -627,7 +627,7 @@ static std::vector<std::vector<double>> make_color_map_summer(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_winter(void)
+static std::vector<std::vector<double>> makeColorMapwinter(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,1.0});
@@ -635,7 +635,7 @@ static std::vector<std::vector<double>> make_color_map_winter(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_BrBG(void)
+static std::vector<std::vector<double>> makeColorMapBrBG(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.329411774874,0.188235297799,0.0196078438312});
@@ -652,7 +652,7 @@ static std::vector<std::vector<double>> make_color_map_BrBG(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_bwr(void)
+static std::vector<std::vector<double>> makeColorMapbwr(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,1.0,1.0});
@@ -661,7 +661,7 @@ static std::vector<std::vector<double>> make_color_map_bwr(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_coolwarm(void)
+static std::vector<std::vector<double>> makeColorMapcoolwarm(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.2298057,0.298717966,0.753683153});
@@ -700,7 +700,7 @@ static std::vector<std::vector<double>> make_color_map_coolwarm(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_PiYG(void)
+static std::vector<std::vector<double>> makeColorMapPiYG(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.556862771511,0.00392156885937,0.321568638086});
@@ -717,7 +717,7 @@ static std::vector<std::vector<double>> make_color_map_PiYG(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_PRGn(void)
+static std::vector<std::vector<double>> makeColorMapPRGn(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.250980407,0.0,0.29411765933});
@@ -734,7 +734,7 @@ static std::vector<std::vector<double>> make_color_map_PRGn(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_PuOr(void)
+static std::vector<std::vector<double>> makeColorMapPuOr(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.498039215803,0.23137255013,0.0313725508749});
@@ -751,7 +751,7 @@ static std::vector<std::vector<double>> make_color_map_PuOr(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_RdBu(void)
+static std::vector<std::vector<double>> makeColorMapRdBu(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.403921574354,0.0,0.121568627656});
@@ -768,7 +768,7 @@ static std::vector<std::vector<double>> make_color_map_RdBu(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_RdGy(void)
+static std::vector<std::vector<double>> makeColorMapRdGy(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.403921574354,0.0,0.121568627656});
@@ -785,7 +785,7 @@ static std::vector<std::vector<double>> make_color_map_RdGy(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_RdYlBu(void)
+static std::vector<std::vector<double>> makeColorMapRdYlBu(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.647058844566,0.0,0.149019613862});
@@ -802,7 +802,7 @@ static std::vector<std::vector<double>> make_color_map_RdYlBu(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_RdYlGn(void)
+static std::vector<std::vector<double>> makeColorMapRdYlGn(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.647058844566,0.0,0.149019613862});
@@ -819,7 +819,7 @@ static std::vector<std::vector<double>> make_color_map_RdYlGn(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_Spectral(void)
+static std::vector<std::vector<double>> makeColorMapSpectral(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.61960786581,0.00392156885937,0.258823543787});
@@ -836,7 +836,7 @@ static std::vector<std::vector<double>> make_color_map_Spectral(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_seismic(void)
+static std::vector<std::vector<double>> makeColorMapseismic(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,0.3,1.0});
@@ -847,7 +847,7 @@ static std::vector<std::vector<double>> make_color_map_seismic(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_Accent(void)
+static std::vector<std::vector<double>> makeColorMapAccent(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.498039215803,0.78823530674,0.498039215803});
@@ -861,7 +861,7 @@ static std::vector<std::vector<double>> make_color_map_Accent(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_Dark2(void)
+static std::vector<std::vector<double>> makeColorMapDark2(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.105882354081,0.61960786581,0.466666668653});
@@ -875,7 +875,7 @@ static std::vector<std::vector<double>> make_color_map_Dark2(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_Paired(void)
+static std::vector<std::vector<double>> makeColorMapPaired(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.65098041296,0.807843148708,0.890196084976});
@@ -893,7 +893,7 @@ static std::vector<std::vector<double>> make_color_map_Paired(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_Pastel1(void)
+static std::vector<std::vector<double>> makeColorMapPastel1(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.984313726425,0.705882370472,0.68235296011});
@@ -908,7 +908,7 @@ static std::vector<std::vector<double>> make_color_map_Pastel1(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_Pastel2(void)
+static std::vector<std::vector<double>> makeColorMapPastel2(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.701960802078,0.886274516582,0.803921580315});
@@ -922,7 +922,7 @@ static std::vector<std::vector<double>> make_color_map_Pastel2(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_Set1(void)
+static std::vector<std::vector<double>> makeColorMapSet1(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.89411765337,0.101960785687,0.109803922474});
@@ -937,7 +937,7 @@ static std::vector<std::vector<double>> make_color_map_Set1(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_Set2(void)
+static std::vector<std::vector<double>> makeColorMapSet2(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.40000000596,0.760784327984,0.647058844566});
@@ -951,7 +951,7 @@ static std::vector<std::vector<double>> make_color_map_Set2(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_Set3(void)
+static std::vector<std::vector<double>> makeColorMapSet3(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.552941203117,0.827450990677,0.780392169952});
@@ -969,7 +969,7 @@ static std::vector<std::vector<double>> make_color_map_Set3(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_gist_earth(void)
+static std::vector<std::vector<double>> makeColorMapgist_earth(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,0.0});
@@ -1007,7 +1007,7 @@ static std::vector<std::vector<double>> make_color_map_gist_earth(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_terrain(void)
+static std::vector<std::vector<double>> makeColorMapterrain(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.2,0.2,0.6,1.0});
@@ -1019,7 +1019,7 @@ static std::vector<std::vector<double>> make_color_map_terrain(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_ocean(void)
+static std::vector<std::vector<double>> makeColorMapocean(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.5,0.0});
@@ -1126,7 +1126,7 @@ static std::vector<std::vector<double>> make_color_map_ocean(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_gist_stern(void)
+static std::vector<std::vector<double>> makeColorMapgist_stern(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0,0.0});
@@ -1138,7 +1138,7 @@ static std::vector<std::vector<double>> make_color_map_gist_stern(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_brg(void)
+static std::vector<std::vector<double>> makeColorMapbrg(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,1.0,1.0});
@@ -1147,7 +1147,7 @@ static std::vector<std::vector<double>> make_color_map_brg(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_CMRmap(void)
+static std::vector<std::vector<double>> makeColorMapCMRmap(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,0.0});
@@ -1162,7 +1162,7 @@ static std::vector<std::vector<double>> make_color_map_CMRmap(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_cubehelix(void)
+static std::vector<std::vector<double>> makeColorMapcubehelix(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,0.0});
@@ -1269,7 +1269,7 @@ static std::vector<std::vector<double>> make_color_map_cubehelix(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_gnuplot(void)
+static std::vector<std::vector<double>> makeColorMapgnuplot(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,0.0});
@@ -1376,7 +1376,7 @@ static std::vector<std::vector<double>> make_color_map_gnuplot(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_gnuplot2(void)
+static std::vector<std::vector<double>> makeColorMapgnuplot2(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,0.0});
@@ -1483,7 +1483,7 @@ static std::vector<std::vector<double>> make_color_map_gnuplot2(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_gist_ncar(void)
+static std::vector<std::vector<double>> makeColorMapgist_ncar(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,0.502});
@@ -1524,7 +1524,7 @@ static std::vector<std::vector<double>> make_color_map_gist_ncar(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_nipy_spectral(void)
+static std::vector<std::vector<double>> makeColorMapnipy_spectral(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.0,0.0,0.0});
@@ -1551,7 +1551,7 @@ static std::vector<std::vector<double>> make_color_map_nipy_spectral(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_jet(void)
+static std::vector<std::vector<double>> makeColorMapjet(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0,0,0.5});
@@ -1569,7 +1569,7 @@ static std::vector<std::vector<double>> make_color_map_jet(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_rainbow(void)
+static std::vector<std::vector<double>> makeColorMaprainbow(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,0.5,0.0,1.0});
@@ -1676,7 +1676,7 @@ static std::vector<std::vector<double>> make_color_map_rainbow(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_gist_rainbow(void)
+static std::vector<std::vector<double>> makeColorMapgist_rainbow(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,0.0,0.16,1.0});
@@ -1690,7 +1690,7 @@ static std::vector<std::vector<double>> make_color_map_gist_rainbow(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_hsv(void)
+static std::vector<std::vector<double>> makeColorMaphsv(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,0.0,0.0});
@@ -1707,7 +1707,7 @@ static std::vector<std::vector<double>> make_color_map_hsv(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_flag(void)
+static std::vector<std::vector<double>> makeColorMapflag(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,0.0,0.0});
@@ -1814,7 +1814,7 @@ static std::vector<std::vector<double>> make_color_map_flag(void)
     return out;
 }
 
-static std::vector<std::vector<double>> make_color_map_prism(void)
+static std::vector<std::vector<double>> makeColorMapprism(void)
 {
     std::vector<std::vector<double>> out;
     out.push_back(std::vector<double>{0.0,1.0,0.0,-0.0});
@@ -1922,7 +1922,7 @@ static std::vector<std::vector<double>> make_color_map_prism(void)
 }
 
 
-std::vector<std::pair<const std::string, const std::string>> available_color_maps(void){
+std::vector<std::pair<const std::string, const std::string>> availableColorMaps(void){
     std::vector<std::pair<const std::string, const std::string>> out;
     out.emplace_back("Sequential/Blues", "Blues");
     out.emplace_back("Sequential/Bugn", "BuGn");
@@ -1994,74 +1994,74 @@ std::vector<std::pair<const std::string, const std::string>> available_color_map
     return out;
 }
 
-std::vector<std::vector<double>> make_color_map(const std::string &name)
+std::vector<std::vector<double>> lookupColorMap(const std::string &name)
 {
-    if (name == "Blues") return make_color_map_Blues();
-    if (name == "BuGn") return make_color_map_BuGn();
-    if (name == "BuPu") return make_color_map_BuPu();
-    if (name == "GnBu") return make_color_map_GnBu();
-    if (name == "Greens") return make_color_map_Greens();
-    if (name == "Greys") return make_color_map_Greys();
-    if (name == "Oranges") return make_color_map_Oranges();
-    if (name == "OrRd") return make_color_map_OrRd();
-    if (name == "PuBu") return make_color_map_PuBu();
-    if (name == "PuBuGn") return make_color_map_PuBuGn();
-    if (name == "PuRd") return make_color_map_PuRd();
-    if (name == "Purples") return make_color_map_Purples();
-    if (name == "RdPu") return make_color_map_RdPu();
-    if (name == "Reds") return make_color_map_Reds();
-    if (name == "YlGn") return make_color_map_YlGn();
-    if (name == "YlGnBu") return make_color_map_YlGnBu();
-    if (name == "YlOrBr") return make_color_map_YlOrBr();
-    if (name == "YlOrRd") return make_color_map_YlOrRd();
-    if (name == "afmhot") return make_color_map_afmhot();
-    if (name == "autumn") return make_color_map_autumn();
-    if (name == "bone") return make_color_map_bone();
-    if (name == "cool") return make_color_map_cool();
-    if (name == "copper") return make_color_map_copper();
-    if (name == "gist_heat") return make_color_map_gist_heat();
-    if (name == "gray") return make_color_map_gray();
-    if (name == "hot") return make_color_map_hot();
-    if (name == "pink") return make_color_map_pink();
-    if (name == "spring") return make_color_map_spring();
-    if (name == "summer") return make_color_map_summer();
-    if (name == "winter") return make_color_map_winter();
-    if (name == "BrBG") return make_color_map_BrBG();
-    if (name == "bwr") return make_color_map_bwr();
-    if (name == "coolwarm") return make_color_map_coolwarm();
-    if (name == "PiYG") return make_color_map_PiYG();
-    if (name == "PRGn") return make_color_map_PRGn();
-    if (name == "PuOr") return make_color_map_PuOr();
-    if (name == "RdBu") return make_color_map_RdBu();
-    if (name == "RdGy") return make_color_map_RdGy();
-    if (name == "RdYlBu") return make_color_map_RdYlBu();
-    if (name == "RdYlGn") return make_color_map_RdYlGn();
-    if (name == "Spectral") return make_color_map_Spectral();
-    if (name == "seismic") return make_color_map_seismic();
-    if (name == "Accent") return make_color_map_Accent();
-    if (name == "Dark2") return make_color_map_Dark2();
-    if (name == "Paired") return make_color_map_Paired();
-    if (name == "Pastel1") return make_color_map_Pastel1();
-    if (name == "Pastel2") return make_color_map_Pastel2();
-    if (name == "Set1") return make_color_map_Set1();
-    if (name == "Set2") return make_color_map_Set2();
-    if (name == "Set3") return make_color_map_Set3();
-    if (name == "gist_earth") return make_color_map_gist_earth();
-    if (name == "terrain") return make_color_map_terrain();
-    if (name == "ocean") return make_color_map_ocean();
-    if (name == "gist_stern") return make_color_map_gist_stern();
-    if (name == "brg") return make_color_map_brg();
-    if (name == "CMRmap") return make_color_map_CMRmap();
-    if (name == "cubehelix") return make_color_map_cubehelix();
-    if (name == "gnuplot") return make_color_map_gnuplot();
-    if (name == "gnuplot2") return make_color_map_gnuplot2();
-    if (name == "gist_ncar") return make_color_map_gist_ncar();
-    if (name == "nipy_spectral") return make_color_map_nipy_spectral();
-    if (name == "jet") return make_color_map_jet();
-    if (name == "rainbow") return make_color_map_rainbow();
-    if (name == "gist_rainbow") return make_color_map_gist_rainbow();
-    if (name == "hsv") return make_color_map_hsv();
-    if (name == "flag") return make_color_map_flag();
-    if (name == "prism") return make_color_map_prism();
+    if (name == "Blues") return makeColorMapBlues();
+    if (name == "BuGn") return makeColorMapBuGn();
+    if (name == "BuPu") return makeColorMapBuPu();
+    if (name == "GnBu") return makeColorMapGnBu();
+    if (name == "Greens") return makeColorMapGreens();
+    if (name == "Greys") return makeColorMapGreys();
+    if (name == "Oranges") return makeColorMapOranges();
+    if (name == "OrRd") return makeColorMapOrRd();
+    if (name == "PuBu") return makeColorMapPuBu();
+    if (name == "PuBuGn") return makeColorMapPuBuGn();
+    if (name == "PuRd") return makeColorMapPuRd();
+    if (name == "Purples") return makeColorMapPurples();
+    if (name == "RdPu") return makeColorMapRdPu();
+    if (name == "Reds") return makeColorMapReds();
+    if (name == "YlGn") return makeColorMapYlGn();
+    if (name == "YlGnBu") return makeColorMapYlGnBu();
+    if (name == "YlOrBr") return makeColorMapYlOrBr();
+    if (name == "YlOrRd") return makeColorMapYlOrRd();
+    if (name == "afmhot") return makeColorMapafmhot();
+    if (name == "autumn") return makeColorMapautumn();
+    if (name == "bone") return makeColorMapbone();
+    if (name == "cool") return makeColorMapcool();
+    if (name == "copper") return makeColorMapcopper();
+    if (name == "gist_heat") return makeColorMapgist_heat();
+    if (name == "gray") return makeColorMapgray();
+    if (name == "hot") return makeColorMaphot();
+    if (name == "pink") return makeColorMappink();
+    if (name == "spring") return makeColorMapspring();
+    if (name == "summer") return makeColorMapsummer();
+    if (name == "winter") return makeColorMapwinter();
+    if (name == "BrBG") return makeColorMapBrBG();
+    if (name == "bwr") return makeColorMapbwr();
+    if (name == "coolwarm") return makeColorMapcoolwarm();
+    if (name == "PiYG") return makeColorMapPiYG();
+    if (name == "PRGn") return makeColorMapPRGn();
+    if (name == "PuOr") return makeColorMapPuOr();
+    if (name == "RdBu") return makeColorMapRdBu();
+    if (name == "RdGy") return makeColorMapRdGy();
+    if (name == "RdYlBu") return makeColorMapRdYlBu();
+    if (name == "RdYlGn") return makeColorMapRdYlGn();
+    if (name == "Spectral") return makeColorMapSpectral();
+    if (name == "seismic") return makeColorMapseismic();
+    if (name == "Accent") return makeColorMapAccent();
+    if (name == "Dark2") return makeColorMapDark2();
+    if (name == "Paired") return makeColorMapPaired();
+    if (name == "Pastel1") return makeColorMapPastel1();
+    if (name == "Pastel2") return makeColorMapPastel2();
+    if (name == "Set1") return makeColorMapSet1();
+    if (name == "Set2") return makeColorMapSet2();
+    if (name == "Set3") return makeColorMapSet3();
+    if (name == "gist_earth") return makeColorMapgist_earth();
+    if (name == "terrain") return makeColorMapterrain();
+    if (name == "ocean") return makeColorMapocean();
+    if (name == "gist_stern") return makeColorMapgist_stern();
+    if (name == "brg") return makeColorMapbrg();
+    if (name == "CMRmap") return makeColorMapCMRmap();
+    if (name == "cubehelix") return makeColorMapcubehelix();
+    if (name == "gnuplot") return makeColorMapgnuplot();
+    if (name == "gnuplot2") return makeColorMapgnuplot2();
+    if (name == "gist_ncar") return makeColorMapgist_ncar();
+    if (name == "nipy_spectral") return makeColorMapnipy_spectral();
+    if (name == "jet") return makeColorMapjet();
+    if (name == "rainbow") return makeColorMaprainbow();
+    if (name == "gist_rainbow") return makeColorMapgist_rainbow();
+    if (name == "hsv") return makeColorMaphsv();
+    if (name == "flag") return makeColorMapflag();
+    if (name == "prism") return makeColorMapprism();
     return std::vector<std::vector<double>>();
 }

@@ -158,7 +158,5 @@ private:
     bool _fftModeAutomatic;
     std::string _freqLabelId;
     std::string _rateLabelId;
-
-    std::vector<std::vector<double>> _colorMap;
-    QwtColorMap *makeColorMap(void) const;
+    std::string _colorMapName;
 };

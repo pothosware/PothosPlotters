@@ -6,8 +6,13 @@
 #include <utility>
 #include <cstddef>
 
+class QwtColorMap;
+
 //! Get a listing of all title, name pairs for each color map
-std::vector<std::pair<const std::string, const std::string>> available_color_maps(void);
+std::vector<std::pair<const std::string, const std::string>> availableColorMaps(void);
 
 //! Get a color mapping given a name in [Z, R, G, B, A] format
-std::vector<std::vector<double>> make_color_map(const std::string &name);
+std::vector<std::vector<double>> lookupColorMap(const std::string &name);
+
+//! Make a QwtColorMap given the name of a mapping
+QwtColorMap *makeQwtColorMap(const std::string &name);
