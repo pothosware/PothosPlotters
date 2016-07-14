@@ -123,6 +123,16 @@
  * |preview disable
  * |tab Axis
  *
+ * |param colorMap[Color Map] Color mapping options for the raster plot.
+ * The color map is expressed as a list of [Z, R, G, B, A] points.
+ * Where Z is the scale level between 0.0 and 1.0.
+ * R, G, B are color values between 0.0 and 1.0.
+ * And A is the optional alpha value between 0.0 and 1.0.
+ * The colors will be linearly interpolated between expressed points.
+ * |default [[0.0, 0.0, 0.0, 0.0], [1.0, 1.0, 1.0, 1.0]]
+ * |preview disable
+ * |tab Axis
+ *
  * |param freqLabelId[Freq Label ID] Labels with this ID can be used to set the center frequency.
  * To ignore frequency labels, set this parameter to an empty string.
  * |default "rxFreq"
@@ -159,6 +169,7 @@
  * |setter setDynamicRange(dynRange)
  * |setter enableXAxis(enableXAxis)
  * |setter enableYAxis(enableYAxis)
+ * |setter setColorMap(colorMap)
  * |setter setFreqLabelId(freqLabelId)
  * |setter setRateLabelId(rateLabelId)
  * |setter setStartLabelId(startLabelId)
@@ -200,6 +211,7 @@ public:
         this->connect(this, "setDynamicRange", _display, "setDynamicRange");
         this->connect(this, "enableXAxis", _display, "enableXAxis");
         this->connect(this, "enableYAxis", _display, "enableYAxis");
+        this->connect(this, "setColorMap", _display, "setColorMap");
         this->connect(_display, "frequencySelected", this, "frequencySelected");
 
         //connect to the internal snooper block

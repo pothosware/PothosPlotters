@@ -99,6 +99,8 @@ public:
     void enableXAxis(const bool enb);
     void enableYAxis(const bool enb);
 
+    void setColorMap(const std::vector<std::vector<double>> &colorMap);
+
     void setFreqLabelId(const std::string &id)
     {
         _freqLabelId = id;
@@ -156,5 +158,7 @@ private:
     bool _fftModeAutomatic;
     std::string _freqLabelId;
     std::string _rateLabelId;
+
+    std::vector<std::vector<double>> _colorMap;
     QwtColorMap *makeColorMap(void) const;
 };

@@ -63,6 +63,7 @@ SpectrogramDisplay::SpectrogramDisplay(void):
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, dynamicRange));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, enableXAxis));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, enableYAxis));
+    this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setColorMap));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setFreqLabelId));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setRateLabelId));
     this->registerSignal("frequencySelected");
@@ -94,7 +95,6 @@ SpectrogramDisplay::SpectrogramDisplay(void):
     {
         _plotSpect->attach(_mainPlot);
         _plotSpect->setData(_plotRaster);
-        _plotSpect->setColorMap(this->makeColorMap());
         _plotSpect->setDisplayMode(QwtPlotSpectrogram::ImageMode, true);
         _plotSpect->setRenderThreadCount(0); //enable multi-thread
     }
@@ -235,6 +235,7 @@ void SpectrogramDisplay::handleUpdateAxis(void)
     _plotRaster->setInterval(Qt::YAxis, _mainPlot->axisInterval(QwtPlot::yLeft));
     _plotRaster->setInterval(Qt::ZAxis, _mainPlot->axisInterval(QwtPlot::yRight));
     _plotRaster->setFFTMode(_fftModeComplex);
+    _plotSpect->setColorMap(this->makeColorMap());
     _mainPlot->axisWidget(QwtPlot::yRight)->setColorMap(_plotRaster->interval(Qt::ZAxis), this->makeColorMap());
 
     _mainPlot->zoomer()->setZoomBase(); //record current axis settings
@@ -276,11 +277,27 @@ void SpectrogramDisplay::appendBins(const std::valarray<float> &bins)
     _plotRaster->appendBins(bins);
 }
 
+void SpectrogramDisplay::setColorMap(const std::vector<std::vector<double>> &colorMap)
+{
+    _colorMap = colorMap;
+    if (_colorMap.size() < 2) throw Pothos::InvalidArgumentException("SpectrogramDisplay::setColorMap()", "map requires at least 2 entries");
+    QMetaObject::invokeMethod(this, "handleUpdateAxis", Qt::QueuedConnection);
+}
+
+static QColor vecToColor(const std::vector<double> &vec)
+{
+    std::vector<double> colorsF(vec);
+    colorsF.resize(5, 1.0); //last 4 entries are r, g, b, a with 1.0 default
+    return QColor::fromRgbF(colorsF[1], colorsF[2], colorsF[3], colorsF[4]);
+}
+
 QwtColorMap *SpectrogramDisplay::makeColorMap(void) const
 {
-    auto cMap = new QwtLinearColorMap(Qt::darkCyan, Qt::red);
-    cMap->addColorStop(0.1, Qt::cyan);
-    cMap->addColorStop(0.6, Qt::green);
-    cMap->addColorStop(0.95, Qt::yellow);
+    auto cMap = new QwtLinearColorMap(vecToColor(_colorMap.front()), vecToColor(_colorMap.back()));
+    for (size_t i = 1; i < _colorMap.size()-1; i++)
+    {
+        const auto &vec = _colorMap.at(i);
+        cMap->addColorStop(vec.at(0), vecToColor(vec));
+    }
     return cMap;
 }
