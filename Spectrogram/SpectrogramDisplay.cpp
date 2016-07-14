@@ -277,9 +277,12 @@ void SpectrogramDisplay::appendBins(const std::valarray<float> &bins)
     _plotRaster->appendBins(bins);
 }
 
-void SpectrogramDisplay::setColorMap(const std::vector<std::vector<double>> &colorMap)
+#include "GeneratedColorMaps.hpp"
+
+void SpectrogramDisplay::setColorMap(const std::string &colorMapName)
 {
-    _colorMap = colorMap;
+    _colorMap = make_color_map(colorMapName);
+    if (_colorMap.empty()) _colorMap = make_color_map("rainbow");
     if (_colorMap.size() < 2) throw Pothos::InvalidArgumentException("SpectrogramDisplay::setColorMap()", "map requires at least 2 entries");
     QMetaObject::invokeMethod(this, "handleUpdateAxis", Qt::QueuedConnection);
 }

@@ -18,6 +18,7 @@ POTHOS_MODULE_UTIL(
         Spectrogram.cpp
         SpectrogramWork.cpp
         SpectrogramDisplay.cpp
+        ColorMapEntry.cpp
     DOC_SOURCES Spectrogram.cpp
     LIBRARIES
         ${Qt5_LIBRARIES}

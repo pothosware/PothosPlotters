@@ -123,13 +123,9 @@
  * |preview disable
  * |tab Axis
  *
- * |param colorMap[Color Map] Color mapping options for the raster plot.
- * The color map is expressed as a list of [Z, R, G, B, A] points.
- * Where Z is the scale level between 0.0 and 1.0.
- * R, G, B are color values between 0.0 and 1.0.
- * And A is the optional alpha value between 0.0 and 1.0.
- * The colors will be linearly interpolated between expressed points.
- * |default [[0.0, 0.0, 0.0, 0.0], [1.0, 1.0, 1.0, 1.0]]
+ * |param colorMap[Color Map] The name of a color map for the raster plot.
+ * |widget ColorMapEntry()
+ * |default "default"
  * |preview disable
  * |tab Axis
  *

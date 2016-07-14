@@ -99,7 +99,7 @@ public:
     void enableXAxis(const bool enb);
     void enableYAxis(const bool enb);
 
-    void setColorMap(const std::vector<std::vector<double>> &colorMap);
+    void setColorMap(const std::string &colorMapName);
 
     void setFreqLabelId(const std::string &id)
     {
