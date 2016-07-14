@@ -1,6 +1,7 @@
 // Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
+#include "GeneratedColorMaps.hpp"
 #include "SpectrogramDisplay.hpp"
 #include "MyPlotStyler.hpp"
 #include "MyPlotPicker.hpp"
@@ -63,6 +64,7 @@ SpectrogramDisplay::SpectrogramDisplay(void):
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, dynamicRange));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, enableXAxis));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, enableYAxis));
+    this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setColorMap));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setFreqLabelId));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setRateLabelId));
     this->registerSignal("frequencySelected");
@@ -94,7 +96,6 @@ SpectrogramDisplay::SpectrogramDisplay(void):
     {
         _plotSpect->attach(_mainPlot);
         _plotSpect->setData(_plotRaster);
-        _plotSpect->setColorMap(this->makeColorMap());
         _plotSpect->setDisplayMode(QwtPlotSpectrogram::ImageMode, true);
         _plotSpect->setRenderThreadCount(0); //enable multi-thread
     }
@@ -235,7 +236,8 @@ void SpectrogramDisplay::handleUpdateAxis(void)
     _plotRaster->setInterval(Qt::YAxis, _mainPlot->axisInterval(QwtPlot::yLeft));
     _plotRaster->setInterval(Qt::ZAxis, _mainPlot->axisInterval(QwtPlot::yRight));
     _plotRaster->setFFTMode(_fftModeComplex);
-    _mainPlot->axisWidget(QwtPlot::yRight)->setColorMap(_plotRaster->interval(Qt::ZAxis), this->makeColorMap());
+    _plotSpect->setColorMap(makeQwtColorMap(_colorMapName));
+    _mainPlot->axisWidget(QwtPlot::yRight)->setColorMap(_plotRaster->interval(Qt::ZAxis), makeQwtColorMap(_colorMapName));
 
     _mainPlot->zoomer()->setZoomBase(); //record current axis settings
 }
@@ -276,11 +278,8 @@ void SpectrogramDisplay::appendBins(const std::valarray<float> &bins)
     _plotRaster->appendBins(bins);
 }
 
-QwtColorMap *SpectrogramDisplay::makeColorMap(void) const
+void SpectrogramDisplay::setColorMap(const std::string &colorMapName)
 {
-    auto cMap = new QwtLinearColorMap(Qt::darkCyan, Qt::red);
-    cMap->addColorStop(0.1, Qt::cyan);
-    cMap->addColorStop(0.6, Qt::green);
-    cMap->addColorStop(0.95, Qt::yellow);
-    return cMap;
+    _colorMapName = colorMapName;
+    QMetaObject::invokeMethod(this, "handleUpdateAxis", Qt::QueuedConnection);
 }

@@ -123,6 +123,12 @@
  * |preview disable
  * |tab Axis
  *
+ * |param colorMap[Color Map] The name of a color map for the raster plot.
+ * |widget ColorMapEntry()
+ * |default "rainbow"
+ * |preview disable
+ * |tab Axis
+ *
  * |param freqLabelId[Freq Label ID] Labels with this ID can be used to set the center frequency.
  * To ignore frequency labels, set this parameter to an empty string.
  * |default "rxFreq"
@@ -159,6 +165,7 @@
  * |setter setDynamicRange(dynRange)
  * |setter enableXAxis(enableXAxis)
  * |setter enableYAxis(enableYAxis)
+ * |setter setColorMap(colorMap)
  * |setter setFreqLabelId(freqLabelId)
  * |setter setRateLabelId(rateLabelId)
  * |setter setStartLabelId(startLabelId)
@@ -200,6 +207,7 @@ public:
         this->connect(this, "setDynamicRange", _display, "setDynamicRange");
         this->connect(this, "enableXAxis", _display, "enableXAxis");
         this->connect(this, "enableYAxis", _display, "enableYAxis");
+        this->connect(this, "setColorMap", _display, "setColorMap");
         this->connect(_display, "frequencySelected", this, "frequencySelected");
 
         //connect to the internal snooper block
