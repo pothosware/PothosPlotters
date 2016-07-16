@@ -101,11 +101,21 @@ elseif (ENABLE_PLOTTERS)
         message(FATAL_ERROR "Qwt submodule not configured (git submodule update --init --recursive)")
     endif ()
 
+    set (QWT_VERSION_STRING 0)
+    set ( _VERSION_FILE ${QWT_SRC_DIR}/qwt_global.h )
+    if ( EXISTS ${_VERSION_FILE} )
+      file ( STRINGS ${_VERSION_FILE} _VERSION_LINE REGEX "define[ ]+QWT_VERSION_STR" )
+      if ( _VERSION_LINE )
+        string ( REGEX REPLACE ".*define[ ]+QWT_VERSION_STR[ ]+\"(.*)\".*" "\\1" QWT_VERSION_STRING "${_VERSION_LINE}" )
+      endif ()
+    endif ()
+    message(STATUS "QWT_VERSION_STRING: ${QWT_VERSION_STRING}")
+
     include_directories(${QWT_SRC_DIR})
     file(GLOB QWT_SOURCES "${QWT_SRC_DIR}/*.cpp")
     add_library(PothosQwt SHARED ${QWT_SOURCES})
     set_target_properties(PothosQwt PROPERTIES DEFINE_SYMBOL "QWT_MAKEDLL")
-    set_target_properties(PothosQwt PROPERTIES VERSION 0)
+    set_target_properties(PothosQwt PROPERTIES VERSION ${QWT_VERSION_STRING})
     target_link_libraries(PothosQwt ${Qt5_LIBRARIES})
     install(TARGETS PothosQwt
         LIBRARY DESTINATION lib${LIB_SUFFIX} # .so file
