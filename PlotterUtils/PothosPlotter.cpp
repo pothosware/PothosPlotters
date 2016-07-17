@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PothosPlotter.hpp"
-#include "PothosPlotStyler.hpp"
 #include "PothosPlotPicker.hpp"
 #include <QList>
 #include <valarray>
@@ -13,6 +12,36 @@
 #include <qwt_text.h>
 #include <qwt_plot_grid.h>
 #include <QMouseEvent>
+
+/***********************************************************************
+ * Custom Fonts for styling
+ **********************************************************************/
+static QFont PothosPlotAxisFont(void)
+{
+    QFont f;
+    f.setPointSize(7);
+    f.setWeight(QFont::Normal);
+    f.setStretch(QFont::SemiCondensed);
+    return f;
+}
+
+static QFont PothosPlotAxisTitleFont(void)
+{
+    QFont f;
+    f.setPointSize(7);
+    f.setWeight(QFont::DemiBold);
+    f.setStretch(QFont::SemiExpanded);
+    return f;
+}
+
+static QFont PothosPlotTitleFont(void)
+{
+    QFont f;
+    f.setPointSize(8);
+    f.setWeight(QFont::Bold);
+    f.setStretch(QFont::SemiExpanded);
+    return f;
+}
 
 /***********************************************************************
  * Custom QwtPlotCanvas that accepts the mousePressEvent
@@ -43,15 +72,14 @@ PothosPlotter::PothosPlotter(QWidget *parent, const int enables):
     _zoomer(nullptr),
     _grid(nullptr)
 {
+    //setup canvas
     this->setCanvas(new PothosPlotterCanvas(this));
-    qRegisterMetaType<QList<QwtLegendData>>("QList<QwtLegendData>"); //missing from qwt
-    qRegisterMetaType<std::valarray<float>>("std::valarray<float>"); //used for plot data
-    connect(this, SIGNAL(itemAttached(QwtPlotItem *, bool)), this, SLOT(handleItemAttached(QwtPlotItem *, bool)));
+    this->setCanvasBackground(QBrush(Qt::white));
 
-    this->setCanvasBackground(PothosPlotCanvasBg());
-    this->setAxisFont(QwtPlot::xBottom, PothosPlotAxisFontSize());
-    this->setAxisFont(QwtPlot::yLeft, PothosPlotAxisFontSize());
-    this->setAxisFont(QwtPlot::yRight, PothosPlotAxisFontSize());
+    //font style
+    this->setAxisFont(QwtPlot::xBottom, PothosPlotAxisFont());
+    this->setAxisFont(QwtPlot::yLeft, PothosPlotAxisFont());
+    this->setAxisFont(QwtPlot::yRight, PothosPlotAxisFont());
 
     //setup optional plot zoomer
     if ((enables & POTHOS_PLOTTER_ZOOM) != 0)
@@ -64,8 +92,13 @@ PothosPlotter::PothosPlotter(QWidget *parent, const int enables):
     {
         auto plotGrid = new QwtPlotGrid();
         plotGrid->attach(this);
-        plotGrid->setPen(PothosPlotGridPen());
+        plotGrid->setPen(QPen(QColor("#999999"), 0.5, Qt::DashLine));
     }
+
+    //connections
+    qRegisterMetaType<QList<QwtLegendData>>("QList<QwtLegendData>"); //missing from qwt
+    qRegisterMetaType<std::valarray<float>>("std::valarray<float>"); //used for plot data
+    connect(this, SIGNAL(itemAttached(QwtPlotItem *, bool)), this, SLOT(handleItemAttached(QwtPlotItem *, bool)));
 }
 
 PothosPlotter::~PothosPlotter(void)
@@ -76,12 +109,18 @@ PothosPlotter::~PothosPlotter(void)
 
 void PothosPlotter::setTitle(const QString &text)
 {
-    QwtPlot::setTitle(PothosPlotTitle(text));
+    static const QFont font(PothosPlotTitleFont());
+    QwtText t(text);
+    t.setFont(font);
+    QwtPlot::setTitle(t);
 }
 
 void PothosPlotter::setAxisTitle(const int id, const QString &text)
 {
-    QwtPlot::setAxisTitle(id, PothosPlotAxisTitle(text));
+    static const QFont font(PothosPlotAxisTitleFont());
+    QwtText t(text);
+    t.setFont(font);
+    QwtPlot::setAxisTitle(id, t);
 }
 
 void PothosPlotter::updateChecked(QwtPlotItem *item)
