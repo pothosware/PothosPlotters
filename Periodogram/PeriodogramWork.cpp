@@ -3,7 +3,7 @@
 
 #include "PeriodogramDisplay.hpp"
 #include "PeriodogramChannel.hpp"
-#include "MyPlotUtils.hpp"
+#include "PothosPlotter.hpp"
 #include <qwt_plot_curve.h>
 #include <qwt_plot.h>
 #include <complex>

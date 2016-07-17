@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2014 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
@@ -9,17 +9,17 @@
 #include <QFont>
 #include <qwt_text.h>
 
-static inline QPen MyPlotGridPen(void)
+static inline QPen PothosPlotGridPen(void)
 {
     return QPen(QBrush("#999999"), 0.5, Qt::DashLine);
 }
 
-static inline QBrush MyPlotCanvasBg(void)
+static inline QBrush PothosPlotCanvasBg(void)
 {
     return QBrush(Qt::white);
 }
 
-static inline QFont MyPlotAxisFontSize(void)
+static inline QFont PothosPlotAxisFontSize(void)
 {
     QFont f;
     f.setPointSize(7);
@@ -28,7 +28,7 @@ static inline QFont MyPlotAxisFontSize(void)
     return f;
 }
 
-static inline QwtText MyPlotAxisTitle(const QString &title)
+static inline QwtText PothosPlotAxisTitle(const QString &title)
 {
     QwtText text(title);
     QFont f;
@@ -39,7 +39,7 @@ static inline QwtText MyPlotAxisTitle(const QString &title)
     return text;
 }
 
-static inline QwtText MyPlotTitle(const QString &title)
+static inline QwtText PothosPlotTitle(const QString &title)
 {
     QwtText text(title);
     QFont f;
@@ -50,7 +50,7 @@ static inline QwtText MyPlotTitle(const QString &title)
     return text;
 }
 
-static inline QwtText MyMarkerLabel(const QString &label)
+static inline QwtText PothosMarkerLabel(const QString &label)
 {
     QwtText text(label);
     QFont f;

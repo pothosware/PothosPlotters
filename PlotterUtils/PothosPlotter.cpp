@@ -1,9 +1,9 @@
 // Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
-#include "MyPlotUtils.hpp"
-#include "MyPlotStyler.hpp"
-#include "MyPlotPicker.hpp"
+#include "PothosPlotter.hpp"
+#include "PothosPlotStyler.hpp"
+#include "PothosPlotPicker.hpp"
 #include <QList>
 #include <valarray>
 #include <qwt_legend_data.h>
@@ -11,44 +11,18 @@
 #include <qwt_legend.h>
 #include <qwt_legend_label.h>
 #include <qwt_text.h>
+#include <qwt_plot_grid.h>
 #include <QMouseEvent>
-
-QColor getDefaultCurveColor(const size_t whichCurve)
-{
-    switch(whichCurve % 12)
-    {
-    case 0: return Qt::blue;
-    case 1: return Qt::green;
-    case 2: return Qt::red;
-    case 3: return Qt::cyan;
-    case 4: return Qt::magenta;
-    case 5: return Qt::yellow;
-    case 6: return Qt::darkBlue;
-    case 7: return Qt::darkGreen;
-    case 8: return Qt::darkRed;
-    case 9: return Qt::darkCyan;
-    case 10: return Qt::darkMagenta;
-    case 11: return Qt::darkYellow;
-    };
-    return QColor();
-}
-
-QColor pastelize(const QColor &c)
-{
-    //Pastels have high value and low to intermediate saturation:
-    //http://en.wikipedia.org/wiki/Pastel_%28color%29
-    return QColor::fromHsv(c.hue(), int(c.saturationF()*128), int(c.valueF()*64)+191);
-}
 
 /***********************************************************************
  * Custom QwtPlotCanvas that accepts the mousePressEvent
  * (needed to make mouse-based events work within QGraphicsItem)
  **********************************************************************/
-class MyQwtPlotCanvas : public QwtPlotCanvas
+class PothosPlotterCanvas : public QwtPlotCanvas
 {
     Q_OBJECT
 public:
-    MyQwtPlotCanvas(QwtPlot *parent):
+    PothosPlotterCanvas(QwtPlot *parent):
         QwtPlotCanvas(parent)
     {
         return;
@@ -64,28 +38,53 @@ protected:
 /***********************************************************************
  * Custom QwtPlot implementation
  **********************************************************************/
-MyQwtPlot::MyQwtPlot(QWidget *parent):
+PothosPlotter::PothosPlotter(QWidget *parent, const int enables):
     QwtPlot(parent),
-    _zoomer(nullptr)
+    _zoomer(nullptr),
+    _grid(nullptr)
 {
-    this->setCanvas(new MyQwtPlotCanvas(this));
-    _zoomer = new MyPlotPicker(this->canvas());
+    this->setCanvas(new PothosPlotterCanvas(this));
     qRegisterMetaType<QList<QwtLegendData>>("QList<QwtLegendData>"); //missing from qwt
     qRegisterMetaType<std::valarray<float>>("std::valarray<float>"); //used for plot data
     connect(this, SIGNAL(itemAttached(QwtPlotItem *, bool)), this, SLOT(handleItemAttached(QwtPlotItem *, bool)));
+
+    this->setCanvasBackground(PothosPlotCanvasBg());
+    this->setAxisFont(QwtPlot::xBottom, PothosPlotAxisFontSize());
+    this->setAxisFont(QwtPlot::yLeft, PothosPlotAxisFontSize());
+    this->setAxisFont(QwtPlot::yRight, PothosPlotAxisFontSize());
+
+    //setup optional plot zoomer
+    if ((enables & POTHOS_PLOTTER_ZOOM) != 0)
+    {
+        _zoomer = new PothosPlotPicker(this->canvas());
+    }
+
+    //setup optional plot grid
+    if ((enables & POTHOS_PLOTTER_GRID) != 0)
+    {
+        auto plotGrid = new QwtPlotGrid();
+        plotGrid->attach(this);
+        plotGrid->setPen(PothosPlotGridPen());
+    }
 }
 
-void MyQwtPlot::setTitle(const QString &text)
+PothosPlotter::~PothosPlotter(void)
 {
-    QwtPlot::setTitle(MyPlotTitle(text));
+    delete _zoomer;
+    delete _grid;
 }
 
-void MyQwtPlot::setAxisTitle(const int id, const QString &text)
+void PothosPlotter::setTitle(const QString &text)
 {
-    QwtPlot::setAxisTitle(id, MyPlotAxisTitle(text));
+    QwtPlot::setTitle(PothosPlotTitle(text));
 }
 
-void MyQwtPlot::updateChecked(QwtPlotItem *item)
+void PothosPlotter::setAxisTitle(const int id, const QString &text)
+{
+    QwtPlot::setAxisTitle(id, PothosPlotAxisTitle(text));
+}
+
+void PothosPlotter::updateChecked(QwtPlotItem *item)
 {
     auto legend = dynamic_cast<QwtLegend *>(this->legend());
     if (legend == nullptr) return; //no legend
@@ -96,7 +95,7 @@ void MyQwtPlot::updateChecked(QwtPlotItem *item)
     this->updateLegend();
 }
 
-void MyQwtPlot::handleItemAttached(QwtPlotItem *item, bool on)
+void PothosPlotter::handleItemAttached(QwtPlotItem *item, bool on)
 {
     //only cuves are supported by this logic
     if (item->rtti() != QwtPlotItem::Rtti_PlotCurve) return;
@@ -127,7 +126,7 @@ void MyQwtPlot::handleItemAttached(QwtPlotItem *item, bool on)
     }
 }
 
-QVariant MyQwtPlot::state(void) const
+QVariant PothosPlotter::state(void) const
 {
     QVariantMap state;
 
@@ -149,7 +148,7 @@ QVariant MyQwtPlot::state(void) const
     return state;
 }
 
-void MyQwtPlot::setState(const QVariant &state)
+void PothosPlotter::setState(const QVariant &state)
 {
     const auto map = state.toMap();
 
@@ -169,4 +168,4 @@ void MyQwtPlot::setState(const QVariant &state)
     }
 }
 
-#include "MyPlotUtils.moc"
+#include "PothosPlotter.moc"

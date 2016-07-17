@@ -1,8 +1,9 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "ConstellationDisplay.hpp"
-#include "MyPlotUtils.hpp"
+#include "PothosPlotter.hpp"
+#include "PothosPlotUtils.hpp"
 #include <qwt_plot_curve.h>
 #include <qwt_plot.h>
 #include <complex>

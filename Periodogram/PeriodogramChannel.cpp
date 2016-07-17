@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PeriodogramChannel.hpp"
+#include "PothosPlotter.hpp"
+#include "PothosPlotUtils.hpp"
 #include <qwt_plot_curve.h>
 #include <qwt_legend.h>
 #include <cmath>
@@ -13,8 +15,7 @@ T movingAvgPowerBinFilter(const T alpha, const T prev, const T curr)
     return 10*std::log((1-alpha)*std::exp(prev/10) + alpha*std::exp(curr/10));
 }
 
-PeriodogramChannel::PeriodogramChannel(const size_t index, MyQwtPlot *plot):
-    _plot(plot)
+PeriodogramChannel::PeriodogramChannel(const size_t index, PothosPlotter *plot)
 {
     _channelCurve.reset(new QwtPlotCurve(QString("Ch%1").arg(index)));
     _maxHoldCurve.reset(new QwtPlotCurve(QString("Max%1").arg(index)));

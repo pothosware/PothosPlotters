@@ -12,8 +12,7 @@
 #include <atomic>
 #include <vector>
 
-class MyQwtPlot;
-class QwtPlotGrid;
+class PothosPlotter;
 class QwtPlotCurve;
 
 class ConstellationDisplay : public QWidget, public Pothos::Block
@@ -73,8 +72,7 @@ private slots:
     void handleZoomed(const QRectF &rect);
 
 private:
-    MyQwtPlot *_mainPlot;
-    QwtPlotGrid *_plotGrid;
+    PothosPlotter *_mainPlot;
     bool _autoScale;
     std::vector<double> _xRange;
     std::vector<double> _yRange;

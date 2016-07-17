@@ -3,8 +3,7 @@
 
 #include "PeriodogramDisplay.hpp"
 #include "PeriodogramChannel.hpp"
-#include "MyPlotStyler.hpp"
-#include "MyPlotUtils.hpp"
+#include "PothosPlotter.hpp"
 #include <QResizeEvent>
 #include <qwt_plot.h>
 #include <qwt_plot_grid.h>
@@ -14,8 +13,7 @@
 #include <algorithm> //min/max
 
 PeriodogramDisplay::PeriodogramDisplay(void):
-    _mainPlot(new MyQwtPlot(this)),
-    _plotGrid(new QwtPlotGrid()),
+    _mainPlot(new PothosPlotter(this, POTHOS_PLOTTER_GRID | POTHOS_PLOTTER_ZOOM)),
     _sampleRate(1.0),
     _sampleRateWoAxisUnits(1.0),
     _centerFreq(0.0),
@@ -67,22 +65,13 @@ PeriodogramDisplay::PeriodogramDisplay(void):
 
     //setup plotter
     {
-        _mainPlot->setCanvasBackground(MyPlotCanvasBg());
         connect(_mainPlot->zoomer(), SIGNAL(selected(const QPointF &)), this, SLOT(handlePickerSelected(const QPointF &)));
         connect(_mainPlot->zoomer(), SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
-        _mainPlot->setAxisFont(QwtPlot::xBottom, MyPlotAxisFontSize());
-        _mainPlot->setAxisFont(QwtPlot::yLeft, MyPlotAxisFontSize());
 
         auto legend = new QwtLegend(_mainPlot);
         legend->setDefaultItemMode(QwtLegendData::Checkable);
         connect(legend, SIGNAL(checked(const QVariant &, bool, int)), this, SLOT(handleLegendChecked(const QVariant &, bool, int)));
         _mainPlot->insertLegend(legend);
-    }
-
-    //setup grid
-    {
-        _plotGrid->attach(_mainPlot);
-        _plotGrid->setPen(MyPlotGridPen());
     }
 }
 

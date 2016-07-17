@@ -3,9 +3,8 @@
 
 #include "GeneratedColorMaps.hpp"
 #include "SpectrogramDisplay.hpp"
-#include "MyPlotStyler.hpp"
-#include "MyPlotPicker.hpp"
-#include "MyPlotUtils.hpp"
+#include "PothosPlotPicker.hpp"
+#include "PothosPlotter.hpp"
 #include "SpectrogramRaster.hpp"
 #include <QTimer>
 #include <QResizeEvent>
@@ -22,7 +21,7 @@
 
 SpectrogramDisplay::SpectrogramDisplay(void):
     _replotTimer(new QTimer(this)),
-    _mainPlot(new MyQwtPlot(this)),
+    _mainPlot(new PothosPlotter(this, POTHOS_PLOTTER_ZOOM)),
     _plotSpect(new QwtPlotSpectrogram()),
     _plotRaster(new MySpectrogramRasterData()),
     _lastUpdateRate(1.0),
@@ -79,13 +78,9 @@ SpectrogramDisplay::SpectrogramDisplay(void):
 
     //setup plotter
     {
-        _mainPlot->setCanvasBackground(MyPlotCanvasBg());
-        dynamic_cast<MyPlotPicker *>(_mainPlot->zoomer())->registerRaster(_plotRaster);
+        dynamic_cast<PothosPlotPicker *>(_mainPlot->zoomer())->registerRaster(_plotRaster);
         connect(_mainPlot->zoomer(), SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
         connect(_mainPlot->zoomer(), SIGNAL(selected(const QPointF &)), this, SLOT(handlePickerSelected(const QPointF &)));
-        _mainPlot->setAxisFont(QwtPlot::xBottom, MyPlotAxisFontSize());
-        _mainPlot->setAxisFont(QwtPlot::yLeft, MyPlotAxisFontSize());
-        _mainPlot->setAxisFont(QwtPlot::yRight, MyPlotAxisFontSize());
         _mainPlot->setAxisTitle(QwtPlot::yRight, "dB");
         _mainPlot->plotLayout()->setAlignCanvasToScales(true);
         _mainPlot->enableAxis(QwtPlot::yRight);

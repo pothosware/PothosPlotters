@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
@@ -10,11 +10,11 @@ class QwtRasterData;
 /*!
  * Plot picker with custom marker style
  */
-class POTHOS_PLOTTER_UTILS_EXPORT MyPlotPicker : public QwtPlotZoomer
+class POTHOS_PLOTTER_UTILS_EXPORT PothosPlotPicker : public QwtPlotZoomer
 {
     Q_OBJECT
 public:
-    MyPlotPicker(QWidget *parent);
+    PothosPlotPicker(QWidget *parent);
 
     //! support for getting a z-axis value
     void registerRaster(QwtRasterData *raster);

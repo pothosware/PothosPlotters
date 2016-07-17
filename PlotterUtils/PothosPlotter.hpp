@@ -3,28 +3,27 @@
 
 #pragma once
 #include "PlotUtilsConfig.hpp"
-#include <QColor>
 #include <qwt_plot.h>
 #include <QVariant>
 #include <QBitArray>
 
 class QwtPlotItem;
 class QwtPlotZoomer;
+class QwtPlotGrid;
 
-//! Get a color for a plotter curve given an index
-POTHOS_PLOTTER_UTILS_EXPORT QColor getDefaultCurveColor(const size_t whichCurve);
-
-//! make a color have pastel-properties
-POTHOS_PLOTTER_UTILS_EXPORT QColor pastelize(const QColor &c);
+#define POTHOS_PLOTTER_GRID (1 << 0)
+#define POTHOS_PLOTTER_ZOOM (1 << 1)
 
 /*!
  * A QwtPlot extension class that has slots for certain things.
  */
-class POTHOS_PLOTTER_UTILS_EXPORT MyQwtPlot : public QwtPlot
+class POTHOS_PLOTTER_UTILS_EXPORT PothosPlotter : public QwtPlot
 {
     Q_OBJECT
 public:
-    MyQwtPlot(QWidget *parent);
+    PothosPlotter(QWidget *parent, const int enables = 0);
+
+    ~PothosPlotter(void);
 
     //! update checked status based on visibility
     void updateChecked(QwtPlotItem *item);
@@ -50,5 +49,6 @@ private slots:
 
 private:
     QwtPlotZoomer *_zoomer;
+    QwtPlotGrid *_grid;
     QBitArray _visible;
 };

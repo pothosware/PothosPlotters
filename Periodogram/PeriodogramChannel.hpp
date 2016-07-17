@@ -3,20 +3,21 @@
 
 #pragma once
 #include <qwt_math.h> //_USE_MATH_DEFINES
-#include "MyPlotUtils.hpp"
-#include <valarray>
+#include <QObject>
 #include <QVector>
 #include <QPointF>
 #include <memory>
+#include <valarray>
 
-class QwtPlot;
+class PothosPlotter;
 class QwtPlotCurve;
+class QwtPlotItem;
 
 class PeriodogramChannel : QObject
 {
     Q_OBJECT
 public:
-    PeriodogramChannel(const size_t index, MyQwtPlot *plot);
+    PeriodogramChannel(const size_t index, PothosPlotter *plot);
 
     ~PeriodogramChannel(void);
 
@@ -28,7 +29,6 @@ private:
 
     void initBufferSize(const std::valarray<float> &powerBins, QVector<QPointF> &buff);
 
-    QwtPlot *_plot;
     QVector<QPointF> _channelBuffer;
     QVector<QPointF> _maxHoldBuffer;
     QVector<QPointF> _minHoldBuffer;
