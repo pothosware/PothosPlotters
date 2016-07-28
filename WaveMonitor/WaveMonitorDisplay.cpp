@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: BSL-1.0
 
 #include "WaveMonitorDisplay.hpp"
-#include "MyPlotStyler.hpp"
-#include "MyPlotUtils.hpp"
+#include "PothosPlotter.hpp"
+#include "PothosPlotStyler.hpp"
+#include "PothosPlotUtils.hpp"
 #include <QResizeEvent>
 #include <qwt_plot.h>
 #include <qwt_plot_grid.h>
@@ -14,8 +15,7 @@
 #include <iostream>
 
 WaveMonitorDisplay::WaveMonitorDisplay(void):
-    _mainPlot(new MyQwtPlot(this)),
-    _plotGrid(new QwtPlotGrid()),
+    _mainPlot(new PothosPlotter(this, POTHOS_PLOTTER_GRID | POTHOS_PLOTTER_ZOOM)),
     _sampleRate(1.0),
     _sampleRateWoAxisUnits(1.0),
     _numPoints(1024),
@@ -50,23 +50,14 @@ WaveMonitorDisplay::WaveMonitorDisplay(void):
 
     //setup plotter
     {
-        _mainPlot->setCanvasBackground(MyPlotCanvasBg());
-        _mainPlot->setAxisFont(QwtPlot::xBottom, MyPlotAxisFontSize());
-        _mainPlot->setAxisFont(QwtPlot::yLeft, MyPlotAxisFontSize());
         connect(_mainPlot->zoomer(), SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
-    }
-
-    //setup grid
-    {
-        _plotGrid->attach(_mainPlot);
-        _plotGrid->setPen(MyPlotGridPen());
     }
 
     //register types passed to gui thread from work
     qRegisterMetaType<Pothos::Packet>("Pothos::Packet");
 
     //setup trigger marker label
-    _triggerMarkerLabel = MyMarkerLabel("T");
+    _triggerMarkerLabel = PothosMarkerLabel("T");
     static const QColor orange("#FFA500");
     _triggerMarkerLabel.setBackgroundBrush(QBrush(orange));
 }

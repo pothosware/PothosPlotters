@@ -10,10 +10,9 @@
 #include <map>
 #include <vector>
 #include <atomic>
-#include "MyFFTUtils.hpp"
+#include "PothosPlotterFFTUtils.hpp"
 
-class MyQwtPlot;
-class QwtPlotGrid;
+class PothosPlotter;
 class QwtPlotCurve;
 class PeriodogramChannel;
 
@@ -133,8 +132,7 @@ private slots:
     void handleLegendChecked(const QVariant &, bool, int);
 
 private:
-    MyQwtPlot *_mainPlot;
-    QwtPlotGrid *_plotGrid;
+    PothosPlotter *_mainPlot;
     FFTPowerSpectrum _fftPowerSpectrum;
     double _sampleRate;
     double _sampleRateWoAxisUnits;

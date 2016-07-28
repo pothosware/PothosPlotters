@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: BSL-1.0
 
 #include "SpectrogramDisplay.hpp"
-#include "MyPlotUtils.hpp"
 #include <qwt_plot.h>
 #include <QTimer>
 #include <complex>

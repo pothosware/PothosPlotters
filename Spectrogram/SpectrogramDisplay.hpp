@@ -9,10 +9,10 @@
 #include <memory>
 #include <map>
 #include <vector>
-#include "MyFFTUtils.hpp"
+#include "PothosPlotterFFTUtils.hpp"
 
 class QTimer;
-class MyQwtPlot;
+class PothosPlotter;
 class QwtColorMap;
 class QwtPlotSpectrogram;
 class MySpectrogramRasterData;
@@ -139,7 +139,7 @@ private slots:
 
 private:
     QTimer *_replotTimer;
-    MyQwtPlot *_mainPlot;
+    PothosPlotter *_mainPlot;
     std::shared_ptr<QwtPlotSpectrogram> _plotSpect;
     MySpectrogramRasterData *_plotRaster;
     FFTPowerSpectrum _fftPowerSpectrum;

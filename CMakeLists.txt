@@ -136,7 +136,7 @@ file(GLOB PLOTTER_UTILS_SOURCES "PlotterUtils/*.cpp")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/PlotterUtils)
 add_library(PothosPlotterUtils SHARED ${PLOTTER_UTILS_SOURCES})
 set_target_properties(PothosPlotterUtils PROPERTIES DEFINE_SYMBOL "POTHOS_PLOTTER_UTILS_MAKEDLL")
-set_target_properties(PothosPlotterUtils PROPERTIES VERSION 0)
+set_target_properties(PothosPlotterUtils PROPERTIES VERSION 0.2.0)
 target_link_libraries(PothosPlotterUtils ${Qt5_LIBRARIES})
 install(TARGETS PothosPlotterUtils
     LIBRARY DESTINATION lib${LIB_SUFFIX} # .so file

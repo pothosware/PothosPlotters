@@ -1,7 +1,7 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
-#include "MyPlotPicker.hpp"
+#include "PothosPlotPicker.hpp"
 #include <qwt_plot.h>
 #include <qwt_plot_canvas.h>
 #include <qwt_raster_data.h>
@@ -9,7 +9,7 @@
 #include <cassert>
 #include <algorithm> //min/max
 
-MyPlotPicker::MyPlotPicker(QWidget *parent):
+PothosPlotPicker::PothosPlotPicker(QWidget *parent):
     QwtPlotZoomer(QwtPlot::xBottom, QwtPlot::yLeft, parent),
     _raster(nullptr)
 {
@@ -18,17 +18,17 @@ MyPlotPicker::MyPlotPicker(QWidget *parent):
     this->setTrackerMode(QwtPicker::AlwaysOn);
 };
 
-void MyPlotPicker::registerRaster(QwtRasterData *raster)
+void PothosPlotPicker::registerRaster(QwtRasterData *raster)
 {
     _raster = raster;
 }
 
-void MyPlotPicker::widgetMouseDoubleClickEvent(QMouseEvent *event)
+void PothosPlotPicker::widgetMouseDoubleClickEvent(QMouseEvent *event)
 {
     emit this->selected(this->invTransform(event->pos()));
 }
 
-bool MyPlotPicker::accept(QPolygon &pa) const
+bool PothosPlotPicker::accept(QPolygon &pa) const
 {
     if (pa.count() < 2) return false;
 
@@ -53,7 +53,7 @@ bool MyPlotPicker::accept(QPolygon &pa) const
     return QwtPlotZoomer::accept(pa);
 }
 
-QwtText MyPlotPicker::trackerTextF(const QPointF &pos) const
+QwtText PothosPlotPicker::trackerTextF(const QPointF &pos) const
 {
     QString zvalue;
     if (_raster != nullptr and

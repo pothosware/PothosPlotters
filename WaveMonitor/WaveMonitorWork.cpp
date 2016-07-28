@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: BSL-1.0
 
 #include "WaveMonitorDisplay.hpp"
-#include "MyPlotStyler.hpp"
-#include "MyPlotUtils.hpp"
+#include "PothosPlotter.hpp"
+#include "PothosPlotStyler.hpp"
 #include <qwt_plot_curve.h>
 #include <qwt_plot_marker.h>
 #include <qwt_plot.h>
@@ -69,7 +69,7 @@ void WaveMonitorDisplay::handleSamples(const Pothos::Packet &packet)
     for (const auto &label : packet.labels)
     {
         auto marker = new QwtPlotMarker();
-        marker->setLabel(MyMarkerLabel(QString::fromStdString(label.id)));
+        marker->setLabel(PothosMarkerLabel(QString::fromStdString(label.id)));
         marker->setLabelAlignment(Qt::AlignHCenter);
         const auto i = label.index + (label.width-1)/2.0;
         marker->setXValue((i-frac)/_sampleRateWoAxisUnits);

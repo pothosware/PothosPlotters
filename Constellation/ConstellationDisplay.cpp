@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: BSL-1.0
 
 #include "ConstellationDisplay.hpp"
-#include "MyPlotStyler.hpp"
-#include "MyPlotUtils.hpp"
+#include "PothosPlotter.hpp"
 #include <QResizeEvent>
 #include <qwt_plot.h>
 #include <qwt_plot_grid.h>
@@ -11,8 +10,7 @@
 #include <QHBoxLayout>
 
 ConstellationDisplay::ConstellationDisplay(void):
-    _mainPlot(new MyQwtPlot(this)),
-    _plotGrid(new QwtPlotGrid()),
+    _mainPlot(new PothosPlotter(this, POTHOS_PLOTTER_GRID | POTHOS_PLOTTER_ZOOM)),
     _autoScale(false),
     _queueDepth(0)
 {
@@ -36,16 +34,7 @@ ConstellationDisplay::ConstellationDisplay(void):
 
     //setup plotter
     {
-        _mainPlot->setCanvasBackground(MyPlotCanvasBg());
         connect(_mainPlot->zoomer(), SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
-        _mainPlot->setAxisFont(QwtPlot::xBottom, MyPlotAxisFontSize());
-        _mainPlot->setAxisFont(QwtPlot::yLeft, MyPlotAxisFontSize());
-    }
-
-    //setup grid
-    {
-        _plotGrid->attach(_mainPlot);
-        _plotGrid->setPen(MyPlotGridPen());
     }
 
     //register types passed to gui thread from work

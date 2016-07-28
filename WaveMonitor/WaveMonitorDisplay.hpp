@@ -12,8 +12,7 @@
 #include <vector>
 #include <qwt_text.h>
 
-class MyQwtPlot;
-class QwtPlotGrid;
+class PothosPlotter;
 class QwtPlotCurve;
 class QwtPlotMarker;
 
@@ -113,8 +112,7 @@ private slots:
 private:
     std::shared_ptr<QwtPlotCurve> &getCurve(const size_t index, const size_t which, const size_t width);
 
-    MyQwtPlot *_mainPlot;
-    QwtPlotGrid *_plotGrid;
+    PothosPlotter *_mainPlot;
     double _sampleRate;
     double _sampleRateWoAxisUnits;
     size_t _numPoints;
