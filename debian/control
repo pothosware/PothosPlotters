@@ -14,7 +14,15 @@ Homepage: https://github.com/pothosware/pothos-plotters/wiki
 Vcs-Git: https://github.com/pothosware/pothos-plotters.git
 Vcs-Browser: https://github.com/pothosware/pothos-plotters
 
-Package: pothos-plotters
+Package: pothos-modules-plotters
+Section: libs
+Architecture: all
+Pre-Depends: ${misc:Pre-Depends}
+Depends: pothos-modules0.4-3-plotters, ${misc:Depends}
+Description: graphical plotter widgets - metapackage
+ The Pothos data-flow software suite.
+
+Package: pothos-modules0.4-3-plotters
 Section: libs
 Architecture: any
 Pre-Depends: ${misc:Pre-Depends}
