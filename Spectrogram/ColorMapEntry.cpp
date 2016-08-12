@@ -96,7 +96,7 @@ static QWidget *makeColorMapEntry(const Poco::JSON::Object::Ptr &, QWidget *pare
     return colorMapEntry;
 }
 
-pothos_static_block(registerComboBox)
+pothos_static_block(registerColorMapEntry)
 {
     Pothos::PluginRegistry::add("/gui/EntryWidgets/ColorMapEntry", Pothos::Callable(&makeColorMapEntry));
 }
