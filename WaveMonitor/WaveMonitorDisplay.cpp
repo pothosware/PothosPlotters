@@ -161,19 +161,19 @@ void WaveMonitorDisplay::handleUpdateCurves(void)
         const auto &label = _channelLabels[index];
         const auto &styleStr = _channelStyles[index];
 
-        Qt::PenStyle style(Qt::SolidLine);
-        if (styleStr == "LINE") style = Qt::SolidLine;
-        if (styleStr == "DASH") style = Qt::DashLine;
-        if (styleStr == "DOTS") style = Qt::DotLine;
-
+        QwtPlotCurve::CurveStyle style(QwtPlotCurve::Dots);
+        Qt::PenStyle penStyle(Qt::SolidLine);
         qreal width = 1.0;
-        if (style != Qt::SolidLine) width += 0.5;
+        if (styleStr == "LINE") {style = QwtPlotCurve::Lines; penStyle = Qt::SolidLine; width = 1.0;}
+        if (styleStr == "DASH") {style = QwtPlotCurve::Lines; penStyle = Qt::DashLine; width = 1.0;}
+        if (styleStr == "DOTS") {style = QwtPlotCurve::Dots; penStyle = Qt::DotLine; width = 2.0;}
 
         for (const auto &curvePair : curves)
         {
             const auto &curve = curvePair.second;
             const auto color = pastelize(getDefaultCurveColor(count++));
-            curve->setPen(color, width, style);
+            curve->setPen(color, width, penStyle);
+            curve->setStyle(style);
             curve->detach();
             curve->attach(_mainPlot);
             _mainPlot->updateChecked(curve.get());

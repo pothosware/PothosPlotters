@@ -3,6 +3,7 @@ This this the changelog file for the Pothos Plotters toolkit.
 Release 0.2.1 (pending)
 ==========================
 
+- Tweaks to QwtPlotCurve::CurveStyle for WaveMonitor
 - Added curve style and color to Constellation plotter
 - Fix typo in name of ColorMapEntry registration
 - Added missing libpoco-dev to debian Build-Depends
