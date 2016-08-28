@@ -20,8 +20,7 @@ void ConstellationDisplay::handleSamples(const Pothos::BufferChunk &buff)
     {
         _curve.reset(new QwtPlotCurve());
         _curve->attach(_mainPlot);
-        _curve->setPen(pastelize(getDefaultCurveColor(0)), 2.0);
-        _curve->setStyle(QwtPlotCurve::Dots);
+        this->handleUpdateAxis();
     }
 
     //convert to points and post to curve

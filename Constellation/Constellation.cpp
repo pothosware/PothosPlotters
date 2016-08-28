@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2016 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "ConstellationDisplay.hpp"
@@ -61,6 +61,20 @@
  * |preview disable
  * |tab Axis
  *
+ * |param curveStyle[Curve Style] The curve style for the plotter.
+ * |default "DOTS"
+ * |option [Line] "LINE"
+ * |option [Dash] "DASH"
+ * |option [Dots] "DOTS"
+ * |preview disable
+ * |tab Curve
+ *
+ * |param curveColor[Curve Color] The color for the plotter curve.
+ * |widget ColorPicker()
+ * |default "blue"
+ * |tab Curve
+ * |preview disable
+ *
  * |mode graphWidget
  * |factory /plotters/constellation(remoteEnv)
  * |setter setTitle(title)
@@ -71,6 +85,8 @@
  * |setter setYRange(yRange)
  * |setter enableXAxis(enableXAxis)
  * |setter enableYAxis(enableYAxis)
+ * |setter setCurveStyle(curveStyle)
+ * |setter setCurveColor(curveColor)
  **********************************************************************/
 class Constellation : public Pothos::Topology
 {
@@ -101,6 +117,8 @@ public:
         this->connect(this, "setYRange", _display, "setYRange");
         this->connect(this, "enableXAxis", _display, "enableXAxis");
         this->connect(this, "enableYAxis", _display, "enableYAxis");
+        this->connect(this, "setCurveStyle", _display, "setCurveStyle");
+        this->connect(this, "setCurveColor", _display, "setCurveColor");
 
         //connect to the internal snooper block
         this->connect(this, "setDisplayRate", _trigger, "setEventRate");

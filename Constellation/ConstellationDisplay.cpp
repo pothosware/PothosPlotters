@@ -3,16 +3,20 @@
 
 #include "ConstellationDisplay.hpp"
 #include "PothosPlotter.hpp"
+#include "PothosPlotUtils.hpp"
 #include <QResizeEvent>
 #include <qwt_plot.h>
 #include <qwt_plot_grid.h>
 #include <qwt_plot_zoomer.h>
+#include <qwt_plot_curve.h>
 #include <QHBoxLayout>
 
 ConstellationDisplay::ConstellationDisplay(void):
     _mainPlot(new PothosPlotter(this, POTHOS_PLOTTER_GRID | POTHOS_PLOTTER_ZOOM)),
     _autoScale(false),
-    _queueDepth(0)
+    _queueDepth(0),
+    _curveStyle("DOTS"),
+    _curveColor("blue")
 {
     //setup block
     this->registerCall(this, POTHOS_FCN_TUPLE(ConstellationDisplay, widget));
@@ -24,6 +28,8 @@ ConstellationDisplay::ConstellationDisplay(void):
     this->registerCall(this, POTHOS_FCN_TUPLE(ConstellationDisplay, setYRange));
     this->registerCall(this, POTHOS_FCN_TUPLE(ConstellationDisplay, enableXAxis));
     this->registerCall(this, POTHOS_FCN_TUPLE(ConstellationDisplay, enableYAxis));
+    this->registerCall(this, POTHOS_FCN_TUPLE(ConstellationDisplay, setCurveStyle));
+    this->registerCall(this, POTHOS_FCN_TUPLE(ConstellationDisplay, setCurveColor));
     this->setupInput(0);
 
     //layout
@@ -83,6 +89,18 @@ void ConstellationDisplay::restoreState(const QVariant &state)
 
 void ConstellationDisplay::handleUpdateAxis(void)
 {
+    if (_curve)
+    {
+        QwtPlotCurve::CurveStyle style(QwtPlotCurve::Dots);
+        Qt::PenStyle penStyle(Qt::SolidLine);
+        qreal width = 1.0;
+        if (_curveStyle == "LINE") {style = QwtPlotCurve::Lines; penStyle = Qt::SolidLine; width = 1.0;}
+        if (_curveStyle == "DASH") {style = QwtPlotCurve::Lines; penStyle = Qt::DashLine; width = 1.0;}
+        if (_curveStyle == "DOTS") {style = QwtPlotCurve::Dots; penStyle = Qt::DotLine; width = 2.0;}
+        _curve->setPen(pastelize(_curveColor), width, penStyle);
+        _curve->setStyle(style);
+    }
+
     if (_xRange.size() == 2) _mainPlot->setAxisScale(QwtPlot::xBottom, _xRange[0], _xRange[1]);
     if (_yRange.size() == 2) _mainPlot->setAxisScale(QwtPlot::yLeft, _yRange[0], _yRange[1]);
 
@@ -117,4 +135,16 @@ void ConstellationDisplay::enableXAxis(const bool enb)
 void ConstellationDisplay::enableYAxis(const bool enb)
 {
     _mainPlot->enableAxis(QwtPlot::yLeft, enb);
+}
+
+void ConstellationDisplay::setCurveStyle(const std::string &style)
+{
+    _curveStyle = style;
+    QMetaObject::invokeMethod(this, "handleUpdateAxis", Qt::QueuedConnection);
+}
+
+void ConstellationDisplay::setCurveColor(const QString &color)
+{
+    _curveColor = color;
+    QMetaObject::invokeMethod(this, "handleUpdateAxis", Qt::QueuedConnection);
 }

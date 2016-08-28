@@ -48,6 +48,9 @@ public:
     void enableXAxis(const bool enb);
     void enableYAxis(const bool enb);
 
+    void setCurveStyle(const std::string &style);
+    void setCurveColor(const QString &color);
+
     void work(void);
 
     //allow for standard resize controls with the default size policy
@@ -78,4 +81,6 @@ private:
     std::vector<double> _yRange;
     std::shared_ptr<QwtPlotCurve> _curve;
     std::atomic<size_t> _queueDepth;
+    std::string _curveStyle;
+    QString _curveColor;
 };
