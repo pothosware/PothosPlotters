@@ -19,11 +19,11 @@ Package: pothos-modules-plotters
 Section: libs
 Architecture: all
 Pre-Depends: ${misc:Pre-Depends}
-Depends: pothos-modules0.4-3-plotters, ${misc:Depends}
+Depends: pothos0.4-3-modules-plotters, ${misc:Depends}
 Description: graphical plotter widgets - metapackage
  The Pothos data-flow software suite.
 
-Package: pothos-modules0.4-3-plotters
+Package: pothos0.4-3-modules-plotters
 Section: libs
 Architecture: any
 Pre-Depends: ${misc:Pre-Depends}
