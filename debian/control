@@ -26,6 +26,7 @@ Description: graphical plotter widgets - metapackage
 Package: pothos0.4-3-modules-plotters
 Section: libs
 Architecture: any
+Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: libpothosplotterutils0.2.0 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Description: graphical plotter widgets
