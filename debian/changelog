@@ -1,3 +1,9 @@
+pothos-plotters (0.2.1-ppa1) unstable; urgency=low
+
+  * Release 0.2.1 (2016-09-24)
+
+ -- Josh Blum <josh@pothosware.com>  Sun, 25 Sep 2016 09:29:56 -0700
+
 pothos-plotters (0.2.0) unstable; urgency=low
 
   * Release 0.2.0 (2016-08-02)

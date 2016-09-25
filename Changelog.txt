@@ -1,6 +1,6 @@
 This this the changelog file for the Pothos Plotters toolkit.
 
-Release 0.2.1 (pending)
+Release 0.2.1 (2016-09-24)
 ==========================
 
 - FindQwt.cmake defaults to the qt5 version first

@@ -10,7 +10,7 @@ Build-Depends:
     libspuce-dev,
     qtbase5-dev, libqt5svg5-dev, libqt5opengl5-dev,
     libqwt-qt5-dev
-Standards-Version: 3.9.6
+Standards-Version: 3.9.8
 Homepage: https://github.com/pothosware/pothos-plotters/wiki
 Vcs-Git: https://github.com/pothosware/pothos-plotters.git
 Vcs-Browser: https://github.com/pothosware/pothos-plotters
