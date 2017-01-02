@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2016 Josh Blum
+// Copyright (c) 2016-2017 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include <Pothos/Framework.hpp>
@@ -166,7 +166,9 @@ public:
 
     void setAlarmLevel(const double level)
     {
+        const bool enb = _thermo->alarmEnabled(); //save enabled
         _thermo->setAlarmLevel(level);
+        _thermo->setAlarmEnabled(enb); //restore after setAlarmLevel
     }
 
     void setOrientation(const QString &orientation)
