@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016 Josh Blum
+// Copyright (c) 2014-2017 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PeriodogramDisplay.hpp"
@@ -48,12 +48,8 @@ void PeriodogramDisplay::work(void)
         const auto &packet = msg.convert<Pothos::Packet>();
         const auto indexIt = packet.metadata.find("index");
         const auto index = (indexIt == packet.metadata.end())?0:indexIt->second.convert<int>();
-
         const auto &buff = packet.payload;
-        auto floatBuff = buff.convert(Pothos::DType(typeid(std::complex<float>)), buff.elements());
-
-        //safe guard against FFT size changes, old buffers could still be in-flight
-        if (floatBuff.elements() != this->numFFTBins()) return;
+        std::valarray<float> powerBins;
 
         //handle automatic FFT mode
         if (_fftModeAutomatic and index == 0)
@@ -64,9 +60,26 @@ void PeriodogramDisplay::work(void)
             if (changed) QMetaObject::invokeMethod(this, "handleUpdateAxis", Qt::QueuedConnection);
         }
 
+        //support payloads that are already transformed into a power spectrum
+        const auto formatIt = packet.metadata.find("format");
+        if (formatIt != packet.metadata.end() and
+            formatIt->second.canConvert(typeid(std::string)) and
+            formatIt->second.convert<std::string>() == "POWER_BINS")
+        {
+            auto floatBuff = buff.convert(Pothos::DType(typeid(float)), buff.elements());
+            powerBins = std::valarray<float>(floatBuff.as<const float *>(), floatBuff.elements());
+        }
+
         //power bins to points on the curve
-        CArray fftBins(floatBuff.as<const std::complex<float> *>(), this->numFFTBins());
-        const auto powerBins = _fftPowerSpectrum.transform(fftBins, _fullScale);
+        else
+        {
+            //safe guard against FFT size changes, old buffers could still be in-flight
+            if (buff.elements() != this->numFFTBins()) return;
+            auto floatBuff = buff.convert(Pothos::DType(typeid(std::complex<float>)), buff.elements());
+            CArray fftBins(floatBuff.as<const std::complex<float> *>(), this->numFFTBins());
+            powerBins = _fftPowerSpectrum.transform(fftBins, _fullScale);
+        }
+
         if (not _queueDepth[index]) _queueDepth[index].reset(new std::atomic<size_t>(0));
         _queueDepth[index]->fetch_add(1);
         QMetaObject::invokeMethod(this, "handlePowerBins", Qt::QueuedConnection, Q_ARG(int, index), Q_ARG(std::valarray<float>, powerBins));

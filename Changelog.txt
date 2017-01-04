@@ -3,6 +3,7 @@ This this the changelog file for the Pothos Plotters toolkit.
 Release 0.2.2 (pending)
 ==========================
 
+- Support power spectrum packets in Periodogram
 - Restore enabled state in thermo setAlarmLevel
 
 Release 0.2.1 (2016-09-24)
