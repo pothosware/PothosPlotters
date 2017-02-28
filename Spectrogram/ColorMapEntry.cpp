@@ -1,8 +1,9 @@
-// Copyright (c) 2016-2016 Josh Blum
+// Copyright (c) 2016-2017 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include <Pothos/Plugin.hpp>
-#include <Poco/JSON/Object.h>
+#include <QJsonObject>
+#include <QJsonArray>
 #include <QComboBox>
 #include <QPainter>
 #include <QPixmap>
@@ -82,7 +83,7 @@ static QIcon makeColorMapIcon(const std::string &name)
 /***********************************************************************
  * Factory function and registration
  **********************************************************************/
-static QWidget *makeColorMapEntry(const Poco::JSON::Object::Ptr &, QWidget *parent)
+static QWidget *makeColorMapEntry(const QJsonArray &, const QJsonObject &, QWidget *parent)
 {
     auto colorMapEntry =  new ColorMapEntry(parent);
     colorMapEntry->setIconSize(QSize(100, 20));
