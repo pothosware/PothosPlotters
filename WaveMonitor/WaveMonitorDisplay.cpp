@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016 Josh Blum
+// Copyright (c) 2014-2017 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "WaveMonitorDisplay.hpp"
@@ -199,8 +199,8 @@ void WaveMonitorDisplay::handleUpdateCurves(void)
             }
             if (curves.size() == 2)
             {
-                curves[0]->setTitle(label+"I");
-                curves[1]->setTitle(label+"Q");
+                curves[0]->setTitle(QString("%1I").arg(label));
+                curves[1]->setTitle(QString("%1Q").arg(label));
             }
         }
     }

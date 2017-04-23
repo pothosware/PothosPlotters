@@ -8,6 +8,7 @@ Release 0.3.0 (pending)
 Release 0.2.2 (pending)
 ==========================
 
+- Consistently use QString format for curve labels
 - Support power spectrum packets in Periodogram
 - Restore enabled state in thermo setAlarmLevel
 
