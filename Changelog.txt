@@ -1,6 +1,6 @@
 This this the changelog file for the Pothos Plotters toolkit.
 
-Release 0.2.2 (pending)
+Release 0.2.2 (2017-04-23)
 ==========================
 
 - Consistently use QString format for curve labels
