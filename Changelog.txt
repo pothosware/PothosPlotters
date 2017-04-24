@@ -5,7 +5,7 @@ Release 0.3.0 (pending)
 
 - Spectrogram edit widget requires PothosGUI 0.5.0
 
-Release 0.2.2 (pending)
+Release 0.2.2 (2017-04-23)
 ==========================
 
 - Consistently use QString format for curve labels
