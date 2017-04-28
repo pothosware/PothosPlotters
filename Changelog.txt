@@ -1,6 +1,6 @@
 This this the changelog file for the Pothos Plotters toolkit.
 
-Release 0.3.0 (pending)
+Release 0.3.0 (2017-04-27)
 ==========================
 
 - Spectrogram edit widget requires PothosGUI 0.5.0
