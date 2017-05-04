@@ -63,6 +63,7 @@ void WaveMonitorDisplay::handleSamples(const Pothos::Packet &packet)
     }
 
     //create markers from labels
+    const bool markerVisible = _curves.at(index).at(0)->isVisible();
     auto &markers = _markers[index];
     markers.clear(); //clear old markers
     const auto samps = buffI.as<const float *>();
@@ -74,6 +75,7 @@ void WaveMonitorDisplay::handleSamples(const Pothos::Packet &packet)
         const auto i = label.index + (label.width-1)/2.0;
         marker->setXValue((i-frac)/_sampleRateWoAxisUnits);
         marker->setYValue(samps[label.index]);
+        marker->setVisible(markerVisible);
         marker->attach(_mainPlot);
         markers.emplace_back(marker);
         if (label.id == "T")

@@ -9,6 +9,7 @@
 #include <qwt_plot.h>
 #include <qwt_plot_grid.h>
 #include <qwt_plot_curve.h>
+#include <qwt_plot_marker.h>
 #include <qwt_plot_zoomer.h>
 #include <qwt_legend.h>
 #include <QHBoxLayout>
@@ -241,6 +242,12 @@ void WaveMonitorDisplay::handleLegendChecked(const QVariant &itemInfo, bool on, 
 {
     _mainPlot->infoToItem(itemInfo)->setVisible(on);
     _mainPlot->replot();
+
+    for (const auto &pair : _curves)
+    {
+        const bool visible = pair.second.at(0)->isVisible();
+        for (const auto &m : _markers[pair.first]) m->setVisible(visible);
+    }
 }
 
 std::shared_ptr<QwtPlotCurve> &WaveMonitorDisplay::getCurve(const size_t index, const size_t which, const size_t width)
