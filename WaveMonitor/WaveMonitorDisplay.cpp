@@ -40,6 +40,8 @@ WaveMonitorDisplay::WaveMonitorDisplay(void):
     this->registerCall(this, POTHOS_FCN_TUPLE(WaveMonitorDisplay, setYAxisTitle));
     this->registerCall(this, POTHOS_FCN_TUPLE(WaveMonitorDisplay, setChannelLabel));
     this->registerCall(this, POTHOS_FCN_TUPLE(WaveMonitorDisplay, setChannelStyle));
+    this->registerCall(this, POTHOS_FCN_TUPLE(WaveMonitorDisplay, clearChannels));
+    this->registerSlot("clearChannels");
     this->registerCall(this, POTHOS_FCN_TUPLE(WaveMonitorDisplay, setRateLabelId));
     this->setupInput(0);
 
@@ -217,6 +219,13 @@ void WaveMonitorDisplay::handleZoomed(const QRectF &rect)
         _mainPlot->setAxisAutoScale(QwtPlot::yLeft);
         _mainPlot->updateAxes(); //update after axis changes
     }
+}
+
+void WaveMonitorDisplay::handleClearChannels(void)
+{
+    _curves.clear();
+    _markers.clear();
+    _curveCount = 0;
 }
 
 QVariant WaveMonitorDisplay::saveState(void) const

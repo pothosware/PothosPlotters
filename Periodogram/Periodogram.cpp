@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016 Josh Blum
+// Copyright (c) 2014-2017 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PeriodogramDisplay.hpp"
@@ -227,6 +227,7 @@ public:
         this->connect(this, "enableXAxis", _display, "enableXAxis");
         this->connect(this, "enableYAxis", _display, "enableYAxis");
         this->connect(this, "setYAxisTitle", _display, "setYAxisTitle");
+        this->connect(this, "clearChannels", _display, "clearChannels");
         this->connect(_display, "frequencySelected", this, "frequencySelected");
 
         //connect to the internal snooper block

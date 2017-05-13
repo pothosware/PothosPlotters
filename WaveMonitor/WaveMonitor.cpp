@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2015 Josh Blum
+// Copyright (c) 2014-2017 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "WaveMonitorDisplay.hpp"
@@ -281,6 +281,7 @@ public:
         _topologyToDisplaySetter["setYAxisTitle"] = "setYAxisTitle";
         _topologyToDisplaySetter["setChannelLabel"] = "setChannelLabel";
         _topologyToDisplaySetter["setChannelStyle"] = "setChannelStyle";
+        _topologyToDisplaySetter["clearChannels"] = "clearChannels";
 
         //trigger setters
         _topologyToTriggerSetter["setDisplayRate"] = "setEventRate";

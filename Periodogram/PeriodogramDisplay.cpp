@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016 Josh Blum
+// Copyright (c) 2014-2017 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PeriodogramDisplay.hpp"
@@ -54,6 +54,8 @@ PeriodogramDisplay::PeriodogramDisplay(void):
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setYAxisTitle));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setFreqLabelId));
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, setRateLabelId));
+    this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, clearChannels));
+    this->registerSlot("clearChannels");
     this->registerSignal("frequencySelected");
     this->setupInput(0);
 
@@ -190,6 +192,11 @@ void PeriodogramDisplay::handleZoomed(const QRectF &rect)
     {
         _mainPlot->setAxisAutoScale(QwtPlot::yLeft);
     }
+}
+
+void PeriodogramDisplay::handleClearChannels(void)
+{
+    _curves.clear();
 }
 
 QString PeriodogramDisplay::title(void) const

@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016 Josh Blum
+// Copyright (c) 2014-2017 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
@@ -78,6 +78,11 @@ public:
         QMetaObject::invokeMethod(this, "handleUpdateCurves", Qt::QueuedConnection);
     }
 
+    void clearChannels(void)
+    {
+        QMetaObject::invokeMethod(this, "handleClearChannels", Qt::QueuedConnection);
+    }
+
     void setRateLabelId(const std::string &id)
     {
         _rateLabelId = id;
@@ -108,6 +113,7 @@ private slots:
     void handleUpdateAxis(void);
     void handleUpdateCurves(void);
     void handleZoomed(const QRectF &rect);
+    void handleClearChannels(void);
 
 private:
     std::shared_ptr<QwtPlotCurve> &getCurve(const size_t index, const size_t which, const size_t width);

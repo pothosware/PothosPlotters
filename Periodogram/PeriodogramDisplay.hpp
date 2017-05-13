@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016 Josh Blum
+// Copyright (c) 2014-2017 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
@@ -88,6 +88,11 @@ public:
     void enableYAxis(const bool enb);
     void setYAxisTitle(const QString &title);
 
+    void clearChannels(void)
+    {
+        QMetaObject::invokeMethod(this, "handleClearChannels", Qt::QueuedConnection);
+    }
+
     void setFreqLabelId(const std::string &id)
     {
         _freqLabelId = id;
@@ -129,6 +134,7 @@ private slots:
     void handlePowerBins(const int index, const std::valarray<float> &bins);
     void handleUpdateAxis(void);
     void handleZoomed(const QRectF &rect);
+    void handleClearChannels(void);
     void handleLegendChecked(const QVariant &, bool, int);
 
 private:
