@@ -206,12 +206,12 @@ QString PeriodogramDisplay::title(void) const
 
 void PeriodogramDisplay::enableXAxis(const bool enb)
 {
-    _mainPlot->enableAxis(QwtPlot::xBottom, enb);
+    QMetaObject::invokeMethod(_mainPlot, "enableAxis", Qt::QueuedConnection, Q_ARG(int, QwtPlot::xBottom), Q_ARG(bool, enb));
 }
 
 void PeriodogramDisplay::enableYAxis(const bool enb)
 {
-    _mainPlot->enableAxis(QwtPlot::yLeft, enb);
+    QMetaObject::invokeMethod(_mainPlot, "enableAxis", Qt::QueuedConnection, Q_ARG(int, QwtPlot::yLeft), Q_ARG(bool, enb));
 }
 
 void PeriodogramDisplay::setYAxisTitle(const QString &title)

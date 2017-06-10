@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016 Josh Blum
+// Copyright (c) 2014-2017 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "GeneratedColorMaps.hpp"
@@ -239,12 +239,12 @@ void SpectrogramDisplay::handleUpdateAxis(void)
 
 void SpectrogramDisplay::enableXAxis(const bool enb)
 {
-    _mainPlot->enableAxis(QwtPlot::xBottom, enb);
+    QMetaObject::invokeMethod(_mainPlot, "enableAxis", Qt::QueuedConnection, Q_ARG(int, QwtPlot::xBottom), Q_ARG(bool, enb));
 }
 
 void SpectrogramDisplay::enableYAxis(const bool enb)
 {
-    _mainPlot->enableAxis(QwtPlot::yLeft, enb);
+    QMetaObject::invokeMethod(_mainPlot, "enableAxis", Qt::QueuedConnection, Q_ARG(int, QwtPlot::yLeft), Q_ARG(bool, enb));
 }
 
 QVariant SpectrogramDisplay::saveState(void) const

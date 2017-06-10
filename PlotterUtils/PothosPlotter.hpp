@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016 Josh Blum
+// Copyright (c) 2014-2017 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #pragma once
@@ -43,6 +43,7 @@ public:
 public slots:
     void setTitle(const QString &text);
     void setAxisTitle(const int id, const QString &text);
+    void enableAxis(const int axisId, const bool tf = true);
 
 private slots:
     void handleItemAttached(QwtPlotItem *plotItem, bool on);

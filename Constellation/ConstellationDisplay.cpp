@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016 Josh Blum
+// Copyright (c) 2014-2017 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "ConstellationDisplay.hpp"
@@ -129,12 +129,12 @@ QString ConstellationDisplay::title(void) const
 
 void ConstellationDisplay::enableXAxis(const bool enb)
 {
-    _mainPlot->enableAxis(QwtPlot::xBottom, enb);
+    QMetaObject::invokeMethod(_mainPlot, "enableAxis", Qt::QueuedConnection, Q_ARG(int, QwtPlot::xBottom), Q_ARG(bool, enb));
 }
 
 void ConstellationDisplay::enableYAxis(const bool enb)
 {
-    _mainPlot->enableAxis(QwtPlot::yLeft, enb);
+    QMetaObject::invokeMethod(_mainPlot, "enableAxis", Qt::QueuedConnection, Q_ARG(int, QwtPlot::yLeft), Q_ARG(bool, enb));
 }
 
 void ConstellationDisplay::setCurveStyle(const std::string &style)

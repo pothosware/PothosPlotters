@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016 Josh Blum
+// Copyright (c) 2014-2017 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PothosPlotter.hpp"
@@ -121,6 +121,11 @@ void PothosPlotter::setAxisTitle(const int id, const QString &text)
     QwtText t(text);
     t.setFont(font);
     QwtPlot::setAxisTitle(id, t);
+}
+
+void PothosPlotter::enableAxis(const int axisId, const bool tf)
+{
+    QwtPlot::enableAxis(axisId, tf);
 }
 
 void PothosPlotter::updateChecked(QwtPlotItem *item)
