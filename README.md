@@ -14,7 +14,7 @@ spectrogram, constellation plotter, and others
 
 ## Documentation
 
-* https://github.com/pothosware/pothos-plotters/wiki
+* https://github.com/pothosware/PothosPlotters/wiki
 
 ## Licensing information
 

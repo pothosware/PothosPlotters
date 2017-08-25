@@ -11,9 +11,9 @@ Build-Depends:
     qtbase5-dev, libqt5svg5-dev, libqt5opengl5-dev,
     libqwt-qt5-dev
 Standards-Version: 3.9.8
-Homepage: https://github.com/pothosware/pothos-plotters/wiki
-Vcs-Git: https://github.com/pothosware/pothos-plotters.git
-Vcs-Browser: https://github.com/pothosware/pothos-plotters
+Homepage: https://github.com/pothosware/PothosPlotters/wiki
+Vcs-Git: https://github.com/pothosware/PothosPlotters.git
+Vcs-Browser: https://github.com/pothosware/PothosPlotters
 
 Package: pothos-modules-plotters
 Section: libs
