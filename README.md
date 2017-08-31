@@ -6,15 +6,15 @@ displaying signal visualization within the Pothos GUI.
 Such blocks include: time-domain waveform viewer, periodogram,
 spectrogram, constellation plotter, and others
 
+## Documentation
+
+* https://github.com/pothosware/PothosPlotters/wiki
+
 ## Dependencies
 
 * Pothos library
 * Pothos communications toolkit
 * Qwt - http://qwt.sourceforge.net/
-
-## Documentation
-
-* https://github.com/pothosware/PothosPlotters/wiki
 
 ## Licensing information
 
