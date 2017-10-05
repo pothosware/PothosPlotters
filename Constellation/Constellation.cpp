@@ -102,9 +102,9 @@ public:
         _display->setName("Display");
 
         auto registry = remoteEnv->findProxy("Pothos/BlockRegistry");
-        _trigger = registry.callProxy("/comms/wave_trigger");
-        _trigger.callVoid("setName", "Trigger");
-        _trigger.callVoid("setMode", "PERIODIC");
+        _trigger = registry.call("/comms/wave_trigger");
+        _trigger.call("setName", "Trigger");
+        _trigger.call("setMode", "PERIODIC");
 
         //register calls in this topology
         this->registerCall(this, POTHOS_FCN_TUPLE(Constellation, setDisplayRate));
@@ -144,12 +144,12 @@ public:
 
     void setDisplayRate(const double rate)
     {
-        _trigger.callVoid("setEventRate", rate);
+        _trigger.call("setEventRate", rate);
     }
 
     void setNumPoints(const size_t num)
     {
-        _trigger.callVoid("setNumPoints", num);
+        _trigger.call("setNumPoints", num);
     }
 
 private:

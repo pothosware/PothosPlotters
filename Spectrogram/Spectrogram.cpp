@@ -184,9 +184,9 @@ public:
         _display->setName("Display");
 
         auto registry = remoteEnv->findProxy("Pothos/BlockRegistry");
-        _trigger = registry.callProxy("/comms/wave_trigger");
-        _trigger.callVoid("setName", "Trigger");
-        _trigger.callVoid("setMode", "PERIODIC");
+        _trigger = registry.call("/comms/wave_trigger");
+        _trigger.call("setName", "Trigger");
+        _trigger.call("setMode", "PERIODIC");
 
         //register calls in this topology
         this->registerCall(this, POTHOS_FCN_TUPLE(Spectrogram, setNumFFTBins));
@@ -234,7 +234,7 @@ public:
 
     void setNumFFTBins(const size_t num)
     {
-        _trigger.callVoid("setNumPoints", num);
+        _trigger.call("setNumPoints", num);
         _display->setNumFFTBins(num);
     }
 
@@ -254,8 +254,8 @@ public:
 
     void setStartLabelId(const std::string &id)
     {
-        _trigger.callVoid("setLabelId", id);
-        _trigger.callVoid("setMode", id.empty()?"PERIODIC":"NORMAL");
+        _trigger.call("setLabelId", id);
+        _trigger.call("setMode", id.empty()?"PERIODIC":"NORMAL");
     }
 
     void updateIdsList(void)
@@ -263,7 +263,7 @@ public:
         std::vector<std::string> ids;
         if (not _freqLabelId.empty()) ids.push_back(_freqLabelId);
         if (not _rateLabelId.empty()) ids.push_back(_rateLabelId);
-        _trigger.callVoid("setIdsList", ids);
+        _trigger.call("setIdsList", ids);
     }
 
 private:

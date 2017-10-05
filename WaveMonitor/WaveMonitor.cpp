@@ -263,8 +263,8 @@ public:
         _display->setName("Display");
 
         auto registry = remoteEnv->findProxy("Pothos/BlockRegistry");
-        _trigger = registry.callProxy("/comms/wave_trigger");
-        _trigger.callVoid("setName", "Trigger");
+        _trigger = registry.call("/comms/wave_trigger");
+        _trigger.call("setName", "Trigger");
 
         //register calls in this topology
         this->registerCall(this, POTHOS_FCN_TUPLE(WaveMonitor, setNumInputs));
@@ -335,7 +335,7 @@ public:
         const auto _triggerSetter = _topologyToTriggerSetter.find(name);
         if (_triggerSetter != _topologyToTriggerSetter.end() and numArgs == 1)
         {
-            _trigger.callVoid(_triggerSetter->second, _trigger.getEnvironment()->convertObjectToProxy(inputArgs[0]));
+            _trigger.call(_triggerSetter->second, _trigger.getEnvironment()->convertObjectToProxy(inputArgs[0]));
             setterCalled = true;
         }
 
@@ -347,7 +347,7 @@ public:
 
     void setNumInputs(const size_t numInputs)
     {
-        _trigger.callVoid("setNumPorts", numInputs);
+        _trigger.call("setNumPorts", numInputs);
         for (size_t i = 0; i < numInputs; i++)
         {
             this->connect(this, i, _trigger, i);
@@ -359,7 +359,7 @@ public:
         _display->setRateLabelId(id);
         std::vector<std::string> ids;
         if (not id.empty()) ids.push_back(id);
-        _trigger.callVoid("setIdsList", ids);
+        _trigger.call("setIdsList", ids);
     }
 
 private:

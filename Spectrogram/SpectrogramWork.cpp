@@ -25,7 +25,7 @@ void SpectrogramDisplay::deactivate(void)
 void SpectrogramDisplay::work(void)
 {
     auto updateRate = this->height()/_timeSpan;
-    if (updateRate != _lastUpdateRate) this->callVoid("updateRateChanged", updateRate);
+    if (updateRate != _lastUpdateRate) this->call("updateRateChanged", updateRate);
     _lastUpdateRate = updateRate;
 
     auto inPort = this->input(0);

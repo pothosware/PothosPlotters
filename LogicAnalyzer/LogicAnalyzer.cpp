@@ -145,9 +145,9 @@ public:
         _display->setName("Display");
 
         auto registry = remoteEnv->findProxy("Pothos/BlockRegistry");
-        _trigger = registry.callProxy("/comms/wave_trigger");
-        _trigger.callVoid("setName", "Trigger");
-        _trigger.callVoid("setMode", "PERIODIC");
+        _trigger = registry.call("/comms/wave_trigger");
+        _trigger.call("setName", "Trigger");
+        _trigger.call("setMode", "PERIODIC");
 
         //register calls in this topology
         this->registerCall(this, POTHOS_FCN_TUPLE(LogicAnalyzer, setNumInputs));
@@ -186,7 +186,7 @@ public:
     void setNumInputs(const size_t numInputs)
     {
         _display->setNumInputs(numInputs);
-        _trigger.callVoid("setNumPorts", numInputs);
+        _trigger.call("setNumPorts", numInputs);
         for (size_t i = 0; i < numInputs; i++)
         {
             this->connect(this, i, _trigger, i);
@@ -195,17 +195,17 @@ public:
 
     void setDisplayRate(const double rate)
     {
-        _trigger.callVoid("setEventRate", rate);
+        _trigger.call("setEventRate", rate);
     }
 
     void setNumPoints(const size_t num)
     {
-        _trigger.callVoid("setNumPoints", num);
+        _trigger.call("setNumPoints", num);
     }
 
     void setAlignment(const bool enabled)
     {
-        _trigger.callVoid("setAlignment", enabled);
+        _trigger.call("setAlignment", enabled);
     }
 
     void setRateLabelId(const std::string &id)
@@ -213,7 +213,7 @@ public:
         _display->setRateLabelId(id);
         std::vector<std::string> ids;
         if (not id.empty()) ids.push_back(id);
-        _trigger.callVoid("setIdsList", ids);
+        _trigger.call("setIdsList", ids);
     }
 
 private:
