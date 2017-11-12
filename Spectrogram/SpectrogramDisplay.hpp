@@ -140,7 +140,7 @@ private slots:
 private:
     QTimer *_replotTimer;
     PothosPlotter *_mainPlot;
-    std::shared_ptr<QwtPlotSpectrogram> _plotSpect;
+    std::unique_ptr<QwtPlotSpectrogram> _plotSpect;
     MySpectrogramRasterData *_plotRaster;
     FFTPowerSpectrum _fftPowerSpectrum;
     double _lastUpdateRate;

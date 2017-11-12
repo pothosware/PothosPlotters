@@ -32,7 +32,7 @@ private:
     QVector<QPointF> _channelBuffer;
     QVector<QPointF> _maxHoldBuffer;
     QVector<QPointF> _minHoldBuffer;
-    std::shared_ptr<QwtPlotCurve> _channelCurve;
-    std::shared_ptr<QwtPlotCurve> _maxHoldCurve;
-    std::shared_ptr<QwtPlotCurve> _minHoldCurve;
+    std::unique_ptr<QwtPlotCurve> _channelCurve;
+    std::unique_ptr<QwtPlotCurve> _maxHoldCurve;
+    std::unique_ptr<QwtPlotCurve> _minHoldCurve;
 };

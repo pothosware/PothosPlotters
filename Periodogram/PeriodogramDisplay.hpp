@@ -156,6 +156,6 @@ private:
     bool _fftModeAutomatic;
 
     //per-port data structs
-    std::map<size_t, std::shared_ptr<PeriodogramChannel>> _curves;
-    std::map<size_t, std::shared_ptr<std::atomic<size_t>>> _queueDepth;
+    std::map<size_t, std::unique_ptr<PeriodogramChannel>> _curves;
+    std::map<size_t, std::unique_ptr<std::atomic<size_t>>> _queueDepth;
 };

@@ -79,7 +79,7 @@ private:
     bool _autoScale;
     std::vector<double> _xRange;
     std::vector<double> _yRange;
-    std::shared_ptr<QwtPlotCurve> _curve;
+    std::unique_ptr<QwtPlotCurve> _curve;
     std::atomic<size_t> _queueDepth;
     std::string _curveStyle;
     QString _curveColor;

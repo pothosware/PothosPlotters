@@ -116,7 +116,7 @@ private slots:
     void handleClearChannels(void);
 
 private:
-    std::shared_ptr<QwtPlotCurve> &getCurve(const size_t index, const size_t which, const size_t width);
+    QwtPlotCurve *getCurve(const size_t index, const size_t which, const size_t width);
 
     PothosPlotter *_mainPlot;
     double _sampleRate;
@@ -133,7 +133,7 @@ private:
 
     //per-port data structs
     size_t _curveCount;
-    std::map<size_t, std::map<size_t, std::shared_ptr<QwtPlotCurve>>> _curves;
-    std::map<size_t, std::vector<std::shared_ptr<QwtPlotMarker>>> _markers;
-    std::map<size_t, std::shared_ptr<std::atomic<size_t>>> _queueDepth;
+    std::map<size_t, std::map<size_t, std::unique_ptr<QwtPlotCurve>>> _curves;
+    std::map<size_t, std::vector<std::unique_ptr<QwtPlotMarker>>> _markers;
+    std::map<size_t, std::unique_ptr<std::atomic<size_t>>> _queueDepth;
 };

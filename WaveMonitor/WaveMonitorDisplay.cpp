@@ -259,7 +259,7 @@ void WaveMonitorDisplay::handleLegendChecked(const QVariant &itemInfo, bool on, 
     }
 }
 
-std::shared_ptr<QwtPlotCurve> &WaveMonitorDisplay::getCurve(const size_t index, const size_t which, const size_t width)
+QwtPlotCurve *WaveMonitorDisplay::getCurve(const size_t index, const size_t which, const size_t width)
 {
     auto &curves = _curves[index];
 
@@ -278,5 +278,5 @@ std::shared_ptr<QwtPlotCurve> &WaveMonitorDisplay::getCurve(const size_t index, 
         if (_curveCount++ == 1) this->installLegend();
         this->handleUpdateCurves();
     }
-    return curve;
+    return curve.get();
 }
