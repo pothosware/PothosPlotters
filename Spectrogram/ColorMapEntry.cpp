@@ -99,7 +99,7 @@ static QWidget *makeColorMapEntry(const QJsonArray &, const QJsonObject &, QWidg
 
 pothos_static_block(registerColorMapEntry)
 {
-    Pothos::PluginRegistry::add("/gui/EntryWidgets/ColorMapEntry", Pothos::Callable(&makeColorMapEntry));
+    Pothos::PluginRegistry::add("/flow/EntryWidgets/ColorMapEntry", Pothos::Callable(&makeColorMapEntry));
 }
 
 #include "ColorMapEntry.moc"
