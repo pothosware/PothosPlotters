@@ -177,11 +177,16 @@ void PeriodogramDisplay::handleUpdateAxis(void)
 
 QVariant PeriodogramDisplay::saveState(void) const
 {
-    return _mainPlot->state();
+    auto map = _mainPlot->state().toMap();
+    map["isComplex"] = _fftModeComplex;
+    return map;
 }
 
 void PeriodogramDisplay::restoreState(const QVariant &state)
 {
+    const auto map = state.toMap();
+    const auto isComplex = map.constFind("isComplex");
+    if (isComplex != map.constEnd()) _fftModeComplex = isComplex.value().toBool();
     _mainPlot->setState(state);
 }
 
