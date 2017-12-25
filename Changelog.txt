@@ -1,6 +1,6 @@
 This this the changelog file for the Pothos Plotters toolkit.
 
-Release 0.4.0 (pending)
+Release 0.4.0 (2017-12-25)
 ==========================
 
 - Replaced use of callVoid() and callProxy() with 0.6 call API
