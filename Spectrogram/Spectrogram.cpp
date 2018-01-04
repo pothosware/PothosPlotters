@@ -209,6 +209,7 @@ public:
         this->connect(this, "enableYAxis", _display, "enableYAxis");
         this->connect(this, "setColorMap", _display, "setColorMap");
         this->connect(_display, "frequencySelected", this, "frequencySelected");
+        this->connect(_display, "relativeFrequencySelected", this, "relativeFrequencySelected");
 
         //connect to the internal snooper block
         this->connect(_display, "updateRateChanged", _trigger, "setEventRate");

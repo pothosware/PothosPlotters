@@ -67,6 +67,7 @@ SpectrogramDisplay::SpectrogramDisplay(void):
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setFreqLabelId));
     this->registerCall(this, POTHOS_FCN_TUPLE(SpectrogramDisplay, setRateLabelId));
     this->registerSignal("frequencySelected");
+    this->registerSignal("relativeFrequencySelected");
     this->registerSignal("updateRateChanged");
     this->setupInput(0);
 
@@ -266,6 +267,7 @@ void SpectrogramDisplay::handlePickerSelected(const QPointF &p)
 {
     const double freq = p.x()*_sampleRate/_sampleRateWoAxisUnits;
     this->emitSignal("frequencySelected", freq);
+    this->emitSignal("relativeFrequencySelected", freq - _centerFreq);
 }
 
 void SpectrogramDisplay::appendBins(const std::valarray<float> &bins)

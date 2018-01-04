@@ -229,6 +229,7 @@ public:
         this->connect(this, "setYAxisTitle", _display, "setYAxisTitle");
         this->connect(this, "clearChannels", _display, "clearChannels");
         this->connect(_display, "frequencySelected", this, "frequencySelected");
+        this->connect(_display, "relativeFrequencySelected", this, "relativeFrequencySelected");
 
         //connect to the internal snooper block
         this->connect(this, "setDisplayRate", _trigger, "setEventRate");
