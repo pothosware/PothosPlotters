@@ -57,6 +57,7 @@ PeriodogramDisplay::PeriodogramDisplay(void):
     this->registerCall(this, POTHOS_FCN_TUPLE(PeriodogramDisplay, clearChannels));
     this->registerSlot("clearChannels");
     this->registerSignal("frequencySelected");
+    this->registerSignal("relativeFrequencySelected");
     this->setupInput(0);
 
     //layout
@@ -228,6 +229,7 @@ void PeriodogramDisplay::handlePickerSelected(const QPointF &p)
 {
     const double freq = p.x()*_sampleRate/_sampleRateWoAxisUnits;
     this->emitSignal("frequencySelected", freq);
+    this->emitSignal("relativeFrequencySelected", freq - _centerFreq);
 }
 
 void PeriodogramDisplay::handleLegendChecked(const QVariant &itemInfo, bool on, int)
