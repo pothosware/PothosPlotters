@@ -138,6 +138,7 @@ add_library(PothosPlotterUtils SHARED ${PLOTTER_UTILS_SOURCES})
 set_target_properties(PothosPlotterUtils PROPERTIES DEFINE_SYMBOL "POTHOS_PLOTTER_UTILS_MAKEDLL")
 set_target_properties(PothosPlotterUtils PROPERTIES VERSION 0.2.0)
 target_link_libraries(PothosPlotterUtils ${Qt5_LIBRARIES})
+target_link_libraries(PothosPlotterUtils ${Pothos_LIBRARIES})
 install(TARGETS PothosPlotterUtils
     LIBRARY DESTINATION lib${LIB_SUFFIX} # .so file
     ARCHIVE DESTINATION lib${LIB_SUFFIX} # .lib file
