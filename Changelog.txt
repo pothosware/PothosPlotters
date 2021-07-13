@@ -1,5 +1,10 @@
 This this the changelog file for the Pothos Plotters toolkit.
 
+Release 0.4.2 (pending)
+==========================
+
+- Support dark themes by allowing plot background default color
+
 Release 0.4.1 (2018-04-24)
 ==========================
 

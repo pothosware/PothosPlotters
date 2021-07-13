@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2017 Josh Blum
+// Copyright (c) 2014-2021 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PothosPlotter.hpp"
@@ -74,7 +74,13 @@ PothosPlotter::PothosPlotter(QWidget *parent, const int enables):
 {
     //setup canvas
     this->setCanvas(new PothosPlotterCanvas(this));
-    this->setCanvasBackground(QBrush(Qt::white));
+    auto bgColor = this->palette().color(QPalette::Background);
+
+    //When the default background is light, force the plot
+    //background to be white because it generally looks better;
+    //otherwise leave the color default to support dark themes.
+    if (bgColor.lightnessF() > 0.5) bgColor = Qt::white;
+    this->setCanvasBackground(QBrush(bgColor));
 
     //font style
     this->setAxisFont(QwtPlot::xBottom, PothosPlotAxisFont());
