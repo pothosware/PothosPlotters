@@ -17,6 +17,8 @@ if (CMAKE_PREFIX_PATH)
     set(ENV{CMAKE_PREFIX_PATH} ${CMAKE_PREFIX_PATH})
 endif (CMAKE_PREFIX_PATH)
 
+include(GNUInstallDirs)
+
 ########################################################################
 # Qt devel setup
 ########################################################################
