@@ -23,7 +23,7 @@ POTHOS_MODULE_UTIL(
         QwtColorMapMaker.cpp
     DOC_SOURCES Spectrogram.cpp
     LIBRARIES
-        Qt5::Widgets
+        Qt${QT_VERSION_MAJOR}::Widgets
         PothosQwt
         PothosPlotterUtils
         spuce

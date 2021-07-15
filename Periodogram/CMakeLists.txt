@@ -19,7 +19,7 @@ POTHOS_MODULE_UTIL(
         PeriodogramDisplay.cpp
     DOC_SOURCES Periodogram.cpp
     LIBRARIES
-        Qt5::Widgets
+        Qt${QT_VERSION_MAJOR}::Widgets
         PothosQwt
         PothosPlotterUtils
         spuce

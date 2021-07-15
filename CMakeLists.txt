@@ -22,7 +22,9 @@ include(GNUInstallDirs)
 ########################################################################
 # Qt devel setup
 ########################################################################
-find_package(Qt5 COMPONENTS Widgets)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Concurrent)
+message(STATUS "QT_VERSION_MAJOR=${QT_VERSION_MAJOR}")
 set(CMAKE_AUTOMOC ON)
 
 ########################################################################
@@ -50,7 +52,7 @@ endif (Spuce_FOUND)
 ########################################################################
 include(FeatureSummary)
 include(CMakeDependentOption)
-cmake_dependent_option(ENABLE_PLOTTERS "Enable Pothos Plotters component" ON "Pothos_FOUND;Qt5_FOUND" OFF)
+cmake_dependent_option(ENABLE_PLOTTERS "Enable Pothos Plotters component" ON "Pothos_FOUND;Qt${QT_VERSION_MAJOR}_FOUND" OFF)
 add_feature_info(Plotters ENABLE_PLOTTERS "Graphical plotter widgets for the GUI")
 
 ########################################################################
@@ -85,7 +87,7 @@ if (QWT_FOUND)
 elseif (ENABLE_PLOTTERS)
 
     #compiling qwt from source requires many more Qt libraries
-    find_package(Qt5 COMPONENTS Widgets Concurrent OpenGL Svg PrintSupport)
+    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Concurrent OpenGL Svg PrintSupport)
 
     set(QWT_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/qwt6/src)
 
@@ -108,11 +110,11 @@ elseif (ENABLE_PLOTTERS)
     target_include_directories(PothosQwt PUBLIC ${QWT_SRC_DIR})
     set_target_properties(PothosQwt PROPERTIES DEFINE_SYMBOL "QWT_MAKEDLL")
     set_target_properties(PothosQwt PROPERTIES VERSION ${QWT_VERSION_STRING})
-    target_link_libraries(PothosQwt PRIVATE Qt5::Widgets)
-    target_link_libraries(PothosQwt PRIVATE Qt5::OpenGL)
-    target_link_libraries(PothosQwt PRIVATE Qt5::Concurrent)
-    target_link_libraries(PothosQwt PRIVATE Qt5::PrintSupport)
-    target_link_libraries(PothosQwt PRIVATE Qt5::Svg)
+    target_link_libraries(PothosQwt PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+    target_link_libraries(PothosQwt PRIVATE Qt${QT_VERSION_MAJOR}::OpenGL)
+    target_link_libraries(PothosQwt PRIVATE Qt${QT_VERSION_MAJOR}::Concurrent)
+    target_link_libraries(PothosQwt PRIVATE Qt${QT_VERSION_MAJOR}::PrintSupport)
+    target_link_libraries(PothosQwt PRIVATE Qt${QT_VERSION_MAJOR}::Svg)
     target_compile_definitions(PothosQwt PUBLIC -DQWT_DLL)
     install(TARGETS PothosQwt
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} # .so file
@@ -132,7 +134,7 @@ add_library(PothosPlotterUtils SHARED ${PLOTTER_UTILS_SOURCES})
 target_include_directories(PothosPlotterUtils PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/PlotterUtils)
 set_target_properties(PothosPlotterUtils PROPERTIES DEFINE_SYMBOL "POTHOS_PLOTTER_UTILS_MAKEDLL")
 set_target_properties(PothosPlotterUtils PROPERTIES VERSION 0.2.0)
-target_link_libraries(PothosPlotterUtils PRIVATE Qt5::Widgets)
+target_link_libraries(PothosPlotterUtils PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(PothosPlotterUtils PRIVATE PothosQwt)
 target_link_libraries(PothosPlotterUtils PRIVATE Pothos)
 install(TARGETS PothosPlotterUtils

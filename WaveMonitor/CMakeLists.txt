@@ -18,7 +18,7 @@ POTHOS_MODULE_UTIL(
         WaveMonitorDisplay.cpp
     DOC_SOURCES WaveMonitor.cpp
     LIBRARIES
-        Qt5::Widgets
+        Qt${QT_VERSION_MAJOR}::Widgets
         PothosQwt
         PothosPlotterUtils
     DESTINATION plotters

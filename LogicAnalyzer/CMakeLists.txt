@@ -17,7 +17,7 @@ POTHOS_MODULE_UTIL(
         LogicAnalyzerDisplay.cpp
     DOC_SOURCES LogicAnalyzer.cpp
     LIBRARIES
-        Qt5::Widgets
+        Qt${QT_VERSION_MAJOR}::Widgets
         PothosPlotterUtils
     DESTINATION plotters
 )
