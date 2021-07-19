@@ -3,7 +3,7 @@ This this the changelog file for the Pothos Plotters toolkit.
 Release 0.4.2 (pending)
 ==========================
 
-- updated qwt submodule to 6.1.5
+- updated qwt submodule to 6.1.6
 - Update build to support Qt6 and newer cmake target style
 - Support dark themes by allowing plot background default color
 
