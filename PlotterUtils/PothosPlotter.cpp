@@ -104,7 +104,7 @@ PothosPlotter::PothosPlotter(QWidget *parent, const int enables):
     //connections
     qRegisterMetaType<QList<QwtLegendData>>("QList<QwtLegendData>"); //missing from qwt
     qRegisterMetaType<std::valarray<float>>("std::valarray<float>"); //used for plot data
-    connect(this, SIGNAL(itemAttached(QwtPlotItem *, bool)), this, SLOT(handleItemAttached(QwtPlotItem *, bool)));
+    connect(this, &PothosPlotter::itemAttached, this, &PothosPlotter::handleItemAttached);
 }
 
 PothosPlotter::~PothosPlotter(void)

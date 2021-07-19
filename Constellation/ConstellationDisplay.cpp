@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2017 Josh Blum
+// Copyright (c) 2014-2021 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "ConstellationDisplay.hpp"
@@ -40,7 +40,7 @@ ConstellationDisplay::ConstellationDisplay(void):
 
     //setup plotter
     {
-        connect(_mainPlot->zoomer(), SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
+        connect(_mainPlot->zoomer(), &QwtPlotZoomer::zoomed, this, &ConstellationDisplay::handleZoomed);
     }
 
     //register types passed to gui thread from work

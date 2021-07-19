@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2017 Josh Blum
+// Copyright (c) 2016-2021 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include <Pothos/Plugin.hpp>
@@ -22,8 +22,8 @@ public:
     ColorMapEntry(QWidget *parent):
         QComboBox(parent)
     {
-        connect(this, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(handleWidgetChanged(const QString &)));
-        connect(this, SIGNAL(editTextChanged(const QString &)), this, SLOT(handleEntryChanged(const QString &)));
+        connect(this, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int){emit this->widgetChanged();});
+        connect(this, &QComboBox::editTextChanged, [=](const QString &){emit this->entryChanged();});
         this->view()->setObjectName("BlockPropertiesEditWidget"); //to pick up eval color style
     }
 
@@ -50,16 +50,6 @@ signals:
     void commitRequested(void);
     void widgetChanged(void);
     void entryChanged(void);
-
-private slots:
-    void handleWidgetChanged(const QString &)
-    {
-        emit this->widgetChanged();
-    }
-    void handleEntryChanged(const QString &)
-    {
-        emit this->entryChanged();
-    }
 };
 
 /***********************************************************************

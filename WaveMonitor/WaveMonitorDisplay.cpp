@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2017 Josh Blum
+// Copyright (c) 2014-2021 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "WaveMonitorDisplay.hpp"
@@ -53,7 +53,7 @@ WaveMonitorDisplay::WaveMonitorDisplay(void):
 
     //setup plotter
     {
-        connect(_mainPlot->zoomer(), SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
+        connect(_mainPlot->zoomer(), &QwtPlotZoomer::zoomed, this, &WaveMonitorDisplay::handleZoomed);
     }
 
     //register types passed to gui thread from work
@@ -243,7 +243,7 @@ void WaveMonitorDisplay::installLegend(void)
     if (_mainPlot->legend() != nullptr) return;
     auto legend = new QwtLegend(_mainPlot);
     legend->setDefaultItemMode(QwtLegendData::Checkable);
-    connect(legend, SIGNAL(checked(const QVariant &, bool, int)), this, SLOT(handleLegendChecked(const QVariant &, bool, int)));
+    connect(legend, &QwtLegend::checked, this, &WaveMonitorDisplay::handleLegendChecked);
     _mainPlot->insertLegend(legend);
 }
 

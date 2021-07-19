@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016 Josh Blum
+// Copyright (c) 2014-2021 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include <Pothos/Framework.hpp>
@@ -103,7 +103,7 @@ public:
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtSliderBlock, setScalePosition));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtSliderBlock, setScaleEngine));
         this->registerSignal("valueChanged");
-        connect(_slider, SIGNAL(valueChanged(const double)), this, SLOT(handleValueChanged(const double)));
+        connect(_slider, &QwtSlider::valueChanged, this, &QwtSliderBlock::handleValueChanged);
     }
 
     QWidget *widget(void)

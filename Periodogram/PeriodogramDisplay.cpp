@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2017 Josh Blum
+// Copyright (c) 2014-2021 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PeriodogramDisplay.hpp"
@@ -68,12 +68,12 @@ PeriodogramDisplay::PeriodogramDisplay(void):
 
     //setup plotter
     {
-        connect(_mainPlot->zoomer(), SIGNAL(selected(const QPointF &)), this, SLOT(handlePickerSelected(const QPointF &)));
-        connect(_mainPlot->zoomer(), SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
+        connect(_mainPlot->zoomer(), QOverload<const QPointF &>::of(&QwtPlotZoomer::selected), this, &PeriodogramDisplay::handlePickerSelected);
+        connect(_mainPlot->zoomer(), &QwtPlotZoomer::zoomed, this, &PeriodogramDisplay::handleZoomed);
 
         auto legend = new QwtLegend(_mainPlot);
         legend->setDefaultItemMode(QwtLegendData::Checkable);
-        connect(legend, SIGNAL(checked(const QVariant &, bool, int)), this, SLOT(handleLegendChecked(const QVariant &, bool, int)));
+        connect(legend, &QwtLegend::checked, this, &PeriodogramDisplay::handleLegendChecked);
         _mainPlot->insertLegend(legend);
     }
 }

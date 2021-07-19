@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2016 Josh Blum
+// Copyright (c) 2016-2021 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include <Pothos/Framework.hpp>
@@ -83,7 +83,7 @@ public:
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtKnobBlock, setStepSize));
         this->registerCall(this, POTHOS_FCN_TUPLE(QwtKnobBlock, setScaleEngine));
         this->registerSignal("valueChanged");
-        connect(_knob, SIGNAL(valueChanged(const double)), this, SLOT(handleValueChanged(const double)));
+        connect(_knob, &QwtKnob::valueChanged, this, &QwtKnobBlock::handleValueChanged);
     }
 
     QWidget *widget(void)

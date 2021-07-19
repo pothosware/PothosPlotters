@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2017 Josh Blum
+// Copyright (c) 2014-2021 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "GeneratedColorMaps.hpp"
@@ -80,8 +80,8 @@ SpectrogramDisplay::SpectrogramDisplay(void):
     //setup plotter
     {
         dynamic_cast<PothosPlotPicker *>(_mainPlot->zoomer())->registerRaster(_plotRaster);
-        connect(_mainPlot->zoomer(), SIGNAL(zoomed(const QRectF &)), this, SLOT(handleZoomed(const QRectF &)));
-        connect(_mainPlot->zoomer(), SIGNAL(selected(const QPointF &)), this, SLOT(handlePickerSelected(const QPointF &)));
+        connect(_mainPlot->zoomer(), QOverload<const QPointF &>::of(&QwtPlotZoomer::selected), this, &SpectrogramDisplay::handlePickerSelected);
+        connect(_mainPlot->zoomer(), &QwtPlotZoomer::zoomed, this, &SpectrogramDisplay::handleZoomed);
         _mainPlot->setAxisTitle(QwtPlot::yRight, "dB");
         _mainPlot->plotLayout()->setAlignCanvasToScales(true);
         _mainPlot->enableAxis(QwtPlot::yRight);
@@ -96,7 +96,7 @@ SpectrogramDisplay::SpectrogramDisplay(void):
         _plotSpect->setRenderThreadCount(0); //enable multi-thread
     }
 
-    connect(_replotTimer, SIGNAL(timeout(void)), _mainPlot, SLOT(replot(void)));
+    connect(_replotTimer, &QTimer::timeout, _mainPlot, &PothosPlotter::replot);
 }
 
 SpectrogramDisplay::~SpectrogramDisplay(void)
