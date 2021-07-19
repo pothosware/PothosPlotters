@@ -79,7 +79,7 @@ SpectrogramDisplay::SpectrogramDisplay(void):
 
     //setup plotter
     {
-        dynamic_cast<PothosPlotPicker *>(_mainPlot->zoomer())->registerRaster(_plotRaster);
+        qobject_cast<PothosPlotPicker *>(_mainPlot->zoomer())->registerRaster(_plotRaster);
         connect(_mainPlot->zoomer(), QOverload<const QPointF &>::of(&QwtPlotZoomer::selected), this, &SpectrogramDisplay::handlePickerSelected);
         connect(_mainPlot->zoomer(), &QwtPlotZoomer::zoomed, this, &SpectrogramDisplay::handleZoomed);
         _mainPlot->setAxisTitle(QwtPlot::yRight, "dB");

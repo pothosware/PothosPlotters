@@ -136,10 +136,10 @@ void PothosPlotter::enableAxis(const int axisId, const bool tf)
 
 void PothosPlotter::updateChecked(QwtPlotItem *item)
 {
-    auto legend = dynamic_cast<QwtLegend *>(this->legend());
+    auto legend = qobject_cast<QwtLegend *>(this->legend());
     if (legend == nullptr) return; //no legend
     auto info = legend->legendWidget(this->itemToInfo(item));
-    auto label = dynamic_cast<QwtLegendLabel *>(info);
+    auto label = qobject_cast<QwtLegendLabel *>(info);
     if (label == nullptr) return; //no label
     label->setChecked(item->isVisible());
     this->updateLegend();

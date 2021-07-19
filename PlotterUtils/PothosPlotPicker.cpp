@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016 Josh Blum
+// Copyright (c) 2014-2021 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include "PothosPlotPicker.hpp"
@@ -33,7 +33,7 @@ bool PothosPlotPicker::accept(QPolygon &pa) const
     if (pa.count() < 2) return false;
 
     auto rect = QRect(pa[0], pa[int(pa.count()) - 1]).normalized();
-    const auto canvas = dynamic_cast<const QwtPlotCanvas *>(this->plot()->canvas());
+    const auto canvas = qobject_cast<const QwtPlotCanvas *>(this->plot()->canvas());
     assert(canvas != nullptr);
     const auto size = canvas->frameRect().size();
     const auto pad = canvas->frameWidth();
