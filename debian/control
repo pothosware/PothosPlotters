@@ -10,7 +10,7 @@ Build-Depends:
     libspuce-dev,
     qtbase5-dev, libqt5svg5-dev, libqt5opengl5-dev,
     libqwt-qt5-dev
-Standards-Version: 4.1.1
+Standards-Version: 4.5.0
 Homepage: https://github.com/pothosware/PothosPlotters/wiki
 Vcs-Git: https://github.com/pothosware/PothosPlotters.git
 Vcs-Browser: https://github.com/pothosware/PothosPlotters
